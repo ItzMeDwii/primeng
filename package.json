@@ -1,7 +1,7 @@
 {
     "name": "@dwii5359/primeng",
-    "version": "15.4.2",
-    "license": "SEE LICENSE IN LICENSE.md",
+    "version": "15.4.5",
+    "license": "MIT",
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
