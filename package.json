@@ -1,6 +1,6 @@
 {
-    "name": "primeng",
-    "version": "15.4.1",
+    "name": "@dwii5359/primeng",
+    "version": "15.4.2",
     "license": "SEE LICENSE IN LICENSE.md",
     "scripts": {
         "ng": "ng",
