@@ -1191,7 +1191,7 @@ export class Calendar implements OnInit, OnDestroy, ControlValueAccessor {
         }
     }
 
-    updateInputfield() {
+    updateInputfield(date?: string) {
         let formattedValue = '';
 
         if (this.value) {
@@ -1218,7 +1218,7 @@ export class Calendar implements OnInit, OnDestroy, ControlValueAccessor {
             }
         }
 
-        this.inputFieldValue = formattedValue;
+        this.inputFieldValue = date ? date : formattedValue;
         this.updateFilledState();
         if (this.inputfieldViewChild && this.inputfieldViewChild.nativeElement) {
             this.inputfieldViewChild.nativeElement.value = this.inputFieldValue;
