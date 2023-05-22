@@ -34,6 +34,7 @@ import { ChevronUpIcon } from 'primeng/icons/chevronup';
 import { ChevronDownIcon } from 'primeng/icons/chevrondown';
 import { TimesIcon } from 'primeng/icons/times';
 import { CalendarIcon } from 'primeng/icons/calendar';
+import { DateTime } from 'luxon';
 
 export const CALENDAR_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -507,6 +508,8 @@ export class Calendar implements OnInit, OnDestroy, ControlValueAccessor {
     @ContentChildren(PrimeTemplate) templates: QueryList<any>;
 
     @Input() tabindex: number;
+
+    @Input() luxonLocale: string = 'en-US';
 
     @ViewChild('container', { static: false }) containerViewChild: ElementRef;
 
@@ -1191,7 +1194,7 @@ export class Calendar implements OnInit, OnDestroy, ControlValueAccessor {
         }
     }
 
-    updateInputfield(date?: string) {
+    updateInputfield() {
         let formattedValue = '';
 
         if (this.value) {
@@ -1218,24 +1221,25 @@ export class Calendar implements OnInit, OnDestroy, ControlValueAccessor {
             }
         }
 
-        this.inputFieldValue = date ? date : formattedValue;
+        this.inputFieldValue = formattedValue;
         this.updateFilledState();
         if (this.inputfieldViewChild && this.inputfieldViewChild.nativeElement) {
             this.inputfieldViewChild.nativeElement.value = this.inputFieldValue;
         }
     }
 
-    formatDateTime(date) {
+    formatDateTime(date: any) {
         let formattedValue = this.keepInvalid ? date : null;
 
         if (this.isValidDate(date)) {
             if (this.timeOnly) {
-                formattedValue = this.formatTime(date);
+                formattedValue = date instanceof Date
+                    ? DateTime.fromJSDate(date).setLocale(this.luxonLocale).toFormat(this.hourFormat == '24' ? 'T' : 't')
+                    : DateTime.fromISO(date).setLocale(this.luxonLocale).toFormat(this.hourFormat == '24' ? 'T' : 't');
             } else {
-                formattedValue = this.formatDate(date, this.getDateFormat());
-                if (this.showTime) {
-                    formattedValue += ' ' + this.formatTime(date);
-                }
+                formattedValue = date instanceof Date
+                    ? DateTime.fromJSDate(date).setLocale(this.luxonLocale).toFormat(this.dateFormat)
+                    : DateTime.fromISO(date).setLocale(this.luxonLocale).toFormat(this.dateFormat)
             }
         }
 
