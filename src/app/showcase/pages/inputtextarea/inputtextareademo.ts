@@ -4,11 +4,10 @@ import { AccessibilityDoc } from '../../doc/inputtextarea/accessibilitydoc';
 import { AutoResizeDoc } from '../../doc/inputtextarea/autoresizedoc';
 import { BasicDoc } from '../../doc/inputtextarea/basicdoc';
 import { DisabledDoc } from '../../doc/inputtextarea/disableddoc';
-import { EventsDoc } from '../../doc/inputtextarea/eventsdoc';
 import { FloatlabelDoc } from '../../doc/inputtextarea/floatlabeldoc';
+import { InvalidDoc } from '../../doc/inputtextarea/invaliddoc';
 import { ImportDoc } from '../../doc/inputtextarea/importdoc';
 import { KeyfilterDoc } from '../../doc/inputtextarea/keyfilterdoc';
-import { PropsDoc } from '../../doc/inputtextarea/propsdoc';
 import { StyleDoc } from '../../doc/inputtextarea/styledoc';
 
 @Component({
@@ -47,6 +46,11 @@ export class InputTextareaDemo {
             component: FloatlabelDoc
         },
         {
+            id: 'invalid',
+            label: 'Invalid',
+            component: InvalidDoc
+        },
+        {
             id: 'disabled',
             label: 'Disabled',
             component: DisabledDoc
@@ -60,18 +64,6 @@ export class InputTextareaDemo {
             id: 'accessibility',
             label: 'Accessibility',
             component: AccessibilityDoc
-        }
-    ];
-    apiDocs = [
-        {
-            id: 'properties',
-            label: 'Properties',
-            component: PropsDoc
-        },
-        {
-            id: 'events',
-            label: 'Events',
-            component: EventsDoc
         }
     ];
 }

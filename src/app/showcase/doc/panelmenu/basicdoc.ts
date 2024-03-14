@@ -1,24 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'basic-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>PanelMenu requires a collection of menuitems as its <i>model</i>.</p>
         </app-docsectiontext>
         <div class="card flex justify-content-center">
             <p-panelMenu [model]="items" [style]="{ width: '300px' }"></p-panelMenu>
         </div>
         <app-code [code]="code" selector="panel-menu-basic-demo"></app-code>
-    </section>`
+    `
 })
 export class BasicDoc implements OnInit {
-    @Input() id: string;
-
-    @Input() title: string;
-
     items: MenuItem[];
 
     ngOnInit() {
@@ -26,6 +22,7 @@ export class BasicDoc implements OnInit {
             {
                 label: 'File',
                 icon: 'pi pi-fw pi-file',
+                expanded: true,
                 items: [
                     {
                         label: 'New',
@@ -44,6 +41,9 @@ export class BasicDoc implements OnInit {
                     {
                         label: 'Delete',
                         icon: 'pi pi-fw pi-trash'
+                    },
+                    {
+                        separator: true
                     },
                     {
                         label: 'Export',
@@ -141,8 +141,7 @@ export class BasicDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-panelMenu [model]="items" [style]="{'width':'300px'}"></p-panelMenu>`,
+        basic: `<p-panelMenu [model]="items" [style]="{'width':'300px'}"></p-panelMenu>`,
 
         html: `
 <div class="card flex justify-content-center">
@@ -183,6 +182,9 @@ export class PanelMenuBasicDemo implements OnInit {
                     {
                         label: 'Delete',
                         icon: 'pi pi-fw pi-trash'
+                    },
+                    { 
+                        separator: true 
                     },
                     {
                         label: 'Export',

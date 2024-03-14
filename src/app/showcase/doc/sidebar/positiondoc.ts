@@ -1,10 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'position-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Sidebar location is configured with the <i>position</i> property that can take <i>left</i>, <i>right</i>, <i>top</i> and <i>bottom</i> as a value.</p>
         </app-docsectiontext>
         <div class="card flex flex-wrap justify-content-center gap-2">
@@ -30,24 +30,19 @@ import { Code } from '../../domain/code';
             <p-button type="button" class="mr-2" (click)="sidebarVisible4 = true" icon="pi pi-arrow-up"></p-button>
         </div>
         <app-code [code]="code" selector="sidebar-position-demo"></app-code>
-    </section>`
+    `
 })
 export class PositionDoc {
-    @Input() id: string;
+    sidebarVisible1: boolean = false;
 
-    @Input() title: string;
+    sidebarVisible2: boolean = false;
 
-    sidebarVisible1: boolean;
+    sidebarVisible3: boolean = false;
 
-    sidebarVisible2: boolean;
-
-    sidebarVisible3: boolean;
-
-    sidebarVisible4: boolean;
+    sidebarVisible4: boolean = false;
 
     code: Code = {
-        basic: `
-<p-sidebar [(visible)]="sidebarVisible1" position="left">
+        basic: `<p-sidebar [(visible)]="sidebarVisible1" position="left">
     <h3>Left Sidebar</h3>
 </p-sidebar>
 
@@ -100,13 +95,13 @@ import { Component } from '@angular/core';
     templateUrl: './sidebar-position-demo.html'
 })
 export class SidebarPositionDemo {
-    sidebarVisible1: boolean;
+    sidebarVisible1: boolean = false;
     
-    sidebarVisible2: boolean;
+    sidebarVisible2: boolean = false;
     
-    sidebarVisible3: boolean;
+    sidebarVisible3: boolean = false;
     
-    sidebarVisible4: boolean;
+    sidebarVisible4: boolean = false;
 }`
     };
 }

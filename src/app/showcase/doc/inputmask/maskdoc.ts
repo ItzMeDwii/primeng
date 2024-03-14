@@ -1,10 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'input-mask-mask-demo',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>
                 Mask format can be a combination of the following definitions; <i>a</i> for alphabetic characters, <i>9</i> for numeric characters and <i>*</i> for alphanumberic characters. In addition, formatting characters like <i>(</i> ,
                 <i>)</i> , <i>-</i> are also accepted.
@@ -25,22 +25,17 @@ import { Code } from '../../domain/code';
             </div>
         </div>
         <app-code [code]="code" selector="input-mask-mask-demo"></app-code>
-    </section>`
+    `
 })
 export class MaskDoc {
-    @Input() id: string;
+    value1: string | undefined;
 
-    @Input() title: string;
+    value2: string | undefined;
 
-    value1: string;
-
-    value2: string;
-
-    value3: string;
+    value3: string | undefined;
 
     code: Code = {
-        basic: `
-<span class="font-bold block mb-2">SSN</span>
+        basic: `<span class="font-bold block mb-2">SSN</span>
 <p-inputMask mask="999-99-9999" [(ngModel)]="value1" placeholder="999-99-9999"></p-inputMask>
 
 <span class="font-bold block mb-2">Phone</span>
@@ -75,11 +70,11 @@ import { Component } from '@angular/core';
     templateUrl: './input-mask-mask-demo.html'
 })
 export class InputMaskMaskDemo {
-    value1: string;
+    value1: string | undefined;
 
-    value2: string;
+    value2: string | undefined;
 
-    value3: string;
+    value3: string | undefined;
 }`
     };
 }

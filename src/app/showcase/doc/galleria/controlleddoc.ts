@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Code } from '../../domain/code';
 import { PhotoService } from '../../service/photoservice';
 
 @Component({
     selector: 'galleria-controlled-demo',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Galleria can be controlled programmatically using the <i>activeIndex</i> property.</p>
         </app-docsectiontext>
         <div class="card">
@@ -25,14 +25,10 @@ import { PhotoService } from '../../service/photoservice';
             </p-galleria>
         </div>
         <app-code [code]="code" selector="galleria-controlled-demo"></app-code>
-    </section>`
+    `
 })
 export class ControlledDoc implements OnInit {
-    @Input() id: string;
-
-    @Input() title: string;
-
-    images: any[];
+    images: any[] | undefined;
 
     get activeIndex(): number {
         return this._activeIndex;
@@ -76,8 +72,7 @@ export class ControlledDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<div class="py-2">
+        basic: `<div class="py-2">
     <p-button type="button" icon="pi pi-minus" (click)="prev()" styleClass="p-button-secondary mr-2"></p-button>
     <p-button type="button" icon="pi pi-plus" (click)="next()" styleClass="p-button-primary"></p-button>
 </div>
@@ -92,7 +87,7 @@ export class ControlledDoc implements OnInit {
     </ng-template>
 </p-galleria>`,
         html: `
-<div class="card">
+ <div class="card">
     <div class="py-2">
         <p-button type="button" icon="pi pi-minus" (click)="prev()" styleClass="p-button-secondary mr-2"></p-button>
         <p-button type="button" icon="pi pi-plus" (click)="next()" styleClass="p-button-primary"></p-button>
@@ -117,7 +112,7 @@ import { PhotoService } from '../../service/photoservice';
     templateUrl: './galleria-controlled-demo.html'
 })
 export class GalleriaControlledDemo implements OnInit {
-    images: any[];
+    images: any[] | undefined;
 
     get activeIndex(): number {
         return this._activeIndex;

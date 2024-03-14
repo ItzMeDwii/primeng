@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import { BasicDoc } from '../../doc/tieredmenu/basicdoc';
-import { EventsDoc } from '../../doc/tieredmenu/eventsdoc';
 import { ImportDoc } from '../../doc/tieredmenu/importdoc';
-import { MenuItemDoc } from '../../doc/tieredmenu/menuitemdoc';
 import { PopupDoc } from '../../doc/tieredmenu/popupdoc';
-import { PropsDoc } from '../../doc/tieredmenu/propsdoc';
+import { TemplateDoc } from '../../doc/tieredmenu/templatedoc';
+import { CommandDoc } from '../../doc/tieredmenu/commanddoc';
+import { RouterDoc } from '../../doc/tieredmenu/routerdoc';
 import { StyleDoc } from '../../doc/tieredmenu/styledoc';
-import { MethodsDoc } from '../../doc/tieredmenu/methodsdoc';
 import { AccessibilityDoc } from '../../doc/tieredmenu/accessibilitydoc';
-import { TemplatesDoc } from '../../doc/tieredmenu/templatesdoc';
 
 @Component({
     templateUrl: './tieredmenudemo.html'
@@ -31,6 +29,21 @@ export class TieredMenuDemo {
             component: PopupDoc
         },
         {
+            id: 'template',
+            label: 'Template',
+            component: TemplateDoc
+        },
+        {
+            id: 'command',
+            label: 'Command',
+            component: CommandDoc
+        },
+        {
+            id: 'router',
+            label: 'Router',
+            component: RouterDoc
+        },
+        {
             id: 'style',
             label: 'Style',
             component: StyleDoc
@@ -39,34 +52,6 @@ export class TieredMenuDemo {
             id: 'accessibility',
             label: 'Accessibility',
             component: AccessibilityDoc
-        }
-    ];
-
-    apiDocs = [
-        {
-            id: 'props',
-            label: 'Properties',
-            component: PropsDoc
-        },
-        {
-            id: 'methods',
-            label: 'Methods',
-            component: MethodsDoc
-        },
-        {
-            id: 'templates',
-            label: 'Templates',
-            component: TemplatesDoc
-        },
-        {
-            id: 'events',
-            label: 'Events',
-            component: EventsDoc
-        },
-        {
-            id: 'menuitem',
-            label: 'MenuItem API',
-            component: MenuItemDoc
         }
     ];
 }

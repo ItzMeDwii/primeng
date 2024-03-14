@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Code } from '../../domain/code';
 import { Product } from '../../domain/product';
 import { ProductService } from '../../service/productservice';
 
 @Component({
     selector: 'drag-drop-data-table-demo',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Drag and Drop to Table</p>
         </app-docsectiontext>
         <div class="card grid grid-nogutter">
@@ -50,18 +50,14 @@ import { ProductService } from '../../service/productservice';
             </div>
         </div>
         <app-code [code]="code" selector="drag-drop-data-table-demo" [extFiles]="extFiles"></app-code>
-    </section>`
+    `
 })
 export class DataTableDoc implements OnInit {
-    @Input() id: string;
+    availableProducts: Product[] | undefined;
 
-    @Input() title: string;
+    selectedProducts: Product[] | undefined;
 
-    availableProducts: Product[];
-
-    selectedProducts: Product[];
-
-    draggedProduct: Product;
+    draggedProduct: Product | undefined | null;
 
     constructor(private productService: ProductService) {}
 
@@ -77,8 +73,8 @@ export class DataTableDoc implements OnInit {
     drop() {
         if (this.draggedProduct) {
             let draggedProductIndex = this.findIndex(this.draggedProduct);
-            this.selectedProducts = [...this.selectedProducts, this.draggedProduct];
-            this.availableProducts = this.availableProducts.filter((val, i) => i != draggedProductIndex);
+            this.selectedProducts = [...(this.selectedProducts as Product[]), this.draggedProduct];
+            this.availableProducts = this.availableProducts?.filter((val, i) => i != draggedProductIndex);
             this.draggedProduct = null;
         }
     }
@@ -89,8 +85,8 @@ export class DataTableDoc implements OnInit {
 
     findIndex(product: Product) {
         let index = -1;
-        for (let i = 0; i < this.availableProducts.length; i++) {
-            if (product.id === this.availableProducts[i].id) {
+        for (let i = 0; i < (this.availableProducts as Product[]).length; i++) {
+            if (product.id === (this.availableProducts as Product[])[i].id) {
                 index = i;
                 break;
             }
@@ -110,8 +106,7 @@ export class DataTableDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<div class="card grid grid-nogutter">
+        basic: `<div class="card grid grid-nogutter">
     <div class="col-12 md:col-6 drag-column">
         <div *ngFor="let product of availableProducts">
             <div class="product-item" pDraggable="products" (onDragStart)="dragStart(product)" (onDragEnd)="dragEnd()">
@@ -203,11 +198,11 @@ import { ProductService } from '../../service/productservice';
     styleUrls: ['./drag-drop-data-table-demo.scss']
 })
 export class DragDropDataTableDemo implements OnInit {
-    availableProducts: Product[];
+    availableProducts: Product[] | undefined;
 
-    selectedProducts: Product[];
+    selectedProducts: Product[] | undefined;
 
-    draggedProduct: Product;
+    draggedProduct: Product | undefined | null;
 
     constructor(private productService: ProductService) {}
 
@@ -223,8 +218,8 @@ export class DragDropDataTableDemo implements OnInit {
     drop() {
         if (this.draggedProduct) {
             let draggedProductIndex = this.findIndex(this.draggedProduct);
-            this.selectedProducts = [...this.selectedProducts, this.draggedProduct];
-            this.availableProducts = this.availableProducts.filter((val, i) => i != draggedProductIndex);
+            this.selectedProducts = [...(this.selectedProducts as Product[]), this.draggedProduct];
+            this.availableProducts = this.availableProducts?.filter((val, i) => i != draggedProductIndex);
             this.draggedProduct = null;
         }
     }
@@ -235,8 +230,8 @@ export class DragDropDataTableDemo implements OnInit {
 
     findIndex(product: Product) {
         let index = -1;
-        for (let i = 0; i < this.availableProducts.length; i++) {
-            if (product.id === this.availableProducts[i].id) {
+        for (let i = 0; i < (this.availableProducts as Product[]).length; i++) {
+            if (product.id === (this.availableProducts as Product[])[i].id) {
                 index = i;
                 break;
             }

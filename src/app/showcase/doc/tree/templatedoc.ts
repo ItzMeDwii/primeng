@@ -1,17 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Code } from '../../domain/code';
+import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
+import { Code } from '../../domain/code';
 
 @Component({
     selector: 'template-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Custom node content instead of a node label is defined with the <i>pTemplate</i> property.</p>
         </app-docsectiontext>
         <div class="card flex justify-content-center">
             <p-tree [value]="nodes" class="w-full md:w-30rem">
                 <ng-template let-node pTemplate="url">
-                    <a [href]="node.data" target="_blank">{{ node.label }}</a>
+                    <a [href]="node.data" target="_blank" rel="noopener noreferrer" class="text-700 hover:text-primary">{{ node.label }}</a>
                 </ng-template>
                 <ng-template let-node pTemplate="default">
                     <b>{{ node.label }}</b>
@@ -19,14 +19,10 @@ import { TreeNode } from 'primeng/api';
             </p-tree>
         </div>
         <app-code [code]="code" selector="tree-template-demo"></app-code>
-    </section>`
+    `
 })
 export class TemplateDoc implements OnInit {
-    @Input() id: string;
-
-    @Input() title: string;
-
-    nodes: TreeNode[];
+    nodes!: TreeNode[];
 
     ngOnInit() {
         this.nodes = [
@@ -54,10 +50,9 @@ export class TemplateDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-tree [value]="nodes" class="w-full md:w-30rem">
+        basic: `<p-tree [value]="nodes" class="w-full md:w-30rem">
     <ng-template let-node pTemplate="url">
-        <a [href]="node.data" target="_blank">{{ node.label }}</a>
+         <a [href]="node.data" target="_blank" rel="noopener noreferrer" class="text-700 hover:text-primary">{{ node.label }}</a>
     </ng-template>
     <ng-template let-node pTemplate="default">
         <b>{{ node.label }}</b>
@@ -68,7 +63,7 @@ export class TemplateDoc implements OnInit {
 <div class="card flex justify-content-center">
     <p-tree [value]="nodes" class="w-full md:w-30rem">
         <ng-template let-node pTemplate="url">
-            <a [href]="node.data" target="_blank">{{ node.label }}</a>
+             <a [href]="node.data" target="_blank" rel="noopener noreferrer" class="text-700 hover:text-primary">{{ node.label }}</a>
         </ng-template>
         <ng-template let-node pTemplate="default">
             <b>{{ node.label }}</b>
@@ -85,7 +80,7 @@ import { TreeNode } from 'primeng/api';
     templateUrl: './tree-template-demo.html'
 })
 export class TreeTemplateDemo implements OnInit {
-    nodes: TreeNode[];
+    nodes!: TreeNode[];
 
     ngOnInit() {
         this.nodes = [

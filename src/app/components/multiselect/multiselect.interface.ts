@@ -1,8 +1,9 @@
 import { TemplateRef } from '@angular/core';
-import { ScrollerOptions } from 'primeng/scroller';
+import { ScrollerOptions } from 'primeng/api';
 import { MultiSelect, MultiSelectItem } from './multiselect';
 /**
  * Callbacks to invoke on filter or reset.
+ * @group Interface
  */
 export interface MultiSelectFilterOptions {
     filter?: (value?: any) => void;
@@ -11,6 +12,7 @@ export interface MultiSelectFilterOptions {
 /**
  * Custom change event.
  * @see {@link MultiSelect.onChange}
+ * @group Events
  */
 export interface MultiSelectChangeEvent {
     /**
@@ -27,8 +29,24 @@ export interface MultiSelectChangeEvent {
     itemValue?: any;
 }
 /**
+ * Custom change event.
+ * @see {@link MultiSelect.onSelectAllChange}
+ * @group Events
+ */
+export interface MultiSelectSelectAllChangeEvent {
+    /**
+     * Browser event.
+     */
+    originalEvent: Event;
+    /**
+     * Boolean value indicates whether all data is selected.
+     */
+    checked: boolean;
+}
+/**
  * Custom filter event.
  * @see {@link MultiSelect.onFilter}
+ * @group Events
  */
 export interface MultiSelectFilterEvent {
     /**
@@ -43,6 +61,7 @@ export interface MultiSelectFilterEvent {
 /**
  * Custom focus event.
  * @see {@link MultiSelect.onFocus}
+ * @group Events
  */
 export interface MultiSelectFocusEvent {
     /**
@@ -53,12 +72,15 @@ export interface MultiSelectFocusEvent {
 /**
  * Custom blur event.
  * @see {@link MultiSelect.onBlur}
+ * @extends {MultiSelectFocusEvent}
+ * @group Events
  */
 export interface MultiSelectBlurEvent extends MultiSelectFocusEvent {}
 
 /**
  * Custom lazy load event.
  * @see {@link MultiSelect.onLazyLoad}
+ * @group Events
  */
 export interface MultiSelectLazyLoadEvent {
     /**
@@ -73,6 +95,7 @@ export interface MultiSelectLazyLoadEvent {
 /**
  * Custom remove event.
  * @see {@link MultiSelect.onRemove}
+ * @group Events
  */
 export interface MultiSelectRemoveEvent {
     /**
@@ -117,7 +140,7 @@ export interface MultiSelectTemplates {
     /**
      * Custom header template.
      */
-    header: TemplateRef<any>;
+    header(): TemplateRef<any>;
     /**
      * Custom filter template.
      * @param {MultiSelectFilterOptions} options - filter options.
@@ -131,15 +154,15 @@ export interface MultiSelectTemplates {
     /**
      * Custom footer template.
      */
-    footer: TemplateRef<any>;
+    footer(): TemplateRef<any>;
     /**
      * Custom empty filter template.
      */
-    emptyfilter: TemplateRef<any>;
+    emptyfilter(): TemplateRef<any>;
     /**
      * Custom empty template.
      */
-    empty: TemplateRef<any>;
+    empty(): TemplateRef<any>;
     /**
      * Custom group template.
      */
@@ -162,25 +185,25 @@ export interface MultiSelectTemplates {
     /**
      * Custom dropdown trigger icon template.
      */
-    dropdownicon: TemplateRef<any>;
+    dropdownicon(): TemplateRef<any>;
     /**
      * Custom clear icon template.
      */
-    clearicon: TemplateRef<any>;
+    clearicon(): TemplateRef<any>;
     /**
      * Custom filter icon template.
      */
-    filtericon: TemplateRef<any>;
+    filtericon(): TemplateRef<any>;
     /**
      * Custom check icon template.
      */
-    checkicon: TemplateRef<any>;
+    checkicon(): TemplateRef<any>;
     /**
      * Custom close icon template.
      */
-    closeicon: TemplateRef<any>;
+    closeicon(): TemplateRef<any>;
     /**
      * Custom remove token icon template.
      */
-    removetokenicon: TemplateRef<any>;
+    removetokenicon(): TemplateRef<any>;
 }

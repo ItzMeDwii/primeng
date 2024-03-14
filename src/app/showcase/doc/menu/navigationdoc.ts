@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'navigation-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>
                 Navigation is specified using url property for external links and with <i>routerLink</i> for internal ones. If a menuitem has an active route, <i>p-menuitem-link-active</i> style class is added as an indicator. Active route link can
                 be configured with <i>routerLinkActiveOptions</i> property of MenuItem API.
@@ -15,14 +15,10 @@ import { Code } from '../../domain/code';
             <p-menu [model]="items"></p-menu>
         </div>
         <app-code [code]="code" selector="menu-navigation-demo"></app-code>
-    </section>`
+    `
 })
 export class NavigationDoc implements OnInit {
-    @Input() id: string;
-
-    @Input() title: string;
-
-    items: MenuItem[];
+    items: MenuItem[] | undefined;
 
     ngOnInit() {
         this.items = [
@@ -38,8 +34,7 @@ export class NavigationDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-menu [model]="items"></p-menu>`,
+        basic: `<p-menu [model]="items"></p-menu>`,
 
         html: `
 <div class="card flex justify-content-center">
@@ -55,7 +50,7 @@ import { MenuItem } from 'primeng/api';
     templateUrl: './menu-navigation-demo.html'
 })
 export class MenuNavigationDemo implements OnInit {
-    items: MenuItem[];
+    items: MenuItem[] | undefined;
 
     constructor(private messageService: MessageService) {}
     

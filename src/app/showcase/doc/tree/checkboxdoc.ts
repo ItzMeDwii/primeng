@@ -1,31 +1,24 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Code } from '../../domain/code';
+import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
+import { Code } from '../../domain/code';
 import { NodeService } from '../../service/nodeservice';
-import { AppDocSectionTextComponent } from '../../layout/doc/docsectiontext/app.docsectiontext.component';
 
 @Component({
     selector: 'checkbox-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id" [level]="3" #docsectiontext>
+    template: `
+        <app-docsectiontext>
             <p>Selection of multiple nodes via checkboxes is enabled by configuring <i>selectionMode</i> as <i>checkbox</i>.</p>
         </app-docsectiontext>
         <div class="card flex flex-column align-items-center justify-content-center">
             <p-tree [value]="files" selectionMode="checkbox" class="w-full md:w-30rem" [(selection)]="selectedFiles"></p-tree>
         </div>
         <app-code [code]="code" selector="tree-checkbox-demo"></app-code>
-    </section>`
+    `
 })
 export class CheckboxDoc implements OnInit {
-    @Input() id: string;
+    files!: TreeNode[];
 
-    @Input() title: string;
-
-    @ViewChild('docsectiontext', { static: true }) docsectiontext: AppDocSectionTextComponent;
-
-    files: TreeNode[];
-
-    selectedFiles: TreeNode[];
+    selectedFiles!: TreeNode[];
 
     constructor(private nodeService: NodeService) {}
 
@@ -34,8 +27,7 @@ export class CheckboxDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-tree [value]="files" selectionMode="checkbox" class="w-full md:w-30rem" [(selection)]="selectedFiles"></p-tree>`,
+        basic: `<p-tree [value]="files" selectionMode="checkbox" class="w-full md:w-30rem" [(selection)]="selectedFiles"></p-tree>`,
 
         html: `
 <div class="card flex flex-column align-items-center justify-content-center">
@@ -52,9 +44,9 @@ import { NodeService } from '../../service/nodeservice';
     templateUrl: './tree-checkbox-demo.html'
 })
 export class TreeCheckboxDemo implements OnInit {
-    files: TreeNode[];
+    files!: TreeNode[];
 
-    selectedFiles: TreeNode[];
+    selectedFiles!: TreeNode[];
 
     constructor(private nodeService: NodeService) {}
 

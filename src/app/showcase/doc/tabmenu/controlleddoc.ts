@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'controlled-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>For controlled mode, use <i>activeItem</i> property along with <i>activeItemChange</i> event are needed to manage the active item.</p>
         </app-docsectiontext>
         <div class="card">
@@ -13,16 +13,12 @@ import { Code } from '../../domain/code';
             <p-tabMenu [model]="items" [activeItem]="activeItem" (activeItemChange)="onActiveItemChange($event)"></p-tabMenu>
         </div>
         <app-code [code]="code" selector="tab-menu-controlled-demo"></app-code>
-    </section>`
+    `
 })
 export class ControlledDoc implements OnInit {
-    @Input() id: string;
+    items: MenuItem[] | undefined;
 
-    @Input() title: string;
-
-    items: MenuItem[];
-
-    activeItem: MenuItem;
+    activeItem: MenuItem | undefined;
 
     ngOnInit() {
         this.items = [
@@ -36,17 +32,16 @@ export class ControlledDoc implements OnInit {
         this.activeItem = this.items[0];
     }
 
-    onActiveItemChange(event) {
+    onActiveItemChange(event: MenuItem) {
         this.activeItem = event;
     }
 
     activateLast() {
-        this.activeItem = this.items[this.items.length - 1];
+        this.activeItem = (this.items as MenuItem[])[(this.items as MenuItem[]).length - 1];
     }
 
     code: Code = {
-        basic: `
-<button type="button" pButton pRipple label="Activate Last" (click)="activateLast()" class="mb-3"></button>
+        basic: `<button type="button" pButton pRipple label="Activate Last" (click)="activateLast()" class="mb-3"></button>
 <p-tabMenu [model]="items" [activeItem]="activeItem" (activeItemChange)="onActiveItemChange($event)"></p-tabMenu>`,
 
         html: `
@@ -64,9 +59,9 @@ import { MenuItem } from 'primeng/api';
     templateUrl: './tab-menu-controlled-demo.html'
 })
 export class TabMenuControlledDemo implements OnInit {
-    items: MenuItem[];
+    items: MenuItem[] | undefined;
 
-    activeItem: MenuItem;
+    activeItem: MenuItem | undefined;
 
     ngOnInit() {
         this.items = [
@@ -80,12 +75,12 @@ export class TabMenuControlledDemo implements OnInit {
         this.activeItem = this.items[0];
     }
 
-    onActiveItemChange(event){
+    onActiveItemChange(event: MenuItem) {
         this.activeItem = event;
     }
 
     activateLast() {
-        this.activeItem = this.items[this.items.length - 1];
+        this.activeItem = (this.items as MenuItem[])[(this.items as MenuItem[]).length - 1];
     }
 }`,
 

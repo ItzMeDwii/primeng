@@ -1,58 +1,59 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { Code } from '../../domain/code';
-import { AppDocSectionTextComponent } from '../../layout/doc/docsectiontext/app.docsectiontext.component';
+
+interface Column {
+    field: string;
+    header: string;
+}
 
 @Component({
     selector: 'paginator-template-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id" [level]="3" #docsectiontext>
+    template: `
+        <app-docsectiontext>
             <p>
                 Paginator UI is customized using the <i>paginatorleft</i> and <i>paginatorright</i> property. Each element can also be customized further with your own UI to replace the default one, refer to the
                 <a href="#" [routerLink]="['/paginator']">Paginator</a> component for more information about the advanced customization options.
             </p>
         </app-docsectiontext>
         <div class="card">
-            <p-treeTable [value]="files" [columns]="cols" [paginator]="true" [rows]="10" [scrollable]="true" [tableStyle]="{ 'min-width': '50rem' }">
-                <ng-template pTemplate="header" let-columns>
-                    <tr>
-                        <th *ngFor="let col of columns">
-                            {{ col.header }}
-                        </th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
-                    <tr>
-                        <td *ngFor="let col of columns; let i = index">
-                            <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
-                            {{ rowData[col.field] }}
-                        </td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="paginatorleft">
-                    <p-button icon="pi pi-refresh" styleClass="p-button-text"></p-button>
-                </ng-template>
+            <p-deferred-demo (load)="loadDemoData()">
+                <p-treeTable [value]="files" [columns]="cols" [paginator]="true" [rows]="10" [scrollable]="true" [tableStyle]="{ 'min-width': '50rem' }">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th *ngFor="let col of columns">
+                                {{ col.header }}
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+                        <tr [ttRow]="rowNode">
+                            <td *ngFor="let col of columns; let i = index">
+                                <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
+                                {{ rowData[col.field] }}
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="paginatorleft">
+                        <p-button icon="pi pi-refresh" styleClass="p-button-text"></p-button>
+                    </ng-template>
 
-                <ng-template pTemplate="paginatorright">
-                    <p-button icon="pi pi-download" styleClass="p-button-text"></p-button>
-                </ng-template>
-            </p-treeTable>
+                    <ng-template pTemplate="paginatorright">
+                        <p-button icon="pi pi-download" styleClass="p-button-text"></p-button>
+                    </ng-template>
+                </p-treeTable>
+            </p-deferred-demo>
         </div>
         <app-code [code]="code" selector="tree-table-paginator-template-demo"></app-code>
-    </section>`
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PaginatorTemplateDoc implements OnInit {
-    @Input() id: string;
+export class PaginatorTemplateDoc {
+    files!: TreeNode[];
 
-    @Input() title: string;
+    cols!: Column[];
 
-    @ViewChild('docsectiontext', { static: true }) docsectiontext: AppDocSectionTextComponent;
-
-    files: TreeNode[];
-
-    cols: any[];
-
-    ngOnInit() {
+    loadDemoData() {
         this.files = [];
         for (let i = 0; i < 50; i++) {
             let node = {
@@ -83,8 +84,7 @@ export class PaginatorTemplateDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-treeTable [value]="files" [columns]="cols" [paginator]="true" [rows]="10" [scrollable]="true" [tableStyle]="{'min-width':'50rem'}">
+        basic: `<p-treeTable [value]="files" [columns]="cols" [paginator]="true" [rows]="10" [scrollable]="true" [tableStyle]="{'min-width':'50rem'}">
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let col of columns">
@@ -93,7 +93,7 @@ export class PaginatorTemplateDoc implements OnInit {
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
-        <tr>
+        <tr [ttRow]="rowNode">
             <td *ngFor="let col of columns; let i = index">
                 <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
                 {{ rowData[col.field] }}
@@ -119,7 +119,7 @@ export class PaginatorTemplateDoc implements OnInit {
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
-            <tr>
+            <tr [ttRow]="rowNode">
                 <td *ngFor="let col of columns; let i = index">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
                     {{ rowData[col.field] }}
@@ -139,14 +139,19 @@ export class PaginatorTemplateDoc implements OnInit {
 import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 
+interface Column {
+    field: string;
+    header: string;
+}
+
 @Component({
     selector: 'tree-table-paginator-template-demo',
     templateUrl: './tree-table-paginator-template-demo.html'
 })
 export class TreeTablePaginatorTemplateDemo implements OnInit {
-    files: TreeNode[];
+    files!: TreeNode[];
 
-    cols: any[];
+    cols: Column[];
 
     ngOnInit() {
         this.files = [];

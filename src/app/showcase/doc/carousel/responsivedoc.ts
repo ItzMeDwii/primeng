@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Code } from '../../domain/code';
 import { Product } from '../../domain/product';
 import { ProductService } from '../../service/productservice';
 
 @Component({
     selector: 'responsive-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>
                 Carousel supports specific configuration per screen size with the <i>responsiveOptions</i> property that takes an array of objects where each object defines the max-width <i>breakpoint</i>, <i>numVisible</i> for the number of items
                 items per page and <i>numScroll</i> for number of items to scroll. When <i>responsiveOptions</i> is defined, the <i>numScroll</i> and <i>numVisible</i> properties of the Carousel are used as default when there is breakpoint that
@@ -25,9 +25,9 @@ import { ProductService } from '../../service/productservice';
                                 <h4 class="mb-1">{{ product.name }}</h4>
                                 <h6 class="mt-0 mb-3">{{ '$' + product.price }}</h6>
                                 <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"></p-tag>
-                                <div class="car-buttons mt-5">
-                                    <p-button type="button" styleClass="p-button p-button-rounded mr-2" icon="pi pi-search"></p-button>
-                                    <p-button type="button" styleClass="p-button-success p-button-rounded mr-2" icon="pi pi-star-fill"></p-button>
+                                <div class="mt-5 flex align-items-center justify-content-center gap-2">
+                                    <p-button icon="pi pi-search" [rounded]="true" />
+                                    <p-button icon="pi pi-star-fill" [rounded]="true" severity="secondary" />
                                 </div>
                             </div>
                         </div>
@@ -36,22 +36,19 @@ import { ProductService } from '../../service/productservice';
             </p-carousel>
         </div>
         <app-code [code]="code" selector="carousel-responsive-demo" [extFiles]="extFiles"></app-code>
-    </section>`
+    `
 })
 export class ResponsiveDoc implements OnInit {
-    @Input() id: string;
+    products: Product[] | undefined;
 
-    @Input() title: string;
+    responsiveOptions: any[] | undefined;
 
-    products: Product[];
-
-    responsiveOptions: any[];
-
-    constructor(private productService: ProductService) {}
+    constructor(private productService: ProductService, private cdr: ChangeDetectorRef) {}
 
     ngOnInit() {
         this.productService.getProductsSmall().then((products) => {
             this.products = products;
+            this.cdr.detectChanges();
         });
 
         this.responsiveOptions = [
@@ -85,8 +82,7 @@ export class ResponsiveDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-carousel [value]="products" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
+        basic: `<p-carousel [value]="products" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
     <ng-template let-product pTemplate="item">
         <div class="product-item">
             <div class="product-item-content">
@@ -97,17 +93,16 @@ export class ResponsiveDoc implements OnInit {
                     <h4 class="mb-1">{{ product.name }}</h4>
                     <h6 class="mt-0 mb-3">{{ '$' + product.price }}</h6>
                     <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"></p-tag>
-                    <div class="car-buttons mt-5">
-                        <p-button type="button" styleClass="p-button p-button-rounded mr-2" icon="pi pi-search"></p-button>
-                        <p-button type="button" styleClass="p-button-success p-button-rounded mr-2" icon="pi pi-star-fill"></p-button>
-                    </div>
+                    <div class="mt-5 flex align-items-center justify-content-center gap-2">
+                    <p-button icon="pi pi-search" [rounded]="true" />
+                    <p-button icon="pi pi-star-fill" [rounded]="true" severity="secondary" />
+                </div>
                 </div>
             </div>
         </div>
     </ng-template>
 </p-carousel>`,
-        html: `
-<div class="card">
+        html: `<div class="card">
     <p-carousel [value]="products" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
         <ng-template let-product pTemplate="item">
             <div class="product-item">
@@ -119,10 +114,10 @@ export class ResponsiveDoc implements OnInit {
                         <h4 class="mb-1">{{ product.name }}</h4>
                         <h6 class="mt-0 mb-3">{{ '$' + product.price }}</h6>
                         <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"></p-tag>
-                        <div class="car-buttons mt-5">
-                            <p-button type="button" styleClass="p-button p-button-rounded mr-2" icon="pi pi-search"></p-button>
-                            <p-button type="button" styleClass="p-button-success p-button-rounded mr-2" icon="pi pi-star-fill"></p-button>
-                        </div>
+                        <div class="mt-5 flex align-items-center justify-content-center gap-2">
+                        <p-button icon="pi pi-search" [rounded]="true" />
+                        <p-button icon="pi pi-star-fill" [rounded]="true" severity="secondary" />
+                    </div>
                     </div>
                 </div>
             </div>
@@ -140,9 +135,9 @@ import { ProductService } from '../../service/productservice';
     styleUrls: ['./carousel-responsive-demo.scss']
 })
 export class CarouselResponsiveDemo {
-    products: Product[];
+    products: Product[] | undefined;
 
-    responsiveOptions: any[];
+    responsiveOptions: any[] | undefined;
 
     constructor(private productService: ProductService) {}
 

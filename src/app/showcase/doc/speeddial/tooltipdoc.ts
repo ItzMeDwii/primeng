@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'tooltip-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
-            <p>Items display a tooltip on hober when a standalone <a href="#" [routerLink]="['/tooltip']">Tooltip</a> is present with a target that matches the items.</p>
+    template: `
+        <app-docsectiontext>
+            <p>Items display a tooltip on hover when a standalone <a href="#" [routerLink]="['/tooltip']">Tooltip</a> is present with a target that matches the items.</p>
         </app-docsectiontext>
         <div class="card">
             <div style="height: 350px; position: relative;" class="speeddial-tooltip-demo">
@@ -16,17 +16,13 @@ import { Code } from '../../domain/code';
             </div>
         </div>
         <app-code [code]="code" selector="speed-dial-tooltip-demo"></app-code>
-    </section>`,
+    `,
     providers: [MessageService]
 })
 export class TooltipDoc implements OnInit {
-    @Input() id: string;
+    tooltipItems: MenuItem[] | undefined;
 
-    @Input() title: string;
-
-    tooltipItems: MenuItem[];
-
-    leftTooltipItems: MenuItem[];
+    leftTooltipItems: MenuItem[] | undefined;
 
     constructor(private messageService: MessageService) {}
 
@@ -126,8 +122,7 @@ export class TooltipDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-speedDial [model]="leftTooltipItems" className="speeddial-right" direction="up"></p-speedDial>
+        basic: `<p-speedDial [model]="leftTooltipItems" className="speeddial-right" direction="up"></p-speedDial>
 <p-speedDial [model]="tooltipItems" className="speeddial-left" direction="up"></p-speedDial>`,
 
         html: `
@@ -150,9 +145,9 @@ import { MenuItem, MessageService } from 'primeng/api';
     providers: [MessageService]
 })
 export class SpeedDialTooltipDemo implements OnInit {
-    tooltipItems: MenuItem[];
+    tooltipItems: MenuItem[] | undefined;
 
-    leftTooltipItems: MenuItem[];
+    leftTooltipItems: MenuItem[] | undefined;
 
     constructor(private messageService: MessageService) {}
 

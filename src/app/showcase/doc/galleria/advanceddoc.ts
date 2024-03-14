@@ -1,13 +1,13 @@
 import { isPlatformBrowser } from '@angular/common';
-import { ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { Galleria } from 'primeng/galleria';
 import { Code } from '../../domain/code';
 import { PhotoService } from '../../service/photoservice';
 
 @Component({
     selector: 'galleria-advanced-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Galleria can be extended further to implement complex requirements.</p>
         </app-docsectiontext>
         <div class="card">
@@ -47,16 +47,12 @@ import { PhotoService } from '../../service/photoservice';
             </p-galleria>
         </div>
         <app-code [code]="code" selector="galleria-advanced-demo"></app-code>
-    </section>`
+    `
 })
 export class AdvancedDoc implements OnInit, OnDestroy {
-    @Input() id: string;
+    images: any[] | undefined;
 
-    @Input() title: string;
-
-    images: any[];
-
-    showThumbnails: boolean;
+    showThumbnails: boolean | undefined;
 
     fullscreen: boolean = false;
 
@@ -64,7 +60,7 @@ export class AdvancedDoc implements OnInit, OnDestroy {
 
     onFullScreenListener: any;
 
-    @ViewChild('galleria') galleria: Galleria;
+    @ViewChild('galleria') galleria: Galleria | undefined;
 
     constructor(@Inject(PLATFORM_ID) private platformId: any, private photoService: PhotoService, private cd: ChangeDetectorRef) {}
 
@@ -103,7 +99,7 @@ export class AdvancedDoc implements OnInit, OnDestroy {
     }
 
     openPreviewFullScreen() {
-        let elem = this.galleria.element.nativeElement.querySelector('.p-galleria');
+        let elem = this.galleria?.element.nativeElement.querySelector('.p-galleria');
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
         } else if (elem['mozRequestFullScreen']) {
@@ -171,8 +167,7 @@ export class AdvancedDoc implements OnInit, OnDestroy {
     }
 
     code: Code = {
-        basic: `
-<p-galleria
+        basic: `<p-galleria
     #galleria
     [(value)]="images"
     [(activeIndex)]="activeIndex"
@@ -207,7 +202,7 @@ export class AdvancedDoc implements OnInit, OnDestroy {
     </ng-template>
 </p-galleria>`,
         html: `
-<div class="card">
+ <div class="card">
     <p-galleria #galleria [(value)]="images" [(activeIndex)]="activeIndex" [numVisible]="5" [showThumbnails]="showThumbnails" [showItemNavigators]="true" [showItemNavigatorsOnHover]="true" [circular]="true" [autoPlay]="true" [transitionInterval]="3000" [containerStyle]="{'width':'100%'}" [containerClass]="galleriaClass()"> 
         <ng-template pTemplate="item" let-item>
             <img [src]="item.itemImageSrc" style="width: 100%; display: block;" />
@@ -231,9 +226,9 @@ import { PhotoService } from '../../service/photoservice';
 })
 export class GalleriaAdvancedDemo implements OnInit, OnDestroy {
 
-    images: any[];
+    images: any[] | undefined;
 
-    showThumbnails: boolean;
+    showThumbnails: boolean | undefined;
 
     fullscreen: boolean = false;
 
@@ -241,7 +236,7 @@ export class GalleriaAdvancedDemo implements OnInit, OnDestroy {
 
     onFullScreenListener: any;
 
-    @ViewChild('galleria') galleria: Galleria;
+    @ViewChild('galleria') galleria: Galleria | undefined;
 
     responsiveOptions: any[] = [
         {
@@ -278,7 +273,7 @@ export class GalleriaAdvancedDemo implements OnInit, OnDestroy {
     }
 
     openPreviewFullScreen() {
-        let elem = this.galleria.element.nativeElement.querySelector('.p-galleria');
+        let elem = this.galleria?.element.nativeElement.querySelector('.p-galleria');
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
         } else if (elem['mozRequestFullScreen']) {

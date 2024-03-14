@@ -29,7 +29,10 @@ import { ThLargeIcon } from 'primeng/icons/thlarge';
 import { BarsIcon } from 'primeng/icons/bars';
 import { Nullable } from 'primeng/ts-helpers';
 import { DataViewLayoutChangeEvent, DataViewLazyLoadEvent, DataViewPageEvent, DataViewPaginatorState, DataViewSortEvent } from './dataview.interface';
-
+/**
+ * DataView displays data in grid or list layout with pagination and sorting features.
+ * @group Components
+ */
 @Component({
     selector: 'p-dataView',
     template: `
@@ -67,19 +70,18 @@ import { DataViewLayoutChangeEvent, DataViewLazyLoadEvent, DataViewPageEvent, Da
                 [showCurrentPageReport]="showCurrentPageReport"
                 [showJumpToPageDropdown]="showJumpToPageDropdown"
                 [showPageLinks]="showPageLinks"
+                [styleClass]="paginatorStyleClass"
             ></p-paginator>
+
             <div class="p-dataview-content">
-                <div class="p-grid p-nogutter grid grid-nogutter" [ngClass]="gridStyleClass">
-                    <ng-template ngFor let-rowData let-rowIndex="index" [ngForOf]="paginator ? (filteredValue || value | slice : (lazy ? 0 : first) : (lazy ? 0 : first) + rows) : filteredValue || value" [ngForTrackBy]="trackBy">
-                        <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: rowData, rowIndex: rowIndex }"></ng-container>
-                    </ng-template>
-                    <div *ngIf="isEmpty() && !loading" class="p-col col">
-                        <div class="p-dataview-emptymessage">
-                            <ng-container *ngIf="!emptyMessageTemplate; else emptyFilter">
-                                {{ emptyMessageLabel }}
-                            </ng-container>
-                            <ng-container #emptyFilter *ngTemplateOutlet="emptyMessageTemplate"></ng-container>
-                        </div>
+                <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: paginator ? (filteredValue || value | slice : (lazy ? 0 : first) : (lazy ? 0 : first) + rows) : filteredValue || value }"></ng-container>
+
+                <div *ngIf="isEmpty() && !loading">
+                    <div class="p-dataview-emptymessage">
+                        <ng-container *ngIf="!emptyMessageTemplate; else empty">
+                            {{ emptyMessageLabel }}
+                        </ng-container>
+                        <ng-container #empty *ngTemplateOutlet="emptyMessageTemplate"></ng-container>
                     </div>
                 </div>
             </div>
@@ -103,6 +105,7 @@ import { DataViewLayoutChangeEvent, DataViewLazyLoadEvent, DataViewPageEvent, Da
                 [showCurrentPageReport]="showCurrentPageReport"
                 [showJumpToPageDropdown]="showJumpToPageDropdown"
                 [showPageLinks]="showPageLinks"
+                [styleClass]="paginatorStyleClass"
             ></p-paginator>
             <div class="p-dataview-footer" *ngIf="footer || footerTemplate">
                 <ng-content select="p-footer"></ng-content>
@@ -149,6 +152,11 @@ export class DataView implements OnInit, AfterContentInit, OnDestroy, BlockableU
      */
     @Input() paginatorPosition: 'top' | 'bottom' | 'both' = 'bottom';
     /**
+     * Custom style class for paginator
+     * @group Props
+     */
+    @Input() paginatorStyleClass: string | undefined;
+    /**
      * Whether to show it even there is only one page.
      * @group Props
      */
@@ -193,6 +201,11 @@ export class DataView implements OnInit, AfterContentInit, OnDestroy, BlockableU
      * @group Props
      */
     @Input() lazy: boolean | undefined;
+    /**
+     * Whether to call lazy loading on initialization.
+     * @group Props
+     */
+    @Input() lazyLoadOnInit: boolean = true;
     /**
      * Text to display when there is no data. Defaults to global value in i18n translation configuration.
      * @group Props
@@ -258,7 +271,10 @@ export class DataView implements OnInit, AfterContentInit, OnDestroy, BlockableU
      * @group Props
      */
     @Input() value: any[] | undefined;
-
+    /**
+     * Defines the layout mode.
+     * @group Props
+     */
     @Input() get layout(): 'list' | 'grid' {
         return this._layout;
     }
@@ -271,24 +287,25 @@ export class DataView implements OnInit, AfterContentInit, OnDestroy, BlockableU
     }
     /**
      * Callback to invoke when paging, sorting or filtering happens in lazy mode.
-     * @param {DataViewLazyLoadEvent} event - custom lazy load event.
+     * @param {DataViewLazyLoadEvent} event - Custom lazy load event.
      * @group Emits
      */
     @Output() onLazyLoad: EventEmitter<DataViewLazyLoadEvent> = new EventEmitter<DataViewLazyLoadEvent>();
     /**
      * Callback to invoke when pagination occurs.
-     * @param {DataViewPageEvent} event - custom page event.
+     * @param {DataViewPageEvent} event - Custom page event.
      * @group Emits
      */
     @Output() onPage: EventEmitter<DataViewPageEvent> = new EventEmitter<DataViewPageEvent>();
     /**
      * Callback to invoke when sorting occurs.
+     * @param {DataViewSortEvent} event - Custom sort event.
      * @group Emits
      */
     @Output() onSort: EventEmitter<DataViewSortEvent> = new EventEmitter<DataViewSortEvent>();
     /**
      * Callback to invoke when changing layout.
-     * @param {DataViewLayoutChangeEvent} event - custom layout change event.
+     * @param {DataViewLayoutChangeEvent} event - Custom layout change event.
      * @group Emits
      */
     @Output() onChangeLayout: EventEmitter<DataViewLayoutChangeEvent> = new EventEmitter<DataViewLayoutChangeEvent>();
@@ -301,9 +318,9 @@ export class DataView implements OnInit, AfterContentInit, OnDestroy, BlockableU
 
     _value: Nullable<any[]>;
 
-    listItemTemplate: Nullable<TemplateRef<any>>;
+    listTemplate: Nullable<TemplateRef<any>>;
 
-    gridItemTemplate: Nullable<TemplateRef<any>>;
+    gridTemplate: Nullable<TemplateRef<any>>;
 
     itemTemplate: Nullable<TemplateRef<any>>;
 
@@ -342,7 +359,7 @@ export class DataView implements OnInit, AfterContentInit, OnDestroy, BlockableU
     constructor(public el: ElementRef, public cd: ChangeDetectorRef, public filterService: FilterService, public config: PrimeNGConfig) {}
 
     ngOnInit() {
-        if (this.lazy) {
+        if (this.lazy && this.lazyLoadOnInit) {
             this.onLazyLoad.emit(this.createLazyLoadMetadata());
         }
 
@@ -374,11 +391,13 @@ export class DataView implements OnInit, AfterContentInit, OnDestroy, BlockableU
         (this.templates as QueryList<PrimeTemplate>).forEach((item) => {
             switch (item.getType()) {
                 case 'listItem':
-                    this.listItemTemplate = item.template;
+                case 'list':
+                    this.listTemplate = item.template;
                     break;
 
                 case 'gridItem':
-                    this.gridItemTemplate = item.template;
+                case 'grid':
+                    this.gridTemplate = item.template;
                     break;
 
                 case 'paginatorleft':
@@ -425,11 +444,11 @@ export class DataView implements OnInit, AfterContentInit, OnDestroy, BlockableU
     updateItemTemplate() {
         switch (this.layout) {
             case 'list':
-                this.itemTemplate = this.listItemTemplate;
+                this.itemTemplate = this.listTemplate;
                 break;
 
             case 'grid':
-                this.itemTemplate = this.gridItemTemplate;
+                this.itemTemplate = this.gridTemplate;
                 break;
         }
     }

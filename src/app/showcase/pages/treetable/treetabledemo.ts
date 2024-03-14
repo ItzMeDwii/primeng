@@ -25,11 +25,12 @@ import { ColumnToggleDoc } from '../../doc/treetable/columntoggledoc';
 import { ConditionalStyleDoc } from '../../doc/treetable/conditionalstyledoc';
 import { ContextMenuDoc } from '../../doc/treetable/contextmenudoc';
 import { StyleDoc } from '../../doc/treetable/styledoc';
-import { PropsDoc } from '../../doc/treetable/propsdoc';
-import { EventsDoc } from '../../doc/treetable/eventsdoc';
-import { MethodsDoc } from '../../doc/treetable/methodsdoc';
 import { AccessibilityDoc } from '../../doc/treetable/accessibilitydoc';
-import { TemplatesDoc } from '../../doc/treetable/templatesdoc';
+import { PaginatorLocaleDoc } from '../../doc/treetable/paginatorlocaledoc';
+import { ResizeScrollableDoc } from '../../doc/treetable/columnresizescrollabledoc';
+import { SizeDoc } from '../../doc/treetable/sizedoc';
+import { GridlinesDoc } from '../../doc/treetable/gridlinesdoc';
+import { ControlledDoc } from '../../doc/treetable/controlleddoc';
 
 @Component({
     templateUrl: './treetabledemo.html'
@@ -37,7 +38,7 @@ import { TemplatesDoc } from '../../doc/treetable/templatesdoc';
 export class TreeTableDemo {
     docs = [
         {
-            id: 'import',
+            id: 'import-demo',
             label: 'Import',
             component: ImportDoc
         },
@@ -52,9 +53,24 @@ export class TreeTableDemo {
             component: DynamicColumnsDoc
         },
         {
+            id: 'controlled',
+            label: 'Controlled',
+            component: ControlledDoc
+        },
+        {
             id: 'template',
             label: 'Template',
             component: TemplateDoc
+        },
+        {
+            id: 'size',
+            label: 'Size',
+            component: SizeDoc
+        },
+        {
+            id: 'gridlines',
+            label: 'Grid Lines',
+            component: GridlinesDoc
         },
         {
             id: 'paginator',
@@ -64,6 +80,11 @@ export class TreeTableDemo {
                     id: 'paginatorbasic',
                     label: 'Basic',
                     component: PaginatorBasicDoc
+                },
+                {
+                    id: 'paginatorlocale',
+                    label: 'Locale',
+                    component: PaginatorLocaleDoc
                 },
                 {
                     id: 'paginatortemplate',
@@ -168,6 +189,11 @@ export class TreeTableDemo {
                     id: 'expandmode',
                     label: 'Expand Mode',
                     component: ResizeExpandDoc
+                },
+                {
+                    id: 'scrollable',
+                    label: 'Scrollable',
+                    component: ResizeScrollableDoc
                 }
             ]
         },
@@ -200,29 +226,6 @@ export class TreeTableDemo {
             id: 'accessibility',
             label: 'Accessibility',
             component: AccessibilityDoc
-        }
-    ];
-
-    apiDocs = [
-        {
-            id: 'properties',
-            label: 'Properties',
-            component: PropsDoc
-        },
-        {
-            id: 'templates',
-            label: 'Templates',
-            component: TemplatesDoc
-        },
-        {
-            id: 'events',
-            label: 'Events',
-            component: EventsDoc
-        },
-        {
-            id: 'methods',
-            label: 'Methods',
-            component: MethodsDoc
         }
     ];
 }

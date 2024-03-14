@@ -2,7 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Directive, ElementRef, HostListener, Input, NgModule, NgZone, OnDestroy, Renderer2 } from '@angular/core';
 import { DomHandler } from 'primeng/dom';
 import { VoidListener } from 'primeng/ts-helpers';
-
+/**
+ * StyleClass manages css classes declaratively to during enter/leave animations or just to toggle classes on an element.
+ * @group Components
+ */
 @Directive({
     selector: '[pStyleClass]',
     host: {
@@ -15,12 +18,24 @@ export class StyleClass implements OnDestroy {
      * Selector to define the target element. Available selectors are '@next', '@prev', '@parent' and '@grandparent'.
      * @group Props
      */
-    @Input('pStyleClass') selector: '@next' | '@prev' | '@parent' | '@grandparent' | string | undefined;
+    @Input('pStyleClass') selector: string | undefined;
+    /**
+     * Style class to add when item begins to get displayed.
+     * @group Props
+     * @deprecated Use enterFromClass instead
+     */
+    @Input() set enterClass(value: string) {
+        this._enterClass = value;
+        console.warn('enterClass is deprecated, use enterFromClass instead');
+    }
+    get enterClass() {
+        return this._enterClass;
+    }
     /**
      * Style class to add when item begins to get displayed.
      * @group Props
      */
-    @Input() enterClass: string | undefined;
+    @Input() enterFromClass: string | undefined;
     /**
      * Style class to add during enter animation.
      * @group Props
@@ -34,8 +49,20 @@ export class StyleClass implements OnDestroy {
     /**
      * Style class to add when item begins to get hidden.
      * @group Props
+     * @deprecated Use leaveFromClass instead
      */
-    @Input() leaveClass: string | undefined;
+    @Input() set leaveClass(value: string) {
+        this._leaveClass = value;
+        console.warn('leaveClass is deprecated, use leaveFromClass instead');
+    }
+    get leaveClass() {
+        return this._leaveClass;
+    }
+    /**
+     * Style class to add when item begins to get hidden.
+     * @group Props
+     */
+    @Input() leaveFromClass: string | undefined;
     /**
      * Style class to add during leave animation.
      * @group Props
@@ -76,6 +103,10 @@ export class StyleClass implements OnDestroy {
 
     animating: boolean | undefined;
 
+    _enterClass: string | undefined;
+
+    _leaveClass: string | undefined;
+
     @HostListener('click', ['$event'])
     clickListener() {
         this.target = this.resolveTarget();
@@ -107,8 +138,8 @@ export class StyleClass implements OnDestroy {
                 }
 
                 DomHandler.addClass(this.target, this.enterActiveClass);
-                if (this.enterClass) {
-                    DomHandler.removeClass(this.target, this.enterClass);
+                if (this.enterClass || this.enterFromClass) {
+                    DomHandler.removeClass(this.target, this.enterClass || this.enterFromClass);
                 }
 
                 this.enterListener = this.renderer.listen(this.target, 'animationend', () => {
@@ -125,8 +156,8 @@ export class StyleClass implements OnDestroy {
                 });
             }
         } else {
-            if (this.enterClass) {
-                DomHandler.removeClass(this.target, this.enterClass);
+            if (this.enterClass || this.enterFromClass) {
+                DomHandler.removeClass(this.target, this.enterClass || this.enterFromClass);
             }
 
             if (this.enterToClass) {
@@ -148,8 +179,8 @@ export class StyleClass implements OnDestroy {
             if (!this.animating) {
                 this.animating = true;
                 DomHandler.addClass(this.target, this.leaveActiveClass);
-                if (this.leaveClass) {
-                    DomHandler.removeClass(this.target, this.leaveClass);
+                if (this.leaveClass || this.leaveFromClass) {
+                    DomHandler.removeClass(this.target, this.leaveClass || this.leaveFromClass);
                 }
 
                 this.leaveListener = this.renderer.listen(this.target, 'animationend', () => {
@@ -162,8 +193,8 @@ export class StyleClass implements OnDestroy {
                 });
             }
         } else {
-            if (this.leaveClass) {
-                DomHandler.removeClass(this.target, this.leaveClass);
+            if (this.leaveClass || this.leaveFromClass) {
+                DomHandler.removeClass(this.target, this.leaveClass || this.leaveFromClass);
             }
 
             if (this.leaveToClass) {

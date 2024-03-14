@@ -8,6 +8,7 @@ import {
     ContentChildren,
     ElementRef,
     EventEmitter,
+    HostListener,
     Inject,
     Input,
     NgModule,
@@ -25,10 +26,13 @@ import { OverlayService, PrimeNGConfig, PrimeTemplate, SharedModule } from 'prim
 import { ConnectedOverlayScrollHandler, DomHandler } from 'primeng/dom';
 import { TimesIcon } from 'primeng/icons/times';
 import { RippleModule } from 'primeng/ripple';
+import { Nullable, VoidListener } from 'primeng/ts-helpers';
 import { ZIndexUtils } from 'primeng/utils';
 import { Subscription } from 'rxjs';
-import { Nullable, VoidListener } from 'primeng/ts-helpers';
-
+/**
+ * OverlayPanel is a container component positioned as connected to its target.
+ * @group Components
+ */
 @Component({
     selector: 'p-overlayPanel',
     template: `
@@ -41,8 +45,12 @@ import { Nullable, VoidListener } from 'primeng/ts-helpers';
             [@animation]="{ value: overlayVisible ? 'open' : 'close', params: { showTransitionParams: showTransitionOptions, hideTransitionParams: hideTransitionOptions } }"
             (@animation.start)="onAnimationStart($event)"
             (@animation.done)="onAnimationEnd($event)"
+            role="dialog"
+            [attr.aria-modal]="overlayVisible"
+            [attr.aria-label]="ariaLabel"
+            [attr.aria-labelledBy]="ariaLabelledBy"
         >
-            <div class="p-overlaypanel-content" (click)="onContentClick()" (mousedown)="onContentClick()">
+            <div class="p-overlaypanel-content" (click)="onContentClick($event)" (mousedown)="onContentClick($event)">
                 <ng-content></ng-content>
                 <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
             </div>
@@ -89,6 +97,16 @@ import { Nullable, VoidListener } from 'primeng/ts-helpers';
 })
 export class OverlayPanel implements AfterContentInit, OnDestroy {
     /**
+     * Defines a string that labels the input for accessibility.
+     * @group Props
+     */
+    @Input() ariaLabel: string | undefined;
+    /**
+     * Establishes relationships between the component and label(s) where its value should be one or more element IDs.
+     * @group Props
+     */
+    @Input() ariaLabelledBy: string | undefined;
+    /**
      * Enables to hide the overlay when outside is clicked.
      * @group Props
      */
@@ -112,7 +130,7 @@ export class OverlayPanel implements AfterContentInit, OnDestroy {
      *  Target element to attach the panel, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name).
      * @group Props
      */
-    @Input() appendTo: any = 'body';
+    @Input() appendTo: HTMLElement | ElementRef | TemplateRef<any> | string | null | undefined | any = 'body';
     /**
      * Whether to automatically manage layering.
      * @group Props
@@ -152,7 +170,7 @@ export class OverlayPanel implements AfterContentInit, OnDestroy {
      * Callback to invoke when an overlay gets hidden.
      * @group Emits
      */
-    @Output() onHide: EventEmitter<object> = new EventEmitter();
+    @Output() onHide: EventEmitter<any> = new EventEmitter<any>();
 
     @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
 
@@ -220,20 +238,16 @@ export class OverlayPanel implements AfterContentInit, OnDestroy {
     bindDocumentClickListener() {
         if (isPlatformBrowser(this.platformId)) {
             if (!this.documentClickListener && this.dismissable) {
-                this.zone.runOutsideAngular(() => {
-                    let documentEvent = DomHandler.isIOS() ? 'touchstart' : 'click';
-                    const documentTarget: any = this.el ? this.el.nativeElement.ownerDocument : this.document;
+                let documentEvent = DomHandler.isIOS() ? 'touchstart' : 'click';
+                const documentTarget: any = this.el ? this.el.nativeElement.ownerDocument : this.document;
 
-                    this.documentClickListener = this.renderer.listen(documentTarget, documentEvent, (event) => {
-                        if (!this.container?.contains(event.target) && this.target !== event.target && !this.target.contains(event.target) && !this.selfClick) {
-                            this.zone.run(() => {
-                                this.hide();
-                            });
-                        }
+                this.documentClickListener = this.renderer.listen(documentTarget, documentEvent, (event) => {
+                    if (!this.container?.contains(event.target) && this.target !== event.target && !this.target.contains(event.target) && !this.selfClick) {
+                        this.hide();
+                    }
 
-                        this.selfClick = false;
-                        this.cd.markForCheck();
-                    });
+                    this.selfClick = false;
+                    this.cd.markForCheck();
                 });
             }
         }
@@ -249,9 +263,9 @@ export class OverlayPanel implements AfterContentInit, OnDestroy {
 
     /**
      * Toggles the visibility of the panel.
-     * @param event - Browser event
-     * @param target - Target element.
-     * @group Methods
+     * @param {Event} event - Browser event
+     * @param {Target} target - Target element.
+     * @group Method
      */
     toggle(event: any, target?: any) {
         if (this.isOverlayAnimationInProgress) {
@@ -272,9 +286,9 @@ export class OverlayPanel implements AfterContentInit, OnDestroy {
     }
     /**
      * Displays the panel.
-     * @param event
-     * @param target
-     * @group Methods
+     * @param {Event} event - Browser event
+     * @param {Target} target - Target element.
+     * @group Method
      */
     show(event: any, target?: any) {
         target && event && event.stopPropagation();
@@ -297,8 +311,9 @@ export class OverlayPanel implements AfterContentInit, OnDestroy {
         this.selfClick = true;
     }
 
-    onContentClick() {
-        this.selfClick = true;
+    onContentClick(event: MouseEvent) {
+        const targetElement = event.target as HTMLElement;
+        this.selfClick = event.offsetX < targetElement.clientWidth && event.offsetY < targetElement.clientHeight;
     }
 
     hasTargetChanged(event: any, target: any) {
@@ -411,7 +426,7 @@ export class OverlayPanel implements AfterContentInit, OnDestroy {
     }
     /**
      * Hides the panel.
-     * @group Methods
+     * @group Method
      */
     hide() {
         this.overlayVisible = false;
@@ -421,6 +436,11 @@ export class OverlayPanel implements AfterContentInit, OnDestroy {
     onCloseClick(event: MouseEvent) {
         this.hide();
         event.preventDefault();
+    }
+
+    @HostListener('document:keydown.escape', ['$event'])
+    onEscapeKeydown(event: KeyboardEvent) {
+        this.hide();
     }
 
     onWindowResize() {

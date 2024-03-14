@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Code } from '../../domain/code';
 import { Product } from '../../domain/product';
 
 @Component({
     selector: 'drag-drop-drop-indicator-demo',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>When a suitable draggable enters a droppable area, the area gets <i>p-draggable-enter</i> class that can be used to style the droppable section.</p>
         </app-docsectiontext>
         <div class="card flex flex-wrap gap-3">
@@ -26,18 +26,14 @@ import { Product } from '../../domain/product';
             </div>
         </div>
         <app-code [code]="code" selector="drag-drop-drop-indicator-demo" [extFiles]="extFiles"></app-code>
-    </section>`
+    `
 })
 export class DropIndicatorDoc {
-    @Input() id: string;
+    availableProducts: Product[] | undefined;
 
-    @Input() title: string;
+    selectedProducts: Product[] | undefined;
 
-    availableProducts: Product[];
-
-    selectedProducts: Product[];
-
-    draggedProduct: Product;
+    draggedProduct: Product | undefined | null;
 
     ngOnInit() {
         this.selectedProducts = [];
@@ -54,8 +50,8 @@ export class DropIndicatorDoc {
     drop() {
         if (this.draggedProduct) {
             let draggedProductIndex = this.findIndex(this.draggedProduct);
-            this.selectedProducts = [...this.selectedProducts, this.draggedProduct];
-            this.availableProducts = this.availableProducts.filter((val, i) => i != draggedProductIndex);
+            this.selectedProducts = [...(this.selectedProducts as Product[]), this.draggedProduct];
+            this.availableProducts = this.availableProducts?.filter((val, i) => i != draggedProductIndex);
             this.draggedProduct = null;
         }
     }
@@ -66,8 +62,8 @@ export class DropIndicatorDoc {
 
     findIndex(product: Product) {
         let index = -1;
-        for (let i = 0; i < this.availableProducts.length; i++) {
-            if (product.id === this.availableProducts[i].id) {
+        for (let i = 0; i < (this.availableProducts as Product[]).length; i++) {
+            if (product.id === (this.availableProducts as Product[])[i].id) {
                 index = i;
                 break;
             }
@@ -75,8 +71,7 @@ export class DropIndicatorDoc {
         return index;
     }
     code: Code = {
-        basic: `
-<div class="p-2 border-1 surface-border border-round w-15rem h-10rem">
+        basic: `<div class="p-2 border-1 surface-border border-round w-15rem h-10rem">
     <ul class="list-none flex flex-column gap-2 p-0 m-0">
         <li *ngFor="let product of availableProducts" class="p-2 border-round shadow-1" pDraggable (onDragStart)="dragStart(product)" (onDragEnd)="dragEnd()">
             {{product.name}}
@@ -120,11 +115,11 @@ import { ProductService } from '../../service/productservice';
     styleUrls: ['./drag-drop-drop-indicator-demo.scss']
 })
 export class DragDropDropIndicatorDemo implements OnInit {
-    availableProducts: Product[];
+    availableProducts: Product[] | undefined;
 
-    selectedProducts: Product[];
+    selectedProducts: Product[] | undefined;
 
-    draggedProduct: Product;
+    draggedProduct: Product | undefined | null;
 
     constructor(private productService: ProductService) {}
 
@@ -143,8 +138,8 @@ export class DragDropDropIndicatorDemo implements OnInit {
     drop() {
         if (this.draggedProduct) {
             let draggedProductIndex = this.findIndex(this.draggedProduct);
-            this.selectedProducts = [...this.selectedProducts, this.draggedProduct];
-            this.availableProducts = this.availableProducts.filter((val, i) => i != draggedProductIndex);
+            this.selectedProducts = [...(this.selectedProducts as Product[]), this.draggedProduct];
+            this.availableProducts = this.availableProducts?.filter((val, i) => i != draggedProductIndex);
             this.draggedProduct = null;
         }
     }
@@ -155,8 +150,8 @@ export class DragDropDropIndicatorDemo implements OnInit {
 
     findIndex(product: Product) {
         let index = -1;
-        for (let i = 0; i < this.availableProducts.length; i++) {
-            if (product.id === this.availableProducts[i].id) {
+        for (let i = 0; i < (this.availableProducts as Product[]).length; i++) {
+            if (product.id === (this.availableProducts as Product[])[i].id) {
                 index = i;
                 break;
             }

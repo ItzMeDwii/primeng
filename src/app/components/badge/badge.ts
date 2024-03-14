@@ -3,7 +3,10 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, Directive, ElementRe
 import { SharedModule } from 'primeng/api';
 import { DomHandler } from 'primeng/dom';
 import { UniqueComponentId } from 'primeng/utils';
-
+/**
+ * Badge Directive is directive usage of badge component.
+ * @group Components
+ */
 @Directive({
     selector: '[pBadge]',
     host: {
@@ -52,7 +55,7 @@ export class BadgeDirective implements AfterViewInit, OnDestroy {
             this._value = val;
 
             if (this.initialized) {
-                let badge = document.getElementById(this.id);
+                let badge: HTMLElement = document.getElementById(this.id) as HTMLElement;
 
                 if (this._value) {
                     if (DomHandler.hasClass(badge, 'p-badge-dot')) DomHandler.removeClass(badge, 'p-badge-dot');
@@ -66,7 +69,7 @@ export class BadgeDirective implements AfterViewInit, OnDestroy {
                     DomHandler.addClass(badge, 'p-badge-dot');
                 }
 
-                badge!.innerHTML = '';
+                badge.innerHTML = '';
                 this.renderer.appendChild(badge, document.createTextNode(this._value));
             }
         }
@@ -150,7 +153,10 @@ export class BadgeDirective implements AfterViewInit, OnDestroy {
         this.initialized = false;
     }
 }
-
+/**
+ * Badge is a small status indicator for another element.
+ * @group Components
+ */
 @Component({
     selector: 'p-badge',
     template: ` <span *ngIf="!badgeDisabled" [ngClass]="containerClass()" [class]="styleClass" [ngStyle]="style">{{ value }}</span> `,

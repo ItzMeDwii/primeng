@@ -1,11 +1,6 @@
 {
-    "id": 52,
-    "content": "🚀 v15.4.2-lts and v14.2.6-lts are out!",
-    "linkText": "Learn More",
-    "linkHref": "https://primeng.org/lts",
-    "backgroundStyle": "background-color:#3B82F6",
-    "textStyle": "color:#ffffff;font-weight:500",
-    "linkStyle": "color:#ffffff;font-weight:700",
-    "linkHoverStyle": "text-decoration: underline"
+    "id": 62,
+    "content": "Sakai | Free Admin Template",
+    "linkText": "View Demo",
+    "linkHref": "https://primefaces.org/sakai-ng"
 }
-

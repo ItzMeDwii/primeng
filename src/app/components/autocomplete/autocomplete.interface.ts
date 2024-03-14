@@ -1,10 +1,11 @@
 import { TemplateRef } from '@angular/core';
-import { ScrollerOptions } from 'primeng/scroller';
+import { ScrollerOptions } from 'primeng/api';
 import { AutoComplete } from './autocomplete';
 
 /**
  * Custom complete event.
  * @see {@link AutoComplete.completeMethod}
+ * @group Events
  */
 export interface AutoCompleteCompleteEvent {
     /**
@@ -19,6 +20,7 @@ export interface AutoCompleteCompleteEvent {
 /**
  * Custom click event.
  * @see {@link AutoComplete.onDropdownClick}
+ * @group Events
  */
 export interface AutoCompleteDropdownClickEvent {
     /**
@@ -31,8 +33,39 @@ export interface AutoCompleteDropdownClickEvent {
     query: string;
 }
 /**
+ * Custom select event.
+ * @see {@link AutoComplete.onSelect}
+ * @group Events
+ */
+export interface AutoCompleteSelectEvent {
+    /**
+     * Browser event.
+     */
+    originalEvent: Event;
+    /**
+     * Selected value.
+     */
+    value: any;
+}
+/**
+ * Custom unselect event.
+ * @see {@link AutoComplete.onUnSelect}
+ * @group Events
+ */
+export interface AutoCompleteUnselectEvent {
+    /**
+     * Browser event.
+     */
+    originalEvent: Event;
+    /**
+     * Removed value.
+     */
+    value: any;
+}
+/**
  * Custom lazy load event.
  * @see {@link AutoComplete.onLazyLoad}
+ * @group Events
  */
 export interface AutoCompleteLazyLoadEvent {
     /**
@@ -86,15 +119,15 @@ export interface AutoCompleteTemplates {
     /**
      * Custom header template.
      */
-    header: TemplateRef<any>;
+    header(): TemplateRef<any>;
     /**
      * Custom empty template.
      */
-    empty: TemplateRef<any>;
+    empty(): TemplateRef<any>;
     /**
      * Custom footer template.
      */
-    footer: TemplateRef<any>;
+    footer(): TemplateRef<any>;
     /**
      * Custom loader template.
      * @param {Object} context - scroller options.
@@ -108,17 +141,17 @@ export interface AutoCompleteTemplates {
     /**
      * Custom remove token icon template.
      */
-    removetokenicon: TemplateRef<any>;
+    removetokenicon(): TemplateRef<any>;
     /**
      * Custom loading icon template.
      */
-    loadingicon: TemplateRef<any>;
+    loadingicon(): TemplateRef<any>;
     /**
      * Custom clear icon template.
      */
-    clearicon: TemplateRef<any>;
+    clearicon(): TemplateRef<any>;
     /**
      * Custom dropdown icon template.
      */
-    dropdownicon: TemplateRef<any>;
+    dropdownicon(): TemplateRef<any>;
 }

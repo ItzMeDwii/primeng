@@ -1,40 +1,42 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'button-loading-demo',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Busy state is controlled with the <i>loading</i> property.</p>
         </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-button label="Submit" [loading]="loading" (click)="load()"></p-button>
+        <div class="card flex justify-content-center gap-3">
+            <p-button label="Submit" [loading]="loading" (onClick)="load()"></p-button>
+
+            <p-button label="Loading custom icon" [loading]="loading" loadingIcon="pi pi-bell" (onClick)="load()"></p-button>
         </div>
         <app-code [code]="code" selector="button-loading-demo"></app-code>
-    </section>`
+    `
 })
 export class LoadingDoc {
-    @Input() id: string;
-
-    @Input() title: string;
-
     loading: boolean = false;
+
+    constructor(private readonly cdr: ChangeDetectorRef) {}
 
     load() {
         this.loading = true;
 
         setTimeout(() => {
             this.loading = false;
+            this.cdr.markForCheck();
         }, 2000);
     }
 
     code: Code = {
-        basic: `
-<p-button label="Submit" [loading]="loading" (click)="load()"></p-button>`,
+        basic: `<p-button label="Submit" [loading]="loading" (onClick)="load()"></p-button>
+<p-button label="Loading custom icon" [loading]="loading" loadingIcon="pi pi-bell" (onClick)="load()"></p-button>`,
 
         html: `
-<div class="card flex justify-content-center">
-    <p-button label="Submit" [loading]="loading" (click)="load()"></p-button>
+<div class="card flex justify-content-center gap-3">
+    <p-button label="Submit" [loading]="loading" (onClick)="load()"></p-button>
+    <p-button label="Loading custom icon" [loading]="loading" loadingIcon="pi pi-bell" (onClick)="load()"></p-button>
 </div>`,
 
         typescript: `

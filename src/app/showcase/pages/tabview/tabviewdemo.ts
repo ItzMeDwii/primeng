@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { DisabledDoc } from '../../doc/tabview/disableddoc';
 import { BasicDoc } from '../../doc/tabview/basicdoc';
+import { DynamicDoc } from '../../doc/tabview/dynamicdoc';
 import { ControlledDoc } from '../../doc/tabview/controlleddoc';
 import { ImportDoc } from '../../doc/tabview/importdoc';
 import { TemplateDoc } from '../../doc/tabview/customtemplatedoc';
 import { ClosableDoc } from '../../doc/tabview/closabledoc';
 import { ScrollableDoc } from '../../doc/tabview/scrollabledoc';
+import { LazyDoc } from '../../doc/tabview/lazydoc';
 import { StyleDoc } from '../../doc/tabview/styledoc';
-import { PropsDoc } from '../../doc/tabview/propsdoc';
-import { EventsDoc } from '../../doc/tabview/eventsdoc';
-import { TemplatesDoc } from '../../doc/tabview/templatesdoc';
 import { AccessibilityDoc } from '../../doc/tabview/accessibilitydoc';
 
 @Component({
@@ -27,6 +26,11 @@ export class TabViewDemo {
             id: 'basic',
             label: 'Basic',
             component: BasicDoc
+        },
+        {
+            id: 'dynamic',
+            label: 'Dynamic',
+            component: DynamicDoc
         },
         {
             id: 'controlled',
@@ -54,6 +58,11 @@ export class TabViewDemo {
             component: ScrollableDoc
         },
         {
+            id: 'lazy',
+            label: 'Lazy',
+            component: LazyDoc
+        },
+        {
             id: 'style',
             label: 'Style',
             component: StyleDoc
@@ -62,24 +71,6 @@ export class TabViewDemo {
             id: 'accessibility',
             label: 'Accessibility',
             component: AccessibilityDoc
-        }
-    ];
-
-    apiDocs = [
-        {
-            id: 'properties',
-            label: 'Properties',
-            component: PropsDoc
-        },
-        {
-            id: 'events',
-            label: 'Events',
-            component: EventsDoc
-        },
-        {
-            id: 'templates',
-            label: 'Templates',
-            component: TemplatesDoc
         }
     ];
 }

@@ -28,19 +28,32 @@ import { ChevronRightIcon } from 'primeng/icons/chevronright';
 import { ChevronUpIcon } from 'primeng/icons/chevronup';
 import { RippleModule } from 'primeng/ripple';
 import { UniqueComponentId } from 'primeng/utils';
-import { CarouselResponsiveOptions } from './carousel.interface';
-
+import { CarouselPageEvent, CarouselResponsiveOptions } from './carousel.interface';
+import { PrimeNGConfig } from 'primeng/api';
+import { DomHandler } from 'primeng/dom';
+/**
+ * Carousel is a content slider featuring various customization options.
+ * @group Components
+ */
 @Component({
     selector: 'p-carousel',
     template: `
-        <div [attr.id]="id" [ngClass]="{ 'p-carousel p-component': true, 'p-carousel-vertical': isVertical(), 'p-carousel-horizontal': !isVertical() }" [ngStyle]="style" [class]="styleClass">
+        <div [attr.id]="id" [ngClass]="{ 'p-carousel p-component': true, 'p-carousel-vertical': isVertical(), 'p-carousel-horizontal': !isVertical() }" [ngStyle]="style" [class]="styleClass" role="region">
             <div class="p-carousel-header" *ngIf="headerFacet || headerTemplate">
                 <ng-content select="p-header"></ng-content>
                 <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
             </div>
             <div [class]="contentClass" [ngClass]="'p-carousel-content'">
-                <div class="p-carousel-container">
-                    <button type="button" *ngIf="showNavigators" [ngClass]="{ 'p-carousel-prev p-link': true, 'p-disabled': isBackwardNavDisabled() }" [disabled]="isBackwardNavDisabled()" (click)="navBackward($event)" pRipple>
+                <div class="p-carousel-container" [attr.aria-live]="allowAutoplay ? 'polite' : 'off'">
+                    <button
+                        type="button"
+                        *ngIf="showNavigators"
+                        [ngClass]="{ 'p-carousel-prev p-link': true, 'p-disabled': isBackwardNavDisabled() }"
+                        [disabled]="isBackwardNavDisabled()"
+                        [attr.aria-label]="ariaPrevButtonLabel()"
+                        (click)="navBackward($event)"
+                        pRipple
+                    >
                         <ng-container *ngIf="!previousIconTemplate">
                             <ChevronLeftIcon *ngIf="!isVertical()" [styleClass]="'carousel-prev-icon'" />
                             <ChevronUpIcon *ngIf="isVertical()" [styleClass]="'carousel-prev-icon'" />
@@ -49,8 +62,8 @@ import { CarouselResponsiveOptions } from './carousel.interface';
                             <ng-template *ngTemplateOutlet="previousIconTemplate"></ng-template>
                         </span>
                     </button>
-                    <div class="p-carousel-items-content" [ngStyle]="{ height: isVertical() ? verticalViewPortHeight : 'auto' }">
-                        <div #itemsContainer class="p-carousel-items-container" (transitionend)="onTransitionEnd()" (touchend)="onTouchEnd($event)" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)">
+                    <div class="p-carousel-items-content" [ngStyle]="{ height: isVertical() ? verticalViewPortHeight : 'auto' }" (touchend)="onTouchEnd($event)" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)">
+                        <div #itemsContainer class="p-carousel-items-container" (transitionend)="onTransitionEnd()">
                             <div
                                 *ngFor="let item of clonedItemsForStarting; let index = index"
                                 [ngClass]="{
@@ -59,12 +72,18 @@ import { CarouselResponsiveOptions } from './carousel.interface';
                                     'p-carousel-item-start': 0 === index,
                                     'p-carousel-item-end': clonedItemsForStarting.length - 1 === index
                                 }"
+                                [attr.aria-hidden]="!(totalShiftedItems * -1 === value.length)"
+                                [attr.aria-label]="ariaSlideNumber(index)"
+                                [attr.aria-roledescription]="ariaSlideLabel()"
                             >
                                 <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }"></ng-container>
                             </div>
                             <div
                                 *ngFor="let item of value; let index = index"
                                 [ngClass]="{ 'p-carousel-item': true, 'p-carousel-item-active': firstIndex() <= index && lastIndex() >= index, 'p-carousel-item-start': firstIndex() === index, 'p-carousel-item-end': lastIndex() === index }"
+                                [attr.aria-hidden]="!(totalShiftedItems * -1 === value.length)"
+                                [attr.aria-label]="ariaSlideNumber(index)"
+                                [attr.aria-roledescription]="ariaSlideLabel()"
                             >
                                 <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }"></ng-container>
                             </div>
@@ -81,7 +100,15 @@ import { CarouselResponsiveOptions } from './carousel.interface';
                             </div>
                         </div>
                     </div>
-                    <button type="button" *ngIf="showNavigators" [ngClass]="{ 'p-carousel-next p-link': true, 'p-disabled': isForwardNavDisabled() }" [disabled]="isForwardNavDisabled()" (click)="navForward($event)" pRipple>
+                    <button
+                        type="button"
+                        *ngIf="showNavigators"
+                        [ngClass]="{ 'p-carousel-next p-link': true, 'p-disabled': isForwardNavDisabled() }"
+                        [disabled]="isForwardNavDisabled()"
+                        (click)="navForward($event)"
+                        pRipple
+                        [attr.aria-label]="ariaNextButtonLabel()"
+                    >
                         <ng-container *ngIf="!nextIconTemplate">
                             <ChevronRightIcon *ngIf="!isVertical()" [styleClass]="'carousel-prev-icon'" />
                             <ChevronDownIcon *ngIf="isVertical()" [styleClass]="'carousel-prev-icon'" />
@@ -91,9 +118,18 @@ import { CarouselResponsiveOptions } from './carousel.interface';
                         </span>
                     </button>
                 </div>
-                <ul [ngClass]="'p-carousel-indicators p-reset'" [class]="indicatorsContentClass" [ngStyle]="indicatorsContentStyle" *ngIf="showIndicators">
-                    <li *ngFor="let totalDot of totalDotsArray(); let i = index" [ngClass]="{ 'p-carousel-indicator': true, 'p-highlight': _page === i }">
-                        <button type="button" [ngClass]="'p-link'" (click)="onDotClick($event, i)" [class]="indicatorStyleClass" [ngStyle]="indicatorStyle"></button>
+                <ul #indicatorContent [ngClass]="'p-carousel-indicators p-reset'" [class]="indicatorsContentClass" [ngStyle]="indicatorsContentStyle" *ngIf="showIndicators" (keydown)="onIndicatorKeydown($event)">
+                    <li *ngFor="let totalDot of totalDotsArray(); let i = index" [ngClass]="{ 'p-carousel-indicator': true, 'p-highlight': _page === i }" [attr.data-pc-section]="'indicator'">
+                        <button
+                            type="button"
+                            [ngClass]="'p-link'"
+                            (click)="onDotClick($event, i)"
+                            [class]="indicatorStyleClass"
+                            [ngStyle]="indicatorStyle"
+                            [attr.aria-label]="ariaPageLabel(i + 1)"
+                            [attr.aria-current]="_page === i ? 'page' : undefined"
+                            [tabindex]="_page === i ? 0 : -1"
+                        ></button>
                     </li>
                 </ul>
             </div>
@@ -113,6 +149,7 @@ import { CarouselResponsiveOptions } from './carousel.interface';
 export class Carousel implements AfterContentInit {
     /**
      * Index of the first item.
+     * @defaultValue 0
      * @group Props
      */
     @Input() get page(): number {
@@ -122,7 +159,6 @@ export class Carousel implements AfterContentInit {
         if (this.isCreated && val !== this._page) {
             if (this.autoplayInterval) {
                 this.stopAutoplay();
-                this.allowAutoplay = false;
             }
 
             if (val > this._page && val <= this.totalDots() - 1) {
@@ -136,6 +172,7 @@ export class Carousel implements AfterContentInit {
     }
     /**
      * Number of items per page.
+     * @defaultValue 1
      * @group Props
      */
     @Input() get numVisible(): number {
@@ -146,6 +183,7 @@ export class Carousel implements AfterContentInit {
     }
     /**
      * Number of items to scroll.
+     * @defaultValue 1
      * @group Props
      */
     @Input() get numScroll(): number {
@@ -156,20 +194,20 @@ export class Carousel implements AfterContentInit {
     }
     /**
      * An array of options for responsive design.
-     * @see CarouselResponsiveOptions
+     * @see {CarouselResponsiveOptions}
      * @group Props
      */
     @Input() responsiveOptions: CarouselResponsiveOptions[] | undefined;
     /**
-     * Specifies the layout of the component, valid values are 'horizontal' and 'vertical'.
+     * Specifies the layout of the component.
      * @group Props
      */
-    @Input() orientation = 'horizontal';
+    @Input() orientation: 'horizontal' | 'vertical' = 'horizontal';
     /**
      * Height of the viewport in vertical layout.
      * @group Props
      */
-    @Input() verticalViewPortHeight = '300px';
+    @Input() verticalViewPortHeight: string = '300px';
     /**
      * Style class of main content.
      * @group Props
@@ -197,10 +235,11 @@ export class Carousel implements AfterContentInit {
     @Input() indicatorStyle: { [klass: string]: any } | null | undefined;
     /**
      * An array of objects to display.
+     * @defaultValue null
      * @group Props
      */
     @Input() get value(): any[] {
-        return this._value!;
+        return this._value as any[];
     }
     set value(val) {
         this._value = val;
@@ -237,12 +276,14 @@ export class Carousel implements AfterContentInit {
     @Input() styleClass: string | undefined;
     /**
      * Callback to invoke after scroll.
-     * @param {Object} event - custom page event.
+     * @param {CarouselPageEvent} event - Custom page event.
      * @group Emits
      */
-    @Output() onPage: EventEmitter<{ page: number }> = new EventEmitter();
+    @Output() onPage: EventEmitter<CarouselPageEvent> = new EventEmitter<CarouselPageEvent>();
 
     @ViewChild('itemsContainer') itemsContainer: ElementRef | undefined;
+
+    @ViewChild('indicatorContent') indicatorContent: ElementRef | undefined;
 
     @ContentChild(Header) headerFacet: QueryList<Header> | undefined;
 
@@ -314,58 +355,63 @@ export class Carousel implements AfterContentInit {
 
     window: Window;
 
-    constructor(public el: ElementRef, public zone: NgZone, public cd: ChangeDetectorRef, private renderer: Renderer2, @Inject(DOCUMENT) private document: Document, @Inject(PLATFORM_ID) private platformId: any) {
+    constructor(public el: ElementRef, public zone: NgZone, public cd: ChangeDetectorRef, private renderer: Renderer2, @Inject(DOCUMENT) private document: Document, @Inject(PLATFORM_ID) private platformId: any, private config: PrimeNGConfig) {
         this.totalShiftedItems = this.page * this.numScroll * -1;
         this.window = this.document.defaultView as Window;
     }
 
     ngOnChanges(simpleChange: SimpleChanges) {
-        if (simpleChange.value) {
-            if (this.circular && this._value) {
-                this.setCloneItems();
-            }
-        }
-
-        if (this.isCreated) {
-            if (simpleChange.numVisible) {
-                if (this.responsiveOptions) {
-                    this.defaultNumVisible = this.numVisible;
-                }
-
-                if (this.isCircular()) {
+        if (isPlatformBrowser(this.platformId)) {
+            if (simpleChange.value) {
+                if (this.circular && this._value) {
                     this.setCloneItems();
                 }
-
-                this.createStyle();
-                this.calculatePosition();
             }
 
-            if (simpleChange.numScroll) {
-                if (this.responsiveOptions) {
-                    this.defaultNumScroll = this.numScroll;
+            if (this.isCreated) {
+                if (simpleChange.numVisible) {
+                    if (this.responsiveOptions) {
+                        this.defaultNumVisible = this.numVisible;
+                    }
+
+                    if (this.isCircular()) {
+                        this.setCloneItems();
+                    }
+
+                    this.createStyle();
+                    this.calculatePosition();
+                }
+
+                if (simpleChange.numScroll) {
+                    if (this.responsiveOptions) {
+                        this.defaultNumScroll = this.numScroll;
+                    }
                 }
             }
         }
+        this.cd.markForCheck();
     }
 
     ngAfterContentInit() {
         this.id = UniqueComponentId();
-        this.allowAutoplay = !!this.autoplayInterval;
+        if (isPlatformBrowser(this.platformId)) {
+            this.allowAutoplay = !!this.autoplayInterval;
 
-        if (this.circular) {
-            this.setCloneItems();
-        }
+            if (this.circular) {
+                this.setCloneItems();
+            }
 
-        if (this.responsiveOptions) {
-            this.defaultNumScroll = this._numScroll;
-            this.defaultNumVisible = this._numVisible;
-        }
+            if (this.responsiveOptions) {
+                this.defaultNumScroll = this._numScroll;
+                this.defaultNumVisible = this._numVisible;
+            }
 
-        this.createStyle();
-        this.calculatePosition();
+            this.createStyle();
+            this.calculatePosition();
 
-        if (this.responsiveOptions) {
-            this.bindDocumentListeners();
+            if (this.responsiveOptions) {
+                this.bindDocumentListeners();
+            }
         }
 
         this.templates?.forEach((item) => {
@@ -395,72 +441,75 @@ export class Carousel implements AfterContentInit {
                     break;
             }
         });
+        this.cd.detectChanges();
     }
 
     ngAfterContentChecked() {
-        const isCircular = this.isCircular();
-        let totalShiftedItems = this.totalShiftedItems;
+        if (isPlatformBrowser(this.platformId)) {
+            const isCircular = this.isCircular();
+            let totalShiftedItems = this.totalShiftedItems;
 
-        if (this.value && this.itemsContainer && (this.prevState.numScroll !== this._numScroll || this.prevState.numVisible !== this._numVisible || this.prevState.value.length !== this.value.length)) {
-            if (this.autoplayInterval) {
-                this.stopAutoplay();
-            }
+            if (this.value && this.itemsContainer && (this.prevState.numScroll !== this._numScroll || this.prevState.numVisible !== this._numVisible || this.prevState.value.length !== this.value.length)) {
+                if (this.autoplayInterval) {
+                    this.stopAutoplay(false);
+                }
 
-            this.remainingItems = (this.value.length - this._numVisible) % this._numScroll;
+                this.remainingItems = (this.value.length - this._numVisible) % this._numScroll;
 
-            let page = this._page;
-            if (this.totalDots() !== 0 && page >= this.totalDots()) {
-                page = this.totalDots() - 1;
-                this._page = page;
-                this.onPage.emit({
-                    page: this.page
-                });
-            }
+                let page = this._page;
+                if (this.totalDots() !== 0 && page >= this.totalDots()) {
+                    page = this.totalDots() - 1;
+                    this._page = page;
+                    this.onPage.emit({
+                        page: this.page
+                    });
+                }
 
-            totalShiftedItems = page * this._numScroll * -1;
-            if (isCircular) {
-                totalShiftedItems -= this._numVisible;
-            }
+                totalShiftedItems = page * this._numScroll * -1;
+                if (isCircular) {
+                    totalShiftedItems -= this._numVisible;
+                }
 
-            if (page === this.totalDots() - 1 && this.remainingItems > 0) {
-                totalShiftedItems += -1 * this.remainingItems + this._numScroll;
-                this.isRemainingItemsAdded = true;
-            } else {
-                this.isRemainingItemsAdded = false;
-            }
-
-            if (totalShiftedItems !== this.totalShiftedItems) {
-                this.totalShiftedItems = totalShiftedItems;
-            }
-
-            this._oldNumScroll = this._numScroll;
-            this.prevState.numScroll = this._numScroll;
-            this.prevState.numVisible = this._numVisible;
-            this.prevState.value = [...this._value!];
-
-            if (this.totalDots() > 0 && this.itemsContainer.nativeElement) {
-                this.itemsContainer.nativeElement.style.transform = this.isVertical() ? `translate3d(0, ${totalShiftedItems * (100 / this._numVisible)}%, 0)` : `translate3d(${totalShiftedItems * (100 / this._numVisible)}%, 0, 0)`;
-            }
-
-            this.isCreated = true;
-
-            if (this.autoplayInterval && this.isAutoplay()) {
-                this.startAutoplay();
-            }
-        }
-
-        if (isCircular) {
-            if (this.page === 0) {
-                totalShiftedItems = -1 * this._numVisible;
-            } else if (totalShiftedItems === 0) {
-                totalShiftedItems = -1 * this.value.length;
-                if (this.remainingItems > 0) {
+                if (page === this.totalDots() - 1 && this.remainingItems > 0) {
+                    totalShiftedItems += -1 * this.remainingItems + this._numScroll;
                     this.isRemainingItemsAdded = true;
+                } else {
+                    this.isRemainingItemsAdded = false;
+                }
+
+                if (totalShiftedItems !== this.totalShiftedItems) {
+                    this.totalShiftedItems = totalShiftedItems;
+                }
+
+                this._oldNumScroll = this._numScroll;
+                this.prevState.numScroll = this._numScroll;
+                this.prevState.numVisible = this._numVisible;
+                this.prevState.value = [...(this._value as any[])];
+
+                if (this.totalDots() > 0 && this.itemsContainer.nativeElement) {
+                    this.itemsContainer.nativeElement.style.transform = this.isVertical() ? `translate3d(0, ${totalShiftedItems * (100 / this._numVisible)}%, 0)` : `translate3d(${totalShiftedItems * (100 / this._numVisible)}%, 0, 0)`;
+                }
+
+                this.isCreated = true;
+
+                if (this.autoplayInterval && this.isAutoplay()) {
+                    this.startAutoplay();
                 }
             }
 
-            if (totalShiftedItems !== this.totalShiftedItems) {
-                this.totalShiftedItems = totalShiftedItems;
+            if (isCircular) {
+                if (this.page === 0) {
+                    totalShiftedItems = -1 * this._numVisible;
+                } else if (totalShiftedItems === 0) {
+                    totalShiftedItems = -1 * this.value.length;
+                    if (this.remainingItems > 0) {
+                        this.isRemainingItemsAdded = true;
+                    }
+                }
+
+                if (totalShiftedItems !== this.totalShiftedItems) {
+                    this.totalShiftedItems = totalShiftedItems;
+                }
             }
         }
     }
@@ -612,7 +661,6 @@ export class Carousel implements AfterContentInit {
 
         if (this.autoplayInterval) {
             this.stopAutoplay();
-            this.allowAutoplay = false;
         }
 
         if (e && e.cancelable) {
@@ -627,7 +675,6 @@ export class Carousel implements AfterContentInit {
 
         if (this.autoplayInterval) {
             this.stopAutoplay();
-            this.allowAutoplay = false;
         }
 
         if (e && e.cancelable) {
@@ -640,7 +687,6 @@ export class Carousel implements AfterContentInit {
 
         if (this.autoplayInterval) {
             this.stopAutoplay();
-            this.allowAutoplay = false;
         }
 
         if (index > page) {
@@ -648,6 +694,69 @@ export class Carousel implements AfterContentInit {
         } else if (index < page) {
             this.navBackward(e, index);
         }
+    }
+
+    onIndicatorKeydown(event: KeyboardEvent) {
+        switch (event.code) {
+            case 'ArrowRight':
+                this.onRightKey();
+                break;
+
+            case 'ArrowLeft':
+                this.onLeftKey();
+                break;
+        }
+    }
+
+    onRightKey() {
+        const indicators = [...DomHandler.find(this.indicatorContent.nativeElement, '[data-pc-section="indicator"]')];
+        const activeIndex = this.findFocusedIndicatorIndex();
+
+        this.changedFocusedIndicator(activeIndex, activeIndex + 1 === indicators.length ? indicators.length - 1 : activeIndex + 1);
+    }
+
+    onLeftKey() {
+        const activeIndex = this.findFocusedIndicatorIndex();
+
+        this.changedFocusedIndicator(activeIndex, activeIndex - 1 <= 0 ? 0 : activeIndex - 1);
+    }
+    onHomeKey() {
+        const activeIndex = this.findFocusedIndicatorIndex();
+
+        this.changedFocusedIndicator(activeIndex, 0);
+    }
+
+    onEndKey() {
+        const indicators = [...DomHandler.find(this.indicatorContent.nativeElement, '[data-pc-section="indicator"]r')];
+        const activeIndex = this.findFocusedIndicatorIndex();
+
+        this.changedFocusedIndicator(activeIndex, indicators.length - 1);
+    }
+
+    onTabKey() {
+        const indicators = [...DomHandler.find(this.indicatorContent.nativeElement, '[data-pc-section="indicator"]')];
+        const highlightedIndex = indicators.findIndex((ind) => DomHandler.getAttribute(ind, 'data-p-highlight') === true);
+
+        const activeIndicator = DomHandler.findSingle(this.indicatorContent.nativeElement, '[data-pc-section="indicator"] > button[tabindex="0"]');
+        const activeIndex = indicators.findIndex((ind) => ind === activeIndicator.parentElement);
+
+        indicators[activeIndex].children[0].tabIndex = '-1';
+        indicators[highlightedIndex].children[0].tabIndex = '0';
+    }
+
+    findFocusedIndicatorIndex() {
+        const indicators = [...DomHandler.find(this.indicatorContent.nativeElement, '[data-pc-section="indicator"]')];
+        const activeIndicator = DomHandler.findSingle(this.indicatorContent.nativeElement, '[data-pc-section="indicator"] > button[tabindex="0"]');
+
+        return indicators.findIndex((ind) => ind === activeIndicator.parentElement);
+    }
+
+    changedFocusedIndicator(prevInd, nextInd) {
+        const indicators = [...DomHandler.find(this.indicatorContent.nativeElement, '[data-pc-section="indicator"]')];
+
+        indicators[prevInd].children[0].tabIndex = '-1';
+        indicators[nextInd].children[0].tabIndex = '0';
+        indicators[nextInd].children[0].focus();
     }
 
     step(dir: number, page?: number) {
@@ -694,6 +803,7 @@ export class Carousel implements AfterContentInit {
         this.onPage.emit({
             page: this.page
         });
+        this.cd.markForCheck();
     }
 
     startAutoplay() {
@@ -706,12 +816,23 @@ export class Carousel implements AfterContentInit {
                 }
             }
         }, this.autoplayInterval);
+        this.allowAutoplay = true;
+        this.cd.markForCheck();
     }
 
-    stopAutoplay() {
+    stopAutoplay(changeAllow: boolean = true) {
         if (this.interval) {
             clearInterval(this.interval);
+            this.interval = undefined;
+            if (changeAllow) {
+                this.allowAutoplay = false;
+            }
         }
+        this.cd.markForCheck();
+    }
+
+    isPlaying(): boolean {
+        return !!this.interval;
     }
 
     onTransitionEnd() {
@@ -756,6 +877,26 @@ export class Carousel implements AfterContentInit {
                 this.navBackward(e);
             }
         }
+    }
+
+    ariaPrevButtonLabel() {
+        return this.config.translation.aria ? this.config.translation.aria.prevPageLabel : undefined;
+    }
+
+    ariaSlideLabel() {
+        return this.config.translation.aria ? this.config.translation.aria.slide : undefined;
+    }
+
+    ariaNextButtonLabel() {
+        return this.config.translation.aria ? this.config.translation.aria.nextPageLabel : undefined;
+    }
+
+    ariaSlideNumber(value) {
+        return this.config.translation.aria ? this.config.translation.aria.slideNumber.replace(/{slideNumber}/g, value) : undefined;
+    }
+
+    ariaPageLabel(value) {
+        return this.config.translation.aria ? this.config.translation.aria.pageLabel.replace(/{page}/g, value) : undefined;
     }
 
     bindDocumentListeners() {

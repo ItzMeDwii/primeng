@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Code } from '../../domain/code';
 import { Product } from '../../domain/product';
 import { ProductService } from '../../service/productservice';
 
 @Component({
     selector: 'carousel-vertical-demo',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>To create a vertical Carousel, <i>orientation</i> needs to be set to <i>vertical</i> along with a <i>verticalViewPortHeight</i>.</p>
         </app-docsectiontext>
         <div class="card flex justify-content-center">
@@ -21,10 +21,9 @@ import { ProductService } from '../../service/productservice';
                                 <h4 class="mb-1">{{ product.name }}</h4>
                                 <h6 class="mt-0 mb-3">{{ product.price }}</h6>
                                 <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"></p-tag>
-                                <div class="car-buttons mt-5">
-                                    <p-button type="button" styleClass="p-button p-button-rounded mr-2" icon="pi pi-search"></p-button>
-                                    <p-button type="button" styleClass="p-button-success p-button-rounded mr-2" icon="pi pi-star-fill"></p-button>
-                                    <p-button type="button" styleClass="p-button-help p-button-rounded" icon="pi pi-cog"></p-button>
+                                <div class="mt-5 flex align-items-center justify-content-center gap-2">
+                                    <p-button icon="pi pi-search" [rounded]="true" />
+                                    <p-button icon="pi pi-star-fill" [rounded]="true" severity="secondary" />
                                 </div>
                             </div>
                         </div>
@@ -33,20 +32,17 @@ import { ProductService } from '../../service/productservice';
             </p-carousel>
         </div>
         <app-code [code]="code" selector="carousel-vertical-demo" [extFiles]="extFiles"></app-code>
-    </section>`
+    `
 })
 export class VerticalDoc implements OnInit {
-    @Input() id: string;
+    products: Product[] | undefined;
 
-    @Input() title: string;
-
-    products: Product[];
-
-    constructor(private productService: ProductService) {}
+    constructor(private productService: ProductService, private cdr: ChangeDetectorRef) {}
 
     ngOnInit() {
         this.productService.getProductsSmall().then((products) => {
             this.products = products;
+            this.cdr.detectChanges();
         });
     }
 
@@ -62,8 +58,7 @@ export class VerticalDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-carousel [value]="products" [numVisible]="3" [numScroll]="1" orientation="vertical" verticalViewPortHeight="360px" [responsiveOptions]="responsiveOptions">
+        basic: `<p-carousel [value]="products" [numVisible]="3" [numScroll]="1" orientation="vertical" verticalViewPortHeight="360px" [responsiveOptions]="responsiveOptions">
     <ng-template let-product pTemplate="item">
         <div class="product-item">
             <div class="product-item-content">
@@ -74,18 +69,16 @@ export class VerticalDoc implements OnInit {
                     <h4 class="mb-1">{{product.name}}</h4>
                     <h6 class="mt-0 mb-3">{{product.price}}</h6>
                     <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"></p-tag>
-                    <div class="car-buttons mt-5">
-                        <p-button type="button" styleClass="p-button p-button-rounded mr-2" icon="pi pi-search"></p-button>
-                        <p-button type="button" styleClass="p-button-success p-button-rounded mr-2" icon="pi pi-star-fill"></p-button>
-                        <p-button type="button" styleClass="p-button-help p-button-rounded" icon="pi pi-cog"></p-button>
-                    </div>
+                    <div class="mt-5 flex align-items-center justify-content-center gap-2">
+                    <p-button icon="pi pi-search" [rounded]="true" />
+                    <p-button icon="pi pi-star-fill" [rounded]="true" severity="secondary" />
+                </div>
                 </div>
             </div>
         </div>
     </ng-template>
 </p-carousel>`,
-        html: `
-<div class="card flex justify-content-center">
+        html: `<div class="card flex justify-content-center">
     <p-carousel [value]="products" [numVisible]="3" [numScroll]="1" orientation="vertical" verticalViewPortHeight="360px" [responsiveOptions]="responsiveOptions">
         <ng-template let-product pTemplate="item">
             <div class="product-item">
@@ -97,10 +90,9 @@ export class VerticalDoc implements OnInit {
                         <h4 class="mb-1">{{product.name}}</h4>
                         <h6 class="mt-0 mb-3">{{product.price}}</h6>
                         <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"></p-tag>
-                        <div class="car-buttons mt-5">
-                            <p-button type="button" styleClass="p-button p-button-rounded mr-2" icon="pi pi-search"></p-button>
-                            <p-button type="button" styleClass="p-button-success p-button-rounded mr-2" icon="pi pi-star-fill"></p-button>
-                            <p-button type="button" styleClass="p-button-help p-button-rounded" icon="pi pi-cog"></p-button>
+                        <div class="mt-5 flex align-items-center justify-content-center gap-2">
+                                <p-button icon="pi pi-search" [rounded]="true" />
+                                <p-button icon="pi pi-star-fill" [rounded]="true" severity="secondary" />
                         </div>
                     </div>
                 </div>
@@ -119,7 +111,7 @@ import { ProductService } from '../../service/productservice';
     styleUrls: ['./carousel-vertical-demo.scss']
 })
 export class CarouselVerticalDemo implements OnInit {
-    products: Product[];
+    products: Product[] | undefined;
 
     responsiveOptions: any[];
 

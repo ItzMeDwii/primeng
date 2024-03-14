@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'interactive-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>In order to add interactivity to the component, disable <i>readonly</i> and use a binding to <i>activeIndex</i> along with <i>activeIndexChange</i> to control the Steps.</p>
         </app-docsectiontext>
         <div class="card">
@@ -13,21 +13,17 @@ import { Code } from '../../domain/code';
             <p-steps [model]="items" [readonly]="false" [activeIndex]="activeIndex" (activeIndexChange)="onActiveIndexChange($event)"></p-steps>
         </div>
         <app-code [code]="code" selector="steps-interactive-demo"></app-code>
-    </section>`,
+    `,
     providers: [MessageService]
 })
 export class InteractiveDoc implements OnInit {
-    @Input() id: string;
-
-    @Input() title: string;
-
-    items: MenuItem[];
+    items: MenuItem[] | undefined;
 
     activeIndex: number = 0;
 
     constructor(public messageService: MessageService) {}
 
-    onActiveIndexChange(event) {
+    onActiveIndexChange(event: number) {
         this.activeIndex = event;
     }
 
@@ -53,8 +49,7 @@ export class InteractiveDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-toast></p-toast>
+        basic: `<p-toast></p-toast>
 <p-steps [model]="items" [readonly]="false" [activeIndex]="activeIndex" (activeIndexChange)="onActiveIndexChange($event)"></p-steps>`,
 
         html: `
@@ -73,13 +68,13 @@ import { MenuItem, MessageService } from 'primeng/api';
     providers: [MessageService]
 })
 export class StepsInteractiveDemo implements OnInit {
-    items: MenuItem[];
+    items: MenuItem[] | undefined;
 
     activeIndex: number = 0;
 
     constructor(public messageService: MessageService) {}
 
-    onActiveIndexChange(event) {
+    onActiveIndexChange(event: number) {
         this.activeIndex = event;
     }
 

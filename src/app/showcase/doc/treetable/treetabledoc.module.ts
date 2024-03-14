@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TreeTableModule } from 'primeng/treetable';
 import { AppDocModule } from '../../layout/doc/app.doc.module';
-import { AppCodeModule } from '../../layout/doc/code/app.code.component';
+import { AppCodeModule } from '../../layout/doc/app.code.component';
 import { ButtonModule } from 'primeng/button';
 import { BasicDoc } from './basicdoc';
 import { TemplateDoc } from './templatedoc';
@@ -38,14 +38,16 @@ import { ConditionalStyleDoc } from './conditionalstyledoc';
 import { ContextMenuDoc } from './contextmenudoc';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { StyleDoc } from './styledoc';
-import { PropsDoc } from './propsdoc';
-import { EventsDoc } from './eventsdoc';
-import { MethodsDoc } from './methodsdoc';
+import { ResizeScrollableDoc } from './columnresizescrollabledoc';
 import { AccessibilityDoc } from './accessibilitydoc';
-import { TemplatesDoc } from './templatesdoc';
+import { PaginatorLocaleDoc } from './paginatorlocaledoc';
+import { SizeDoc } from './sizedoc';
+import { GridlinesDoc } from './gridlinesdoc';
+import { ControlledDoc } from './controlleddoc';
+import { DeferredDemo } from '../../demo/deferreddemo';
 
 @NgModule({
-    imports: [CommonModule, AppCodeModule, AppDocModule, TreeTableModule, ButtonModule, RouterModule, InputTextModule, SelectButtonModule, FormsModule, InputSwitchModule, ToastModule, MultiSelectModule, ContextMenuModule],
+    imports: [CommonModule, AppCodeModule, AppDocModule, TreeTableModule, ButtonModule, RouterModule, InputTextModule, SelectButtonModule, FormsModule, InputSwitchModule, ToastModule, MultiSelectModule, ContextMenuModule, DeferredDemo],
     exports: [AppDocModule],
     declarations: [
         ImportDoc,
@@ -74,11 +76,12 @@ import { TemplatesDoc } from './templatesdoc';
         ConditionalStyleDoc,
         ContextMenuDoc,
         StyleDoc,
-        PropsDoc,
-        EventsDoc,
-        MethodsDoc,
         AccessibilityDoc,
-        TemplatesDoc
+        PaginatorLocaleDoc,
+        ResizeScrollableDoc,
+        SizeDoc,
+        GridlinesDoc,
+        ControlledDoc
     ]
 })
 export class TreeTableDocModule {}

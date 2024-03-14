@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Code } from '../../domain/code';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Code } from '../../domain/code';
 
 @Component({
     selector: 'reactive-forms-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Checkbox can also be used with reactive forms. In this case, the <i>formControlName</i> property is used to bind the component to a form control.</p>
         </app-docsectiontext>
         <div class="card">
@@ -15,14 +15,10 @@ import { FormControl, FormGroup } from '@angular/forms';
             </form>
         </div>
         <app-code [code]="code" selector="checkbox-reactive-forms-demo"></app-code>
-    </section>`
+    `
 })
 export class ReactiveFormsDoc implements OnInit {
-    @Input() id: string;
-
-    @Input() title: string;
-
-    formGroup: FormGroup;
+    formGroup: FormGroup | undefined;
 
     ngOnInit() {
         this.formGroup = new FormGroup({
@@ -31,8 +27,7 @@ export class ReactiveFormsDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<form class="flex align-items-center gap-1" [formGroup]="formGroup">
+        basic: `<form class="flex align-items-center gap-1" [formGroup]="formGroup">
     <p-checkbox formControlName="city" value="New York" inputId="ny"></p-checkbox>
     <label for="ny">New York</label>
 </form>`,
@@ -54,7 +49,7 @@ import { FormControl, FormGroup } from '@angular/forms';
     templateUrl: './checkbox-reactive-forms-demo.html'
 })
 export class CheckboxReactiveFormsDemo implements OnInit{
-    formGroup: FormGroup;
+    formGroup: FormGroup | undefined;
 
     ngOnInit() {
         this.formGroup = new FormGroup({

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AccessibilityDoc } from '../../doc/button/accessibilitydoc';
 import { BadgeDoc } from '../../doc/button/badgedoc';
 import { BasicDoc } from '../../doc/button/basicdoc';
-import { ButtonsetDoc } from '../../doc/button/buttonsetdoc';
 import { DirectiveDoc } from '../../doc/button/directivedoc';
 import { DisabledDoc } from '../../doc/button/disableddoc';
 import { IconsDoc } from '../../doc/button/iconsdoc';
@@ -11,7 +10,6 @@ import { ImportDoc } from '../../doc/button/importdoc';
 import { LinkDoc } from '../../doc/button/linkdoc';
 import { LoadingDoc } from '../../doc/button/loadingdoc';
 import { OutlinedDoc } from '../../doc/button/outlineddoc';
-import { PropsDoc } from '../../doc/button/propsdoc';
 import { RaisedDoc } from '../../doc/button/raiseddoc';
 import { RaisedTextDoc } from '../../doc/button/raisedtextdoc';
 import { RoundedDoc } from '../../doc/button/roundeddoc';
@@ -19,12 +17,10 @@ import { SeverityDoc } from '../../doc/button/severitydoc';
 import { SizesDoc } from '../../doc/button/sizesdoc';
 import { StyleDoc } from '../../doc/button/styledoc';
 import { TemplateDoc } from '../../doc/button/templatedoc';
-import { TemplatesDoc } from '../../doc/button/templatesdoc';
 import { TextDoc } from '../../doc/button/textdoc';
-
+import { ButtonGroupDoc } from '../../doc/button/buttongroupdoc';
 @Component({
-    templateUrl: './buttondemo.html',
-    styleUrls: ['./buttondemo.scss']
+    templateUrl: './buttondemo.html'
 })
 export class ButtonDemo {
     docs = [
@@ -104,9 +100,9 @@ export class ButtonDemo {
             component: BadgeDoc
         },
         {
-            id: 'buttonset',
-            label: 'Button Set',
-            component: ButtonsetDoc
+            id: 'buttongroup',
+            label: 'Button Group',
+            component: ButtonGroupDoc
         },
         {
             id: 'sizes',
@@ -127,19 +123,6 @@ export class ButtonDemo {
             id: 'accessibility',
             label: 'Accessibility',
             component: AccessibilityDoc
-        }
-    ];
-
-    apiDocs = [
-        {
-            id: 'properties',
-            label: 'Properties',
-            component: PropsDoc
-        },
-        {
-            id: 'templates',
-            label: 'Templates',
-            component: TemplatesDoc
         }
     ];
 }

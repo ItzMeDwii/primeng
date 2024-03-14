@@ -3,6 +3,7 @@ import { Paginator } from './paginator';
 
 /**
  * Paginator state.
+ * @group Interface
  */
 export interface PaginatorState {
     page?: number;
@@ -16,19 +17,23 @@ export interface PaginatorState {
  */
 export interface PaginatorTemplates {
     /**
+     * Custom dropdown trigger icon template.
+     */
+    dropdownicon(): TemplateRef<any>;
+    /**
      * Custom first page link icon template.
      */
-    firstpagelinkicon: TemplateRef<any>;
+    firstpagelinkicon(): TemplateRef<any>;
     /**
      * Custom previous page link icon template.
      */
-    previouspagelinkicon: TemplateRef<any>;
+    previouspagelinkicon(): TemplateRef<any>;
     /**
      * Custom last page link icon template.
      */
-    lastpagelinkicon: TemplateRef<any>;
+    lastpagelinkicon(): TemplateRef<any>;
     /**
      * Custom next page link icon template.
      */
-    nextpagelinkicon: TemplateRef<any>;
+    nextpagelinkicon(): TemplateRef<any>;
 }

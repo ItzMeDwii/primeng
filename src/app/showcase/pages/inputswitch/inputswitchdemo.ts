@@ -3,12 +3,10 @@ import { BasicDoc } from '../../doc/inputswitch/basicdoc';
 import { ImportDoc } from '../../doc/inputswitch/importdoc';
 import { DisabledDoc } from '../../doc/inputswitch/disableddoc';
 import { PreselectionDoc } from '../../doc/inputswitch/preselectiondoc';
-import { PropsDoc } from '../../doc/inputswitch/propsdoc';
-import { EventsDoc } from '../../doc/inputswitch/eventsdoc';
 import { StyleDoc } from '../../doc/inputswitch/styledoc';
 import { AccessibilityDoc } from '../../doc/inputswitch/accessibilitydoc';
 import { ReactiveFormsDoc } from '../../doc/inputswitch/reactiveformsdoc';
-
+import { InvalidDoc } from '../../doc/inputswitch/invaliddoc';
 @Component({
     templateUrl: './inputswitchdemo.html'
 })
@@ -40,6 +38,11 @@ export class InputSwitchDemo {
             component: DisabledDoc
         },
         {
+            id: 'invalid',
+            label: 'Invalid',
+            component: InvalidDoc
+        },
+        {
             id: 'style',
             label: 'Style',
             component: StyleDoc
@@ -48,19 +51,6 @@ export class InputSwitchDemo {
             id: 'accessibility',
             label: 'Accessibility',
             component: AccessibilityDoc
-        }
-    ];
-
-    apiDocs = [
-        {
-            id: 'properties',
-            label: 'Properties',
-            component: PropsDoc
-        },
-        {
-            id: 'events',
-            label: 'Events',
-            component: EventsDoc
         }
     ];
 }

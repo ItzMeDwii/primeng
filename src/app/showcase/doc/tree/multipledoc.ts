@@ -1,13 +1,12 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Code } from '../../domain/code';
+import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
+import { Code } from '../../domain/code';
 import { NodeService } from '../../service/nodeservice';
-import { AppDocSectionTextComponent } from '../../layout/doc/docsectiontext/app.docsectiontext.component';
 
 @Component({
     selector: 'multiple-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id" [level]="3" #docsectiontext>
+    template: `
+        <app-docsectiontext>
             <p>
                 More than one node is selectable by setting <i>selectionMode</i> to <i>multiple</i>. By default in multiple selection mode, metaKey press (e.g. <i>⌘</i>) is necessary to add to existing selections however this can be configured with
                 disabling the <i>metaKeySelection</i> property. Note that in touch enabled devices, Tree always ignores metaKey.
@@ -22,20 +21,14 @@ import { AppDocSectionTextComponent } from '../../layout/doc/docsectiontext/app.
             <p-tree [metaKeySelection]="metaKeySelection" [value]="files" class="w-full md:w-30rem" selectionMode="multiple" [(selection)]="selectedFiles"></p-tree>
         </div>
         <app-code [code]="code" selector="tree-multiple-demo"></app-code>
-    </section>`
+    `
 })
 export class MultipleDoc implements OnInit {
-    @Input() id: string;
-
-    @Input() title: string;
-
-    @ViewChild('docsectiontext', { static: true }) docsectiontext: AppDocSectionTextComponent;
-
     metaKeySelection: boolean = false;
 
-    files: TreeNode[];
+    files!: TreeNode[];
 
-    selectedFiles: TreeNode[];
+    selectedFiles!: TreeNode[];
 
     constructor(private nodeService: NodeService) {}
 
@@ -44,8 +37,7 @@ export class MultipleDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<div class="flex align-items-center mb-4 gap-2">
+        basic: `<div class="flex align-items-center mb-4 gap-2">
     <p-inputSwitch inputId="input-metakey" [(ngModel)]="metaKeySelection"></p-inputSwitch>
     <label for="input-metakey">MetaKey</label>
 </div>
@@ -72,9 +64,9 @@ import { NodeService } from '../../service/nodeservice';
 export class TreeMultipleDemo implements OnInit {
     metaKeySelection: boolean = false;
 
-    files: TreeNode[];
+    files!: TreeNode[];
 
-    selectedFiles: TreeNode[];
+    selectedFiles!: TreeNode[];
 
     constructor(private nodeService: NodeService) {}
 

@@ -1,25 +1,21 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Message } from 'primeng/api';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'severity-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>The <i>severity</i> option specifies the type of the message.</p>
         </app-docsectiontext>
         <div class="card">
             <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
         </div>
         <app-code [code]="code" selector="messages-severity-demo"></app-code>
-    </section>`
+    `
 })
 export class SeverityDoc implements OnInit {
-    @Input() id: string;
-
-    @Input() title: string;
-
-    messages: Message[];
+    messages: Message[] | undefined;
 
     ngOnInit() {
         this.messages = [
@@ -31,8 +27,7 @@ export class SeverityDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>`,
+        basic: `<p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>`,
         html: `
 <div class="card">
     <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
@@ -46,7 +41,7 @@ import { Message } from 'primeng/api';
     templateUrl: './messages-severity-demo.html'
 })
 export class MessagesSeverityDemo implements OnInit {
-    messages: Message[];
+    messages: Message[] | undefined;
 
     ngOnInit() {
         this.messages = [

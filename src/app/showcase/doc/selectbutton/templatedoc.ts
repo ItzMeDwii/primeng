@@ -1,27 +1,23 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'template-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
-            <p>For custom content support define a ng-template where the local ng-template variable refers to an option in the options collection.</p>
+    template: `
+        <app-docsectiontext>
+            <p>For custom content support define a ng-template with <i>pTemplate</i> where the local ng-template variable refers to an option in the options collection.</p>
         </app-docsectiontext>
         <div class="card flex justify-content-center">
             <p-selectButton [options]="justifyOptions" [(ngModel)]="value" optionLabel="icon">
-                <ng-template let-item>
+                <ng-template let-item pTemplate>
                     <i [class]="item.icon"></i>
                 </ng-template>
             </p-selectButton>
         </div>
         <app-code [code]="code" selector="select-button-template-demo"></app-code>
-    </section>`
+    `
 })
 export class TemplateDoc {
-    @Input() id: string;
-
-    @Input() title: string;
-
     value: any;
 
     justifyOptions: any[] = [
@@ -32,9 +28,8 @@ export class TemplateDoc {
     ];
 
     code: Code = {
-        basic: `
-<p-selectButton [options]="justifyOptions" [(ngModel)]="value" optionLabel="icon">
-    <ng-template let-item>
+        basic: `<p-selectButton [options]="justifyOptions" [(ngModel)]="value" optionLabel="icon">
+    <ng-template let-item pTemplate>
         <i [class]="item.icon"></i>
     </ng-template>
 </p-selectButton>`,
@@ -42,7 +37,7 @@ export class TemplateDoc {
         html: `
 <div class="card flex justify-content-center">
     <p-selectButton [options]="justifyOptions" [(ngModel)]="value" optionLabel="icon">
-        <ng-template let-item>
+        <ng-template let-item pTemplate>
             <i [class]="item.icon"></i>
         </ng-template>
     </p-selectButton>

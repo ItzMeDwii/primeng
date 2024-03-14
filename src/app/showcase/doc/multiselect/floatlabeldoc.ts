@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Code } from '../../domain/code';
 
 interface City {
@@ -8,27 +8,23 @@ interface City {
 
 @Component({
     selector: 'floatlabel-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>A floating label appears on top of the input field when focused.</p>
         </app-docsectiontext>
         <div class="card flex justify-content-center">
             <span class="p-float-label">
-                <p-multiSelect [options]="cities" [(ngModel)]="selectedCities" optionLabel="name"></p-multiSelect>
-                <label for="ms-cities">Select Cities</label>
+                <p-multiSelect inputId="float-label" [options]="cities" [(ngModel)]="selectedCities" optionLabel="name"></p-multiSelect>
+                <label for="float-label">Select Cities</label>
             </span>
         </div>
         <app-code [code]="code" selector="multi-select-floatlabel-demo"></app-code>
-    </section>`
+    `
 })
 export class FloatLabelDoc implements OnInit {
-    @Input() id: string;
+    cities!: City[];
 
-    @Input() title: string;
-
-    cities: City[];
-
-    selectedCities: City[];
+    selectedCities!: City[];
 
     ngOnInit() {
         this.cities = [
@@ -41,17 +37,16 @@ export class FloatLabelDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<span class="p-float-label">
-    <p-multiSelect [options]="cities" [(ngModel)]="selectedCities" optionLabel="name"></p-multiSelect>
-    <label for="ms-cities">Select Cities</label>
+        basic: `<span class="p-float-label">
+    <p-multiSelect inputId="float-label" [options]="cities" [(ngModel)]="selectedCities" optionLabel="name"></p-multiSelect>
+    <label for="float-label">Select Cities</label>
 </span>`,
 
         html: `
 <div class="card flex justify-content-center">
     <span class="p-float-label">
-        <p-multiSelect [options]="cities" [(ngModel)]="selectedCities" optionLabel="name"></p-multiSelect>
-        <label for="ms-cities">Select Cities</label>
+        <p-multiSelect inputId="float-label" [options]="cities" [(ngModel)]="selectedCities" optionLabel="name"></p-multiSelect>
+        <label for="float-label">Select Cities</label>
     </span>
 </div>`,
 
@@ -68,9 +63,9 @@ interface City {
     templateUrl: './multi-select-floatlabel-demo.html'
 })
 export class MultiSelectFloatlabelDemo implements OnInit {
-    cities: City[];
+    cities!: City[];
 
-    selectedCities: City[];
+    selectedCities!: City[];
 
     ngOnInit() {
         this.cities = [

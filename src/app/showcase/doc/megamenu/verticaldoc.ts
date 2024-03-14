@@ -1,25 +1,21 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MegaMenuItem } from 'primeng/api';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'vertical-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Layout of the MegaMenu is changed with the <i>orientation</i> property that accepts <i>horizontal</i> and <i>vertical</i> as options.</p>
         </app-docsectiontext>
         <div class="card">
             <p-megaMenu [model]="items" orientation="vertical"></p-megaMenu>
         </div>
         <app-code [code]="code" selector="mega-menu-vertical-demo"></app-code>
-    </section>`
+    `
 })
 export class VerticalDoc implements OnInit {
-    @Input() id: string;
-
-    @Input() title: string;
-
-    items: MegaMenuItem[];
+    items: MegaMenuItem[] | undefined;
 
     ngOnInit() {
         this.items = [
@@ -141,8 +137,7 @@ export class VerticalDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-megaMenu [model]="items"></p-megaMenu>`,
+        basic: `<p-megaMenu [model]="items"></p-megaMenu>`,
 
         html: `
 <div class="card">
@@ -158,7 +153,7 @@ import { MegaMenuItem } from 'primeng/api';
     templateUrl: './mega-menu-vertical-demo.html'
 })
 export class MegaMenuVerticalDemo implements OnInit {
-    items: MegaMenuItem[];
+    items: MegaMenuItem[] | undefined;
 
     ngOnInit() {
         this.items = [

@@ -1,10 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Code } from '../../domain/code';
+
+interface EventItem {
+    status?: string;
+    date?: string;
+    icon?: string;
+    color?: string;
+    image?: string;
+}
 
 @Component({
     selector: 'template-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Sample implementation with custom content and styled markers.</p>
         </app-docsectiontext>
         <div class="card">
@@ -27,14 +35,10 @@ import { Code } from '../../domain/code';
             </p-timeline>
         </div>
         <app-code [code]="code" selector="timeline-template-demo"></app-code>
-    </section>`
+    `
 })
 export class TemplateDoc {
-    @Input() id: string;
-
-    @Input() title: string;
-
-    events: any[];
+    events: EventItem[];
 
     constructor() {
         this.events = [
@@ -46,8 +50,7 @@ export class TemplateDoc {
     }
 
     code: Code = {
-        basic: `
-<p-timeline [value]="events" align="alternate" styleClass="customized-timeline">
+        basic: `<p-timeline [value]="events" align="alternate" styleClass="customized-timeline">
     <ng-template pTemplate="marker" let-event>
         <span class="custom-marker shadow-2" [style.backgroundColor]="event.color">
             <i [ngClass]="event.icon"></i>
@@ -89,12 +92,20 @@ export class TemplateDoc {
         typescript: `
 import { Component } from '@angular/core';
 
+interface EventItem {
+    status?: string;
+    date?: string;
+    icon?: string;
+    color?: string;
+    image?: string;
+}
+
 @Component({
     selector: 'timeline-template-demo',
     templateUrl: './timeline-template-demo.html'
 })
 export class TimelineTemplateDemo {
-    events: any[];
+    events: EventItem[];
 
     constructor() {
         this.events = [

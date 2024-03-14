@@ -1,12 +1,11 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AppDocSectionTextComponent } from 'src/app/showcase/layout/doc/docsectiontext/app.docsectiontext.component';
+import { Component, OnInit } from '@angular/core';
 import { Code } from '../../../domain/code';
 import { PhotoService } from '../../../service/photoservice';
 
 @Component({
     selector: 'without-thumbnails-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id" [level]="3" #docsectiontext>
+    template: `
+        <app-docsectiontext>
             <p>Thumbnails can also be hidden in full screen mode.</p>
         </app-docsectiontext>
         <div class="card flex justify-content-center">
@@ -28,18 +27,12 @@ import { PhotoService } from '../../../service/photoservice';
             </p-galleria>
         </div>
         <app-code [code]="code" selector="galleria-full-screen-without-thumbnails-demo"></app-code>
-    </section>`
+    `
 })
 export class WithoutThumbnailsDoc implements OnInit {
-    @Input() id: string;
+    displayBasic: boolean | undefined;
 
-    @Input() title: string;
-
-    @ViewChild('docsectiontext', { static: true }) docsectiontext: AppDocSectionTextComponent;
-
-    displayBasic: boolean;
-
-    images: any[];
+    images: any[] | undefined;
 
     responsiveOptions: any[] = [
         {
@@ -67,8 +60,7 @@ export class WithoutThumbnailsDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-galleria
+        basic: `<p-galleria
     [(value)]="images"
     [(visible)]="displayBasic"
     [responsiveOptions]="responsiveOptions"
@@ -111,9 +103,9 @@ import { PhotoService } from '../../service/photoservice';
     templateUrl: './galleria-full-screen-without-thumbnails-demo.html'
 })
 export class GalleriaFullScreenWithoutThumbnailsDemo implements OnInit {
-    displayBasic: boolean;
+    displayBasic: boolean | undefined;
 
-    images: any[];
+    images: any[] | undefined;
 
     responsiveOptions: any[] = [
         {

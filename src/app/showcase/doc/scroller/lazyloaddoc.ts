@@ -1,10 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Code } from '../../domain/code';
 
+interface LazyEvent {
+    first: number;
+    last: number;
+}
 @Component({
     selector: 'lazy-load-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>
                 Lazy mode is handy to deal with large datasets where instead of loading the entire data, small chunks of data are loaded on demand by invoking onLazyLoad callback everytime scrolling requires a new chunk. To implement lazy loading,
                 enable <i>lazy</i> attribute, initialize your data as a placeholder with a length and finally implement a method callback using <i>onLazyLoad</i> that actually loads a chunk from a datasource. onLazyLoad gets an event object that
@@ -19,15 +23,11 @@ import { Code } from '../../domain/code';
             </p-scroller>
         </div>
         <app-code [code]="code" selector="scroller-lazy-load-demo"></app-code>
-    </section>`,
+    `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LazyLoadDoc {
-    @Input() id: string;
-
-    @Input() title: string;
-
-    items: string[];
+    items!: string[];
 
     lazyLoading: boolean = true;
 
@@ -39,7 +39,7 @@ export class LazyLoadDoc {
         this.items = Array.from({ length: 1000 });
     }
 
-    onLazyLoad(event) {
+    onLazyLoad(event: LazyEvent) {
         this.lazyLoading = true;
 
         if (this.loadLazyTimeout) {
@@ -62,8 +62,7 @@ export class LazyLoadDoc {
     }
 
     code: Code = {
-        basic: `
-<p-scroller [items]="items" [itemSize]="50" [showLoader]="true" [delay]="250" [loading]="lazyLoading" [lazy]="true" (onLazyLoad)="onLazyLoad($event)" styleClass="border-1 surface-border" [style]="{'width': '200px', 'height': '200px'}">
+        basic: `<p-scroller [items]="items" [itemSize]="50" [showLoader]="true" [delay]="250" [loading]="lazyLoading" [lazy]="true" (onLazyLoad)="onLazyLoad($event)" styleClass="border-1 surface-border" [style]="{'width': '200px', 'height': '200px'}">
     <ng-template pTemplate="item" let-item let-options="options">
         <div class="flex align-items-center p-2" [ngClass]="{ 'surface-ground': options.odd }" style="height: 50px;">{{ item }}</div>
     </ng-template>
@@ -81,13 +80,18 @@ export class LazyLoadDoc {
         typescript: `
 import { Component, OnInit } from '@angular/core';
 
+interface LazyEvent {
+    first: number;
+    last: number;
+}
+
 @Component({
     selector: 'scroller-lazy-load-demo',
     templateUrl: './scroller-lazy-load-demo.html',
     styleUrls: ['./scroller-lazy-load-demo.scss']
 })
 export class ScrollerLazyLoadDemo implements OnInit {
-    items: string[];
+    items!: string[];
 
     lazyLoading: boolean = true;
 
@@ -97,7 +101,7 @@ export class ScrollerLazyLoadDemo implements OnInit {
         this.items = Array.from({ length: 1000 });
     }
 
-    onLazyLoad(event) {
+    onLazyLoad(event: LazyEvent) {
         this.lazyLoading = true;
 
         if (this.loadLazyTimeout) {

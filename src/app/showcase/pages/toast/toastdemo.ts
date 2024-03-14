@@ -1,21 +1,19 @@
 import { Component } from '@angular/core';
-import { ImportDoc } from '../../doc/toast/importdoc';
-import { BasicDoc } from '../../doc/toast/basicdoc';
-import { SeverityDoc } from '../../doc/toast/severitydoc';
+import { AccessibilityDoc } from '../../doc/toast/accessibilitydoc';
 import { AnimationDoc } from '../../doc/toast/animationdoc';
-import { EventsDoc } from '../../doc/toast/eventsdoc';
-import { InterfaceDoc } from '../../doc/toast/interfacedoc';
+import { BasicDoc } from '../../doc/toast/basicdoc';
+import { ClearDoc } from '../../doc/toast/cleardoc';
+import { ImportDoc } from '../../doc/toast/importdoc';
+import { LifeDoc } from '../../doc/toast/lifedoc';
 import { MultipleDoc } from '../../doc/toast/multipledoc';
 import { PositionDoc } from '../../doc/toast/positiondoc';
-import { PropsDoc } from '../../doc/toast/propsdoc';
 import { ResponsiveDoc } from '../../doc/toast/responsivedoc';
+import { SeverityDoc } from '../../doc/toast/severitydoc';
 import { StickyDoc } from '../../doc/toast/stickydoc';
 import { StyleDoc } from '../../doc/toast/styledoc';
 import { TargetDoc } from '../../doc/toast/targetdoc';
 import { TemplateDoc } from '../../doc/toast/templatedoc';
-import { TemplatesDoc } from '../../doc/toast/templatesdoc';
-import { ClearDoc } from '../../doc/toast/cleardoc';
-import { AccessibilityDoc } from '../../doc/toast/accessibilitydoc';
+import { HeadlessDoc } from '../../doc/toast/headlessdoc';
 
 @Component({
     templateUrl: './toastdemo.html'
@@ -53,19 +51,29 @@ export class ToastDemo {
             component: TargetDoc
         },
         {
+            id: 'life',
+            label: 'Life',
+            component: LifeDoc
+        },
+        {
+            id: 'clear',
+            label: 'Clear',
+            component: ClearDoc
+        },
+        {
             id: 'sticky',
             label: 'Sticky',
             component: StickyDoc
         },
         {
-            id: 'clear',
-            label: 'Clearing Messages',
-            component: ClearDoc
-        },
-        {
             id: 'templating',
             label: 'Templating',
             component: TemplateDoc
+        },
+        {
+            id: 'headless',
+            label: 'Headless',
+            component: HeadlessDoc
         },
         {
             id: 'responsive',
@@ -86,29 +94,6 @@ export class ToastDemo {
             id: 'accessibility',
             label: 'Accessibility',
             component: AccessibilityDoc
-        }
-    ];
-
-    apiDocs = [
-        {
-            id: 'interface',
-            label: 'Message Interface',
-            component: InterfaceDoc
-        },
-        {
-            id: 'props',
-            label: 'Properties',
-            component: PropsDoc
-        },
-        {
-            id: 'events',
-            label: 'Events',
-            component: EventsDoc
-        },
-        {
-            id: 'templates',
-            label: 'Templates',
-            component: TemplatesDoc
         }
     ];
 }

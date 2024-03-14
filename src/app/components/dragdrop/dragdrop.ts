@@ -2,7 +2,10 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Directive, ElementRef, EventEmitter, HostListener, Input, NgModule, NgZone, OnDestroy, Output, Renderer2 } from '@angular/core';
 import { DomHandler } from 'primeng/dom';
 import { VoidListener } from 'primeng/ts-helpers';
-
+/**
+ * pDraggable directive apply draggable behavior to any element.
+ * @group Components
+ */
 @Directive({
     selector: '[pDraggable]',
     host: {
@@ -118,9 +121,9 @@ export class Draggable implements AfterViewInit, OnDestroy {
     dragStart(event: DragEvent) {
         if (this.allowDrag() && !this.pDraggableDisabled) {
             if (this.dragEffect) {
-                event.dataTransfer!.effectAllowed = this.dragEffect;
+                (event.dataTransfer as DataTransfer).effectAllowed = this.dragEffect;
             }
-            event.dataTransfer!.setData('text', this.scope!);
+            (event.dataTransfer as DataTransfer).setData('text', this.scope!);
 
             this.onDragStart.emit(event);
 
@@ -154,7 +157,10 @@ export class Draggable implements AfterViewInit, OnDestroy {
         this.unbindMouseListeners();
     }
 }
-
+/**
+ * pDroppable directive apply droppable behavior to any element.
+ * @group Components
+ */
 @Directive({
     selector: '[pDroppable]',
     host: {
@@ -165,6 +171,7 @@ export class Droppable implements AfterViewInit, OnDestroy {
     @Input('pDroppable') scope: string | string[] | undefined;
     /**
      * Whether the element is droppable, useful for conditional cases.
+     * @group Props
      */
     @Input() pDroppableDisabled: boolean = false;
     /**
@@ -233,7 +240,7 @@ export class Droppable implements AfterViewInit, OnDestroy {
         event.preventDefault();
 
         if (this.dropEffect) {
-            event.dataTransfer!.dropEffect = this.dropEffect;
+            (event.dataTransfer as DataTransfer).dropEffect = this.dropEffect;
         }
 
         DomHandler.addClass(this.el.nativeElement, 'p-draggable-enter');
@@ -244,12 +251,14 @@ export class Droppable implements AfterViewInit, OnDestroy {
     dragLeave(event: DragEvent) {
         event.preventDefault();
 
-        DomHandler.removeClass(this.el.nativeElement, 'p-draggable-enter');
-        this.onDragLeave.emit(event);
+        if (!this.el.nativeElement.contains(event.relatedTarget)) {
+            DomHandler.removeClass(this.el.nativeElement, 'p-draggable-enter');
+            this.onDragLeave.emit(event);
+        }
     }
 
     allowDrop(event: DragEvent): boolean {
-        let dragScope = event.dataTransfer!.getData('text');
+        let dragScope = (event.dataTransfer as DataTransfer).getData('text');
         if (typeof this.scope == 'string' && dragScope == this.scope) {
             return true;
         } else if (Array.isArray(this.scope)) {

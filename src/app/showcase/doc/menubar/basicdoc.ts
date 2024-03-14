@@ -1,25 +1,21 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'basic-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Menubar requires nested menuitems as its model.</p>
         </app-docsectiontext>
         <div class="card">
             <p-menubar [model]="items"></p-menubar>
         </div>
         <app-code [code]="code" selector="menubar-basic-demo"></app-code>
-    </section>`
+    `
 })
 export class BasicDoc implements OnInit {
-    @Input() id: string;
-
-    @Input() title: string;
-
-    items: MenuItem[];
+    items: MenuItem[] | undefined;
 
     ngOnInit() {
         this.items = [
@@ -148,8 +144,7 @@ export class BasicDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-menubar [model]="items"></p-menubar>`,
+        basic: `<p-menubar [model]="items"></p-menubar>`,
 
         html: `
 <div class="card">
@@ -165,7 +160,7 @@ import { MenuItem } from 'primeng/api';
     templateUrl: './menubar-basic-demo.html'
 })
 export class MenubarBasicDemo implements OnInit {
-    items: MenuItem[];
+    items: MenuItem[] | undefined;
 
     ngOnInit() {
         this.items = [

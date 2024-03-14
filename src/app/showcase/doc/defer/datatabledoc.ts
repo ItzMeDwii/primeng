@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Car } from '../../domain/car';
 import { Code } from '../../domain/code';
@@ -6,8 +6,8 @@ import { CarService } from '../../service/carservice';
 
 @Component({
     selector: 'datatable-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Defer is applied to a container element with pDefer directive where content needs to be placed inside an ng-template.</p>
         </app-docsectiontext>
         <div class="card">
@@ -37,16 +37,12 @@ import { CarService } from '../../service/carservice';
                 </ng-template>
             </div>
         </div>
-        <app-code [code]="code" selector="defer-data-table-demo"></app-code>
-    </section>`,
+        <app-code [code]="code" [extFiles]="extFiles" selector="defer-data-table-demo"></app-code>
+    `,
     providers: [MessageService, CarService]
 })
 export class DataTableDoc {
-    @Input() id: string;
-
-    @Input() title: string;
-
-    cars: Car[];
+    cars: Car[] | undefined;
 
     constructor(private carService: CarService, private messageService: MessageService) {}
 
@@ -56,8 +52,7 @@ export class DataTableDoc {
     }
 
     code: Code = {
-        basic: `
-<div pDefer (onLoad)="initData()">
+        basic: `<div pDefer (onLoad)="initData()">
     <ng-template>
         <p-table [value]="cars" responsiveLayout="scroll">
             <ng-template pTemplate="header">
@@ -113,7 +108,6 @@ export class DataTableDoc {
 import { Component, Input } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Car } from '../../domain/car';
-import { Code } from '../../domain/code';
 import { CarService } from '../../service/carservice';
 
 @Component({
@@ -122,7 +116,7 @@ import { CarService } from '../../service/carservice';
     providers: [MessageService, CarService]
 })
 export class DeferDataTableDemo {
-    cars: Car[];
+    cars: Car[] | undefined;
 
     constructor(private carService: CarService, private messageService: MessageService) {}
 
@@ -130,6 +124,28 @@ export class DeferDataTableDemo {
         this.messageService.add({ severity: 'success', summary: 'Data Initialized', detail: 'Render Completed' });
         this.carService.getCarsSmall().then((cars) => (this.cars = cars));
     }
-}`
+}`,
+        data: `{
+            vin: 'ee8a89d8',
+            brand: 'Fiat',
+            year: 1987,
+            color: 'Maroon'
+}`,
+        service: ['CarService']
     };
+    extFiles = [
+        {
+            path: 'src/domain/car.ts',
+            content: `
+export interface Car {
+    id?;
+    vin?;
+    year?;
+    brand?;
+    color?;
+    price?;
+    saleDate?;
+}`
+        }
+    ];
 }

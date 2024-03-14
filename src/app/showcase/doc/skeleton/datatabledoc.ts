@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'datatable-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Sample DataTable implementation using different Skeleton components and PrimeFlex CSS utilities.</p>
         </app-docsectiontext>
         <div class="card">
@@ -28,22 +28,17 @@ import { Code } from '../../domain/code';
             </p-table>
         </div>
         <app-code [code]="code" selector="skeleton-data-table-demo"></app-code>
-    </section>`
+    `
 })
 export class DataTableDoc implements OnInit {
-    @Input() id: string;
-
-    @Input() title: string;
-
-    products: any[];
+    products: any[] | undefined;
 
     ngOnInit() {
         this.products = Array.from({ length: 5 }).map((_, i) => `Item #${i}`);
     }
 
     code: Code = {
-        basic: `
-<p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+        basic: `<p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
         <tr>
             <th>Code</th>
@@ -90,7 +85,7 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: './skeleton-data-table-demo.html'
 })
 export class SkeletonDataTableDemo implements OnInit {
-    products: any[];
+    products: any[] | undefined;
 
     ngOnInit() {
         this.products = Array.from({ length: 5 }).map((_, i) => \`Item #\${i}\`);

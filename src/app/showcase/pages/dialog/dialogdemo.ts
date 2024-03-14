@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { BasicDoc } from '../../doc/dialog/basicdoc';
-import { EventsDoc } from '../../doc/dialog/eventsdoc';
 import { ImportDoc } from '../../doc/dialog/importdoc';
 import { LongContentDoc } from '../../doc/dialog/longcontentdoc';
-import { PropsDoc } from '../../doc/dialog/propsdoc';
 import { StyleDoc } from '../../doc/dialog/styledoc';
 import { ResponsiveDoc } from '../../doc/dialog/responsivedoc';
 import { PositionDoc } from '../../doc/dialog/positiondoc';
@@ -11,6 +9,7 @@ import { MaximizableDoc } from '../../doc/dialog/maximizabledoc';
 import { TemplateDoc } from '../../doc/dialog/templatedoc';
 import { OverlaysInsideDoc } from '../../doc/dialog/overlaysinsidedoc';
 import { ModalDoc } from '../../doc/dialog/modaldoc';
+import { HeadlessDoc } from '../../doc/dialog/headlessdoc';
 import { AccessibilityDoc } from '../../doc/dialog/accessibilitydoc';
 
 @Component({
@@ -64,6 +63,11 @@ export class DialogDemo {
             component: OverlaysInsideDoc
         },
         {
+            id: 'headless',
+            label: 'Headless',
+            component: HeadlessDoc
+        },
+        {
             id: 'style',
             label: 'Style',
             component: StyleDoc
@@ -72,19 +76,6 @@ export class DialogDemo {
             id: 'accessibility',
             label: 'Accessibility',
             component: AccessibilityDoc
-        }
-    ];
-
-    apiDocs = [
-        {
-            id: 'props',
-            label: 'Properties',
-            component: PropsDoc
-        },
-        {
-            id: 'events',
-            label: 'Events',
-            component: EventsDoc
         }
     ];
 }

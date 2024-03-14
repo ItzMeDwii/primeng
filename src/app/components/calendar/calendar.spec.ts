@@ -925,14 +925,14 @@ describe('Calendar', () => {
         inputEl.nativeElement.dispatchEvent(focusEvent);
         fixture.detectChanges();
 
-        const seperatorEl = fixture.debugElement.queryAll(By.css('.p-separator'));
+        const separatorEl = fixture.debugElement.queryAll(By.css('.p-separator'));
         const secondPicker = fixture.debugElement.query(By.css('.p-second-picker'));
-        expect(seperatorEl.length).toEqual(2);
+        expect(separatorEl.length).toEqual(2);
         expect(calendar.showSeconds).toBeTruthy();
-        expect(seperatorEl[0]).toBeTruthy();
-        expect(seperatorEl[1]).toBeTruthy();
-        expect(seperatorEl[0].children[0].nativeElement.textContent).toEqual(':');
-        expect(seperatorEl[1].children[0].nativeElement.textContent).toEqual(':');
+        expect(separatorEl[0]).toBeTruthy();
+        expect(separatorEl[1]).toBeTruthy();
+        expect(separatorEl[0].children[0].nativeElement.textContent).toEqual(':');
+        expect(separatorEl[1].children[0].nativeElement.textContent).toEqual(':');
         expect(secondPicker).toBeTruthy();
         expect(secondPicker.queryAll(By.css('span'))[0].nativeElement.textContent).toEqual('21');
     });
@@ -1396,6 +1396,32 @@ describe('Calendar', () => {
         expect(onInputBlurSpy).toHaveBeenCalled();
         expect(updateInputfieldSpy).not.toHaveBeenCalled();
         expect(onModelTouchedSpy).toHaveBeenCalled();
+    });
+
+    it('should trigger onModelChange when user input a well-formatted but invalid value with keepInvalid=true', () => {
+        const today = new Date();
+
+        calendar.keepInvalid = true;
+        calendar.dateFormat = 'yy/mm/dd';
+        calendar.minDate = today;
+        fixture.detectChanges();
+
+        const onModelChangeSpy = spyOn(calendar, 'onModelChange').and.callThrough();
+
+        const inputEl = fixture.debugElement.query(By.css('.p-inputtext'));
+        const focusEvent = new Event('focus');
+        const blurEvent = new Event('blur');
+
+        inputEl.nativeElement.click();
+        inputEl.nativeElement.dispatchEvent(focusEvent);
+        fixture.detectChanges();
+        expect(onModelChangeSpy).not.toHaveBeenCalled();
+
+        // simulate user input
+        inputEl.nativeElement.value = '2000/01/01'; // <-- an invalid value (= before today)
+        calendar.isKeydown = true;
+        calendar.onUserInput({ target: inputEl.nativeElement });
+        expect(onModelChangeSpy).toHaveBeenCalled();
     });
 
     it('should change appendto', () => {

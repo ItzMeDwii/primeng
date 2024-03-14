@@ -23,7 +23,9 @@ import { EventsDoc } from '../../doc/calendar/eventsdoc';
 import { MethodsDoc } from '../../doc/calendar/methodsdoc';
 import { AccessibilityDoc } from '../../doc/calendar/accessibilitydoc';
 import { ReactiveFormsDoc } from '../../doc/calendar/reactiveformsdoc';
-
+import { FloatLabelDoc } from '../../doc/calendar/floatlabeldoc';
+import { InvalidDoc } from '../../doc/calendar/invaliddoc';
+import { DisabledDoc } from '../../doc/calendar/disableddoc';
 @Component({
     templateUrl: './calendardemo.html'
 })
@@ -120,6 +122,21 @@ export class CalendarDemo {
             component: InlineDoc
         },
         {
+            id: 'floatlabel',
+            label: 'Float Label',
+            component: FloatLabelDoc
+        },
+        {
+            id: 'invalid',
+            label: 'Invalid',
+            component: InvalidDoc
+        },
+        {
+            id: 'disabled',
+            label: 'Disabled',
+            component: DisabledDoc
+        },
+        {
             id: 'style',
             label: 'Style',
             component: StyleDoc
@@ -128,29 +145,6 @@ export class CalendarDemo {
             id: 'accessibility',
             label: 'Accessibility',
             component: AccessibilityDoc
-        }
-    ];
-
-    apiDocs = [
-        {
-            id: 'properties',
-            label: 'Properties',
-            component: PropsDoc
-        },
-        {
-            id: 'events',
-            label: 'Events',
-            component: EventsDoc
-        },
-        {
-            id: 'templates',
-            label: 'Templates',
-            component: TemplatesDoc
-        },
-        {
-            id: 'methods',
-            label: 'Methods',
-            component: MethodsDoc
         }
     ];
 }

@@ -1,10 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Code } from '../../domain/code';
+
+interface EventItem {
+    status?: string;
+    date?: string;
+    icon?: string;
+    color?: string;
+    image?: string;
+}
 
 @Component({
     selector: 'alignment-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Content location relative the line is defined with the <i>align</i> property.</p>
         </app-docsectiontext>
         <div class="card flex flex-wrap gap-6">
@@ -27,14 +35,10 @@ import { Code } from '../../domain/code';
             </p-timeline>
         </div>
         <app-code [code]="code" selector="timeline-alignment-demo"></app-code>
-    </section>`
+    `
 })
 export class AlignmentDoc {
-    @Input() id: string;
-
-    @Input() title: string;
-
-    events: any[];
+    events: EventItem[];
 
     constructor() {
         this.events = [
@@ -46,8 +50,7 @@ export class AlignmentDoc {
     }
 
     code: Code = {
-        basic: `
-<p-timeline [value]="events" class="w-full md:w-20rem">
+        basic: `<p-timeline [value]="events" class="w-full md:w-20rem">
     <ng-template pTemplate="content" let-event>
         {{ event.status }}
     </ng-template>
@@ -87,12 +90,20 @@ export class AlignmentDoc {
         typescript: `
 import { Component } from '@angular/core';
 
+interface EventItem {
+    status?: string;
+    date?: string;
+    icon?: string;
+    color?: string;
+    image?: string;
+}
+
 @Component({
     selector: 'timeline-alignment-demo',
     templateUrl: './timeline-alignment-demo.html'
 })
 export class TimelineAlignmentDemo {
-    events: any[];
+    events: EventItem[];
 
     constructor() {
         this.events = [

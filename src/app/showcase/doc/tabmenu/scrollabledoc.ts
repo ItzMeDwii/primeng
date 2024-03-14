@@ -1,27 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'scrollable-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Setting <i>scrollable</i> property to <i>true</i> enables scrolling if content overflows.</p>
         </app-docsectiontext>
         <div class="card">
             <p-tabMenu [scrollable]="true" [model]="items" [activeItem]="activeItem"></p-tabMenu>
         </div>
         <app-code [code]="code" selector="tab-menu-scrollable-demo"></app-code>
-    </section>`
+    `
 })
 export class ScrollableDoc implements OnInit {
-    @Input() id: string;
+    items: MenuItem[] | undefined;
 
-    @Input() title: string;
-
-    items: MenuItem[];
-
-    activeItem: MenuItem;
+    activeItem: MenuItem | undefined;
 
     ngOnInit() {
         this.items = Array.from({ length: 50 }, (_, i) => ({ label: `Tab ${i + 1}` }));
@@ -29,8 +25,7 @@ export class ScrollableDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-tabMenu [scrollable]="true" [model]="items" [activeItem]="activeItem"></p-tabMenu>`,
+        basic: `<p-tabMenu [scrollable]="true" [model]="items" [activeItem]="activeItem"></p-tabMenu>`,
 
         html: `
 <div class="card">
@@ -46,9 +41,9 @@ import { MenuItem } from 'primeng/api';
     templateUrl: './tab-menu-scrollable-demo.html'
 })
 export class TabMenuScrollableDemo implements OnInit {
-    items: MenuItem[];
+    items: MenuItem[] | undefined;
 
-    activeItem: MenuItem;
+    activeItem: MenuItem | undefined;
 
     ngOnInit() {
         this.items = Array.from({ length: 50 }, (_, i) => ({ label: \`Tab \${i + 1}\`}));

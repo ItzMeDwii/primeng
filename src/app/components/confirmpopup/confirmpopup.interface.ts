@@ -6,11 +6,19 @@ import { TemplateRef } from '@angular/core';
  */
 export interface ConfirmPopupTemplates {
     /**
+     * Custom content template.
+     */
+    content(context: { $implicit?: any }): TemplateRef<any>;
+    /**
      * Custom template of rejecticon.
      */
-    rejecticon: TemplateRef<any> | null;
+    rejecticon(): TemplateRef<any>;
     /**
      * Custom template of accepticon.
      */
-    accepticon: TemplateRef<any> | null;
+    accepticon(): TemplateRef<any>;
+    /**
+     * Headless template.
+     */
+    headless(context: { $implicit?: any }): TemplateRef<any>;
 }

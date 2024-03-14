@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { AccessibilityDoc } from '../../doc/cascadeselect/accessibilitydoc';
 import { BasicDoc } from '../../doc/cascadeselect/basicdoc';
-import { EventsDoc } from '../../doc/cascadeselect/eventsdoc';
 import { ImportDoc } from '../../doc/cascadeselect/importdoc';
-import { PropsDoc } from '../../doc/cascadeselect/propsdoc';
 import { ReactiveFormsDoc } from '../../doc/cascadeselect/reactiveformsdoc';
+import { InvalidDoc } from '../../doc/cascadeselect/invaliddoc';
+import { FloatLabelDoc } from '../../doc/cascadeselect/floatlabeldoc';
 import { StyleDoc } from '../../doc/cascadeselect/styledoc';
 import { TemplateDoc } from '../../doc/cascadeselect/templatedoc';
-import { TemplatesDoc } from '../../doc/cascadeselect/templatesdoc';
+import { DisabledDoc } from '../../doc/cascadeselect/disableddoc';
 
 @Component({
     templateUrl: './cascadeselectdemo.html'
@@ -35,6 +35,21 @@ export class CascadeSelectDemo {
             component: TemplateDoc
         },
         {
+            id: 'float-label',
+            label: 'Float Label',
+            component: FloatLabelDoc
+        },
+        {
+            id: 'invalid',
+            label: 'Invalid',
+            component: InvalidDoc
+        },
+        {
+            id: 'disabled',
+            label: 'Disabled',
+            component: DisabledDoc
+        },
+        {
             id: 'style',
             label: 'Style',
             component: StyleDoc
@@ -43,24 +58,6 @@ export class CascadeSelectDemo {
             id: 'accessibility',
             label: 'Accessibility',
             component: AccessibilityDoc
-        }
-    ];
-
-    apiDocs = [
-        {
-            id: 'properties',
-            label: 'Properties',
-            component: PropsDoc
-        },
-        {
-            id: 'events',
-            label: 'Events',
-            component: EventsDoc
-        },
-        {
-            id: 'templates',
-            label: 'Templates',
-            component: TemplatesDoc
         }
     ];
 }

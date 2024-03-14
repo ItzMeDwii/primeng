@@ -1,4 +1,4 @@
-import { animate, style, transition, trigger } from '@angular/animations';
+import { AnimationEvent, animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
     AfterContentInit,
@@ -10,7 +10,6 @@ import {
     DoCheck,
     ElementRef,
     EventEmitter,
-    forwardRef,
     HostListener,
     Inject,
     Input,
@@ -19,32 +18,35 @@ import {
     OnDestroy,
     OnInit,
     Output,
+    PLATFORM_ID,
     Pipe,
     PipeTransform,
-    PLATFORM_ID,
     QueryList,
     Renderer2,
     TemplateRef,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
+    forwardRef
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { OverlayService, PrimeNGConfig, PrimeTemplate, SharedModule, TranslationKeys } from 'primeng/api';
 import { ConnectedOverlayScrollHandler, DomHandler } from 'primeng/dom';
+import { EyeIcon } from 'primeng/icons/eye';
+import { EyeSlashIcon } from 'primeng/icons/eyeslash';
+import { TimesIcon } from 'primeng/icons/times';
 import { InputTextModule } from 'primeng/inputtext';
+import { Nullable, VoidListener } from 'primeng/ts-helpers';
 import { ZIndexUtils } from 'primeng/utils';
 import { Subscription } from 'rxjs';
-import { TimesIcon } from 'primeng/icons/times';
-import { EyeSlashIcon } from 'primeng/icons/eyeslash';
-import { EyeIcon } from 'primeng/icons/eye';
-import { Nullable, VoidListener } from 'primeng/ts-helpers';
-import { AnimationEvent } from '@angular/animations';
 
 type Meter = {
     strength: string;
     width: string;
 };
-
+/**
+ * Password directive.
+ * @group Components
+ */
 @Directive({
     selector: '[pPassword]',
     host: {
@@ -319,10 +321,14 @@ export const Password_VALUE_ACCESSOR: any = {
     useExisting: forwardRef(() => Password),
     multi: true
 };
+/**
+ * Password displays strength indicator for password fields.
+ * @group Components
+ */
 @Component({
     selector: 'p-password',
     template: `
-        <div [ngClass]="toggleMask | mapper : containerClass" [ngStyle]="style" [class]="styleClass">
+        <div [ngClass]="toggleMask | mapper : containerClass" [ngStyle]="style" [class]="styleClass" [attr.data-pc-name]="'password'" [attr.data-pc-section]="'root'">
             <input
                 #input
                 [attr.label]="label"
@@ -335,30 +341,31 @@ export const Password_VALUE_ACCESSOR: any = {
                 [class]="inputStyleClass"
                 [attr.type]="unmasked | mapper : inputType"
                 [attr.placeholder]="placeholder"
+                [attr.autocomplete]="autocomplete"
                 [value]="value"
                 (input)="onInput($event)"
                 (focus)="onInputFocus($event)"
                 (blur)="onInputBlur($event)"
                 (keyup)="onKeyUp($event)"
-                (keydown)="onKeyDown($event)"
                 [attr.maxlength]="maxLength"
+                [attr.data-pc-section]="'input'"
             />
             <ng-container *ngIf="showClear && value != null">
-                <TimesIcon *ngIf="!clearIconTemplate" [styleClass]="'p-password-clear-icon'" (click)="clear()" />
-                <span (click)="clear()" class="p-password-clear-icon">
+                <TimesIcon *ngIf="!clearIconTemplate" [styleClass]="'p-password-clear-icon'" (click)="clear()" [attr.data-pc-section]="'clearIcon'" />
+                <span (click)="clear()" class="p-password-clear-icon" [attr.data-pc-section]="'clearIcon'">
                     <ng-template *ngTemplateOutlet="clearIconTemplate"></ng-template>
                 </span>
             </ng-container>
 
             <ng-container *ngIf="toggleMask">
                 <ng-container *ngIf="unmasked">
-                    <EyeSlashIcon *ngIf="!hideIconTemplate" (click)="onMaskToggle()" />
+                    <EyeSlashIcon *ngIf="!hideIconTemplate" (click)="onMaskToggle()" [attr.data-pc-section]="'hideIcon'" />
                     <span *ngIf="hideIconTemplate" (click)="onMaskToggle()">
                         <ng-template *ngTemplateOutlet="hideIconTemplate"></ng-template>
                     </span>
                 </ng-container>
                 <ng-container *ngIf="!unmasked">
-                    <EyeIcon *ngIf="!showIconTemplate" (click)="onMaskToggle()" />
+                    <EyeIcon *ngIf="!showIconTemplate" (click)="onMaskToggle()" [attr.data-pc-section]="'showIcon'" />
                     <span *ngIf="showIconTemplate" (click)="onMaskToggle()">
                         <ng-template *ngTemplateOutlet="showIconTemplate"></ng-template>
                     </span>
@@ -373,16 +380,17 @@ export const Password_VALUE_ACCESSOR: any = {
                 [@overlayAnimation]="{ value: 'visible', params: { showTransitionParams: showTransitionOptions, hideTransitionParams: hideTransitionOptions } }"
                 (@overlayAnimation.start)="onAnimationStart($event)"
                 (@overlayAnimation.done)="onAnimationEnd($event)"
+                [attr.data-pc-section]="'panel'"
             >
                 <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
                 <ng-container *ngIf="contentTemplate; else content">
                     <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
                 </ng-container>
                 <ng-template #content>
-                    <div class="p-password-meter">
-                        <div [ngClass]="meter | mapper : strengthClass" [ngStyle]="{ width: meter ? meter.width : '' }"></div>
+                    <div class="p-password-meter" [attr.data-pc-section]="'meter'">
+                        <div [ngClass]="meter | mapper : strengthClass" [ngStyle]="{ width: meter ? meter.width : '' }" [attr.data-pc-section]="'meterLabel'"></div>
                     </div>
-                    <div className="p-password-info">{{ infoText }}</div>
+                    <div class="p-password-info" [attr.data-pc-section]="'info'">{{ infoText }}</div>
                 </ng-template>
                 <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
             </div>
@@ -428,12 +436,12 @@ export class Password implements AfterContentInit, OnInit {
      */
     @Input() promptLabel: string | undefined;
     /**
-     * ^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,}).
+     * Regex value for medium regex.
      * @group Props
      */
     @Input() mediumRegex: string = '^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})';
     /**
-     * ^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})
+     * Regex value for strong regex.
      * @group Props
      */
     @Input() strongRegex: string = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})';
@@ -483,16 +491,6 @@ export class Password implements AfterContentInit, OnInit {
      */
     @Input() inputStyleClass: string | undefined;
     /**
-     * Inline style of the overlay panel element.
-     * @group Props
-     */
-    @Input() panelStyle: any;
-    /**
-     * Style class of the overlay panel element.
-     * @group Props
-     */
-    @Input() panelStyleClass: string | undefined;
-    /**
      * Style class of the element.
      * @group Props
      */
@@ -501,12 +499,12 @@ export class Password implements AfterContentInit, OnInit {
      * Inline style of the component.
      * @group Props
      */
-    @Input() style: any;
+    @Input() style: { [klass: string]: any } | null | undefined;
     /**
      * Inline style of the input field.
      * @group Props
      */
-    @Input() inputStyle: any;
+    @Input() inputStyle: { [klass: string]: any } | null | undefined;
     /**
      * Transition options of the show animation.
      * @group Props
@@ -517,6 +515,11 @@ export class Password implements AfterContentInit, OnInit {
      * @group Props
      */
     @Input() hideTransitionOptions: string = '.1s linear';
+    /**
+     * Specify automated assistance in filling out password by browser.
+     * @group Props
+     */
+    @Input() autocomplete: string | undefined;
     /**
      * Advisory information to display on input.
      * @group Props
@@ -543,7 +546,7 @@ export class Password implements AfterContentInit, OnInit {
      * Callback to invoke when clear button is clicked.
      * @group Emits
      */
-    @Output() onClear: EventEmitter<undefined | null> = new EventEmitter<undefined | null>();
+    @Output() onClear: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('input') input!: ElementRef;
 
@@ -709,16 +712,16 @@ export class Password implements AfterContentInit, OnInit {
         this.onBlur.emit(event);
     }
 
-    onKeyDown(event: KeyboardEvent) {
-        if (event.key === 'Escape') {
-            this.overlayVisible = false;
-        }
-    }
-
-    onKeyUp(event: Event) {
+    onKeyUp(event: KeyboardEvent) {
         if (this.feedback) {
             let value = (event.target as HTMLInputElement).value;
             this.updateUI(value);
+
+            if (event.code === 'Escape') {
+                this.overlayVisible && (this.overlayVisible = false);
+
+                return;
+            }
 
             if (!this.overlayVisible) {
                 this.overlayVisible = true;

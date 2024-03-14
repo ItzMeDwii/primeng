@@ -26,13 +26,14 @@ import { BlockableUI, PrimeNGConfig, PrimeTemplate, SharedModule, TranslationKey
 import { DomHandler } from 'primeng/dom';
 import { RippleModule } from 'primeng/ripple';
 import { Scroller, ScrollerModule } from 'primeng/scroller';
-import { ScrollerOptions } from 'primeng/scroller';
+import { ScrollerOptions } from 'primeng/api';
 import { ObjectUtils } from 'primeng/utils';
 import { Subscription } from 'rxjs';
 import { CheckIcon } from 'primeng/icons/check';
 import { ChevronDownIcon } from 'primeng/icons/chevrondown';
 import { ChevronRightIcon } from 'primeng/icons/chevronright';
 import { MinusIcon } from 'primeng/icons/minus';
+import { PlusIcon } from 'primeng/icons/plus';
 import { SearchIcon } from 'primeng/icons/search';
 import { SpinnerIcon } from 'primeng/icons/spinner';
 import { Nullable } from 'primeng/ts-helpers';
@@ -56,13 +57,29 @@ import {
             <li
                 *ngIf="tree.droppableNodes"
                 class="p-treenode-droppoint"
+                [attr.aria-hidden]="true"
                 [ngClass]="{ 'p-treenode-droppoint-active': draghoverPrev }"
                 (drop)="onDropPoint($event, -1)"
                 (dragover)="onDropPointDragOver($event)"
                 (dragenter)="onDropPointDragEnter($event, -1)"
                 (dragleave)="onDropPointDragLeave($event)"
             ></li>
-            <li *ngIf="!tree.horizontal" [ngClass]="['p-treenode', node.styleClass || '', isLeaf() ? 'p-treenode-leaf' : '']" [ngStyle]="{ height: itemSize + 'px' }" [style]="node.style">
+            <li
+                *ngIf="!tree.horizontal"
+                [ngClass]="['p-treenode', node.styleClass || '', isLeaf() ? 'p-treenode-leaf' : '']"
+                [ngStyle]="{ height: itemSize + 'px' }"
+                [style]="node.style"
+                [attr.aria-label]="node.label"
+                [attr.aria-checked]="ariaChecked"
+                [attr.aria-setsize]="node.children ? node.children.length : 0"
+                [attr.aria-selected]="ariaSelected"
+                [attr.aria-expanded]="node.expanded"
+                [attr.aria-posinset]="index + 1"
+                [attr.aria-level]="level + 1"
+                [attr.tabindex]="index === 0 ? 0 : -1"
+                role="treeitem"
+                (keydown)="onKeyDown($event)"
+            >
                 <div
                     class="p-treenode-content"
                     [style.paddingLeft]="level * indentation + 'rem'"
@@ -76,17 +93,9 @@ import {
                     [draggable]="tree.draggableNodes"
                     (dragstart)="onDragStart($event)"
                     (dragend)="onDragStop($event)"
-                    [attr.tabindex]="0"
                     [ngClass]="{ 'p-treenode-selectable': tree.selectionMode && node.selectable !== false, 'p-treenode-dragover': draghoverNode, 'p-highlight': isSelected() }"
-                    role="treeitem"
-                    (keydown)="onKeyDown($event)"
-                    [attr.aria-posinset]="this.index + 1"
-                    [attr.aria-expanded]="this.node.expanded"
-                    [attr.aria-selected]="isSelected()"
-                    [attr.aria-label]="node.label"
-                    [attr.data-id]="node.key"
                 >
-                    <button type="button" [attr.aria-label]="tree.togglerAriaLabel" class="p-tree-toggler p-link" (click)="toggle($event)" pRipple tabindex="-1">
+                    <button type="button" [attr.data-pc-section]="'toggler'" class="p-tree-toggler p-link" (click)="toggle($event)" pRipple tabindex="-1" aria-hidden="true">
                         <ng-container *ngIf="!tree.togglerIconTemplate">
                             <ChevronRightIcon *ngIf="!node.expanded" [styleClass]="'p-tree-toggler-icon'" />
                             <ChevronDownIcon *ngIf="node.expanded" [styleClass]="'p-tree-toggler-icon'" />
@@ -95,10 +104,10 @@ import {
                             <ng-template *ngTemplateOutlet="tree.togglerIconTemplate; context: { $implicit: node.expanded }"></ng-template>
                         </span>
                     </button>
-                    <div class="p-checkbox p-component" [ngClass]="{ 'p-checkbox-disabled': node.selectable === false }" *ngIf="tree.selectionMode == 'checkbox'" [attr.aria-checked]="isSelected()">
-                        <div class="p-checkbox-box" [ngClass]="{ 'p-highlight': isSelected(), 'p-indeterminate': node.partialSelected }">
+                    <div class="p-checkbox p-component" [ngClass]="{ 'p-checkbox-disabled p-disabled': node.selectable === false }" *ngIf="tree.selectionMode == 'checkbox'" aria-hidden="true">
+                        <div class="p-checkbox-box" [ngClass]="{ 'p-highlight': isSelected(), 'p-indeterminate': node.partialSelected }" role="checkbox">
                             <ng-container *ngIf="!tree.checkboxIconTemplate">
-                                <CheckIcon *ngIf="isSelected()" [styleClass]="'p-checkbox-icon'" />
+                                <CheckIcon *ngIf="!node.partialSelected && isSelected()" [styleClass]="'p-checkbox-icon'" />
                                 <MinusIcon *ngIf="node.partialSelected" [styleClass]="'p-checkbox-icon'" />
                             </ng-container>
                             <ng-template *ngTemplateOutlet="tree.checkboxIconTemplate; context: { $implicit: isSelected(), partialSelected: node.partialSelected }"></ng-template>
@@ -112,7 +121,7 @@ import {
                         </span>
                     </span>
                 </div>
-                <ul class="p-treenode-children" style="display: none;" *ngIf="!tree.virtualScroll && node.children && node.expanded" [style.display]="node.expanded ? 'block' : 'none'" role="group">
+                <ul class="p-treenode-children" style="display: none;" *ngIf="!tree.virtualScroll && node.children && node.expanded" [style.display]="node.expanded ? 'block' : 'none'" role="tree">
                     <p-treeNode
                         *ngFor="let childNode of node.children; let firstChild = first; let lastChild = last; let index = index; trackBy: tree.trackBy"
                         [node]="childNode"
@@ -125,15 +134,18 @@ import {
                     ></p-treeNode>
                 </ul>
             </li>
+
             <li
                 *ngIf="tree.droppableNodes && lastChild"
                 class="p-treenode-droppoint"
                 [ngClass]="{ 'p-treenode-droppoint-active': draghoverNext }"
                 (drop)="onDropPoint($event, 1)"
+                [attr.aria-hidden]="true"
                 (dragover)="onDropPointDragOver($event)"
                 (dragenter)="onDropPointDragEnter($event, 1)"
                 (dragleave)="onDropPointDragLeave($event)"
             ></li>
+
             <table *ngIf="tree.horizontal" [class]="node.styleClass">
                 <tbody>
                     <tr>
@@ -197,9 +209,9 @@ export class UITreeNode implements OnInit {
 
     @Input() rowNode: any;
 
-    @Input() node: TreeNode | undefined;
+    @Input() node: TreeNode<any> | undefined;
 
-    @Input() parentNode: TreeNode | undefined;
+    @Input() parentNode: TreeNode<any> | undefined;
 
     @Input() root: boolean | undefined;
 
@@ -225,6 +237,14 @@ export class UITreeNode implements OnInit {
 
     draghoverNode: boolean | undefined;
 
+    get ariaSelected() {
+        return this.tree.selectionMode === 'single' || this.tree.selectionMode === 'multiple' ? this.isSelected() : undefined;
+    }
+
+    get ariaChecked() {
+        return this.tree.selectionMode === 'checkbox' ? this.isSelected() : undefined;
+    }
+
     constructor(@Inject(forwardRef(() => Tree)) tree: Tree) {
         this.tree = tree as Tree;
     }
@@ -232,12 +252,13 @@ export class UITreeNode implements OnInit {
     ngOnInit() {
         (<TreeNode>this.node).parent = this.parentNode;
         if (this.parentNode) {
-            this.tree.syncNodeOption(<TreeNode>this.node, <TreeNode[]>this.tree.value, 'parent', this.tree.getNodeWithKey(<string>this.parentNode.key, <TreeNode[]>this.tree.value));
+            this.setAllNodesTabIndexes();
+            this.tree.syncNodeOption(<TreeNode>this.node, <TreeNode<any>[]>this.tree.value, 'parent', this.tree.getNodeWithKey(<string>this.parentNode.key, <TreeNode<any>[]>this.tree.value));
         }
     }
 
     getIcon() {
-        let icon: string;
+        let icon: string | undefined;
 
         if ((<TreeNode>this.node).icon) icon = (<TreeNode>this.node).icon as string;
         else icon = (<TreeNode>this.node).expanded && (<TreeNode>this.node).children && (<TreeNode>this.node).children?.length ? (<TreeNode>this.node).expandedIcon : (<TreeNode>this.node).collapsedIcon;
@@ -279,7 +300,7 @@ export class UITreeNode implements OnInit {
     }
 
     onNodeKeydown(event: KeyboardEvent) {
-        if (event.which === 13) {
+        if (event.key === 'Enter') {
             this.tree.onNodeClick(event, <TreeNode>this.node);
         }
     }
@@ -294,6 +315,10 @@ export class UITreeNode implements OnInit {
 
     isSelected() {
         return this.tree.isSelected(<TreeNode>this.node);
+    }
+
+    isSameNode(event) {
+        return event.currentTarget && (event.currentTarget.isSameNode(event.target) || event.currentTarget.isSameNode(event.target.closest('[role="treeitem"]')));
     }
 
     onDropPoint(event: DragEvent, position: number) {
@@ -484,72 +509,39 @@ export class UITreeNode implements OnInit {
     }
 
     onKeyDown(event: KeyboardEvent) {
-        const nodeElement = (<HTMLDivElement>event.target).parentElement?.parentElement;
-
-        if (nodeElement?.nodeName !== 'P-TREENODE' || (this.tree.contextMenu && this.tree.contextMenu.containerViewChild.nativeElement.style.display === 'block')) {
+        if (!this.isSameNode(event) || (this.tree.contextMenu && this.tree.contextMenu.containerViewChild?.nativeElement.style.display === 'block')) {
             return;
         }
 
-        switch (event.which) {
+        switch (event.code) {
             //down arrow
-            case 40:
-                const listElement = this.tree.droppableNodes ? nodeElement.children[1].children[1] : nodeElement.children[0].children[1];
-                if (listElement && listElement.children.length > 0) {
-                    this.focusNode(listElement.children[0]);
-                } else {
-                    const nextNodeElement = nodeElement.nextElementSibling;
-                    if (nextNodeElement) {
-                        this.focusNode(nextNodeElement);
-                    } else {
-                        let nextSiblingAncestor = this.findNextSiblingOfAncestor(nodeElement);
-                        if (nextSiblingAncestor) {
-                            this.focusNode(nextSiblingAncestor);
-                        }
-                    }
-                }
-                event.preventDefault();
+            case 'ArrowDown':
+                this.onArrowDown(event);
                 break;
 
             //up arrow
-            case 38:
-                if (nodeElement.previousElementSibling) {
-                    this.focusNode(this.findLastVisibleDescendant(nodeElement.previousElementSibling));
-                } else {
-                    let parentNodeElement = this.getParentNodeElement(nodeElement);
-                    if (parentNodeElement) {
-                        this.focusNode(parentNodeElement);
-                    }
-                }
-
-                event.preventDefault();
+            case 'ArrowUp':
+                this.onArrowUp(event);
                 break;
 
             //right arrow
-            case 39:
-                if (!this.node?.expanded && !this.tree.isNodeLeaf(<TreeNode>this.node)) {
-                    this.expand(event);
-                }
-                event.preventDefault();
+            case 'ArrowRight':
+                this.onArrowRight(event);
                 break;
 
             //left arrow
-            case 37:
-                if (this.node?.expanded) {
-                    this.collapse(event);
-                } else {
-                    let parentNodeElement = this.getParentNodeElement(nodeElement);
-                    if (parentNodeElement) {
-                        this.focusNode(parentNodeElement);
-                    }
-                }
-
-                event.preventDefault();
+            case 'ArrowLeft':
+                this.onArrowLeft(event);
                 break;
 
             //enter
-            case 13:
-                this.tree.onNodeClick(event, <TreeNode>this.node);
-                event.preventDefault();
+            case 'Enter':
+            case 'Space':
+                this.onEnter(event);
+                break;
+            //tab
+            case 'Tab':
+                this.setAllNodesTabIndexes();
                 break;
 
             default:
@@ -558,8 +550,116 @@ export class UITreeNode implements OnInit {
         }
     }
 
+    onArrowUp(event: KeyboardEvent) {
+        const nodeElement = (<HTMLDivElement>event.target).getAttribute('data-pc-section') === 'toggler' ? (<HTMLDivElement>event.target).closest('[role="treeitem"]') : (<HTMLDivElement>event.target).parentElement;
+
+        if (nodeElement.previousElementSibling) {
+            this.focusRowChange(nodeElement, nodeElement.previousElementSibling, this.findLastVisibleDescendant(nodeElement.previousElementSibling));
+        } else {
+            let parentNodeElement = this.getParentNodeElement(nodeElement);
+
+            if (parentNodeElement) {
+                this.focusRowChange(nodeElement, parentNodeElement);
+            }
+        }
+
+        event.preventDefault();
+    }
+
+    onArrowDown(event: KeyboardEvent) {
+        const nodeElement = (<HTMLDivElement>event.target).getAttribute('data-pc-section') === 'toggler' ? (<HTMLDivElement>event.target).closest('[role="treeitem"]') : <HTMLDivElement>event.target;
+        const listElement = nodeElement.children[1];
+
+        if (listElement && listElement.children.length > 0) {
+            this.focusRowChange(nodeElement, listElement.children[0]);
+        } else {
+            if (nodeElement.parentElement.nextElementSibling) {
+                this.focusRowChange(nodeElement, nodeElement.parentElement.nextElementSibling);
+            } else {
+                let nextSiblingAncestor = this.findNextSiblingOfAncestor(nodeElement.parentElement);
+
+                if (nextSiblingAncestor) {
+                    this.focusRowChange(nodeElement, nextSiblingAncestor);
+                }
+            }
+        }
+        event.preventDefault();
+    }
+
+    onArrowRight(event: KeyboardEvent) {
+        if (!this.node?.expanded && !this.tree.isNodeLeaf(<TreeNode>this.node)) {
+            this.expand(event);
+            (<HTMLDivElement>event.currentTarget).tabIndex = -1;
+
+            setTimeout(() => {
+                this.onArrowDown(event);
+            }, 1);
+        }
+        event.preventDefault();
+    }
+
+    onArrowLeft(event: KeyboardEvent) {
+        const nodeElement = (<HTMLDivElement>event.target).getAttribute('data-pc-section') === 'toggler' ? (<HTMLDivElement>event.target).closest('[role="treeitem"]') : <HTMLDivElement>event.target;
+
+        if (this.level === 0 && !this.node?.expanded) {
+            return false;
+        }
+
+        if (this.node?.expanded) {
+            this.collapse(event);
+            return;
+        }
+
+        let parentNodeElement = this.getParentNodeElement(nodeElement.parentElement);
+
+        if (parentNodeElement) {
+            this.focusRowChange(event.currentTarget, parentNodeElement);
+        }
+
+        event.preventDefault();
+    }
+
+    onEnter(event: KeyboardEvent) {
+        this.tree.onNodeClick(event, <TreeNode>this.node);
+        this.setTabIndexForSelectionMode(event, this.tree.nodeTouched);
+        event.preventDefault();
+    }
+
+    setAllNodesTabIndexes() {
+        const nodes = DomHandler.find(this.tree.el.nativeElement, '.p-treenode');
+
+        const hasSelectedNode = [...nodes].some((node) => node.getAttribute('aria-selected') === 'true' || node.getAttribute('aria-checked') === 'true');
+
+        [...nodes].forEach((node) => {
+            node.tabIndex = -1;
+        });
+
+        if (hasSelectedNode) {
+            const selectedNodes = [...nodes].filter((node) => node.getAttribute('aria-selected') === 'true' || node.getAttribute('aria-checked') === 'true');
+
+            selectedNodes[0].tabIndex = 0;
+
+            return;
+        }
+
+        [...nodes][0].tabIndex = 0;
+    }
+
+    setTabIndexForSelectionMode(event, nodeTouched) {
+        if (this.tree.selectionMode !== null) {
+            const elements = [...DomHandler.find(this.tree.el.nativeElement, '.p-treenode')];
+
+            event.currentTarget.tabIndex = nodeTouched === false ? -1 : 0;
+
+            if (elements.every((element) => element.tabIndex === -1)) {
+                elements[0].tabIndex = 0;
+            }
+        }
+    }
+
     findNextSiblingOfAncestor(nodeElement: any): any {
         let parentNodeElement = this.getParentNodeElement(nodeElement);
+
         if (parentNodeElement) {
             if (parentNodeElement.nextElementSibling) return parentNodeElement.nextElementSibling;
             else return this.findNextSiblingOfAncestor(parentNodeElement);
@@ -580,15 +680,22 @@ export class UITreeNode implements OnInit {
         }
     }
 
-    getParentNodeElement(nodeElement: HTMLElement) {
+    getParentNodeElement(nodeElement: HTMLElement | Element) {
         const parentNodeElement = nodeElement.parentElement?.parentElement?.parentElement;
 
         return parentNodeElement?.tagName === 'P-TREENODE' ? parentNodeElement : null;
     }
 
     focusNode(element: any) {
-        if (this.tree.droppableNodes) (element.children[1].children[0] as HTMLElement).focus();
-        else (element.children[0].children[0] as HTMLElement).focus();
+        if (this.tree.droppableNodes) (element.children[1] as HTMLElement).focus();
+        else (element.children[0] as HTMLElement).focus();
+    }
+
+    focusRowChange(firstFocusableRow, currentFocusedRow, lastVisibleDescendant?) {
+        firstFocusableRow.tabIndex = '-1';
+        currentFocusedRow.children[0].tabIndex = '0';
+
+        this.focusNode(lastVisibleDescendant || currentFocusedRow);
     }
 
     focusVirtualNode() {
@@ -598,7 +705,10 @@ export class UITreeNode implements OnInit {
         }, 1);
     }
 }
-
+/**
+ * Tree is used to display hierarchical data.
+ * @group Components
+ */
 @Component({
     selector: 'p-tree',
     template: `
@@ -780,7 +890,7 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
      * Defines how multiple items can be selected, when true metaKey needs to be pressed to select or unselect an item and when set to false selection of each item can be toggled individually. On touch enabled devices, metaKeySelection is turned off automatically.
      * @group Props
      */
-    @Input() metaKeySelection: boolean = true;
+    @Input() metaKeySelection: boolean = false;
     /**
      * Whether checkbox selections propagate to ancestor nodes.
      * @group Props
@@ -847,10 +957,10 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
      */
     @Input() filterPlaceholder: string | undefined;
     /**
-     * No description available.
+     * Values after the tree nodes are filtered.
      * @group Props
      */
-    @Input() filteredNodes: TreeNode[] | undefined | null;
+    @Input() filteredNodes: TreeNode<any>[] | undefined | null;
     /**
      * Locale to use in filtering. The default locale is the host environment's current locale.
      * @group Props
@@ -897,9 +1007,9 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
      */
     @Input() trackBy: Function = (index: number, item: any) => item;
     /**
-     * @deprecated use virtualScrollItemSize property instead.
      * Height of the node.
      * @group Props
+     * @deprecated use virtualScrollItemSize property instead.
      */
     _virtualNodeHeight: number | undefined;
     @Input() get virtualNodeHeight(): number | undefined {
@@ -911,67 +1021,67 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
     }
     /**
      * Callback to invoke on selection change.
-     * @param {(TreeNode | TreeNode[] | null)} event - custom selection change event.
+     * @param {(TreeNode<any> | TreeNode<any>[] | null)} event - Custom selection change event.
      * @group Emits
      */
-    @Output() selectionChange: EventEmitter<TreeNode[] | TreeNode | null> = new EventEmitter<TreeNode[] | TreeNode | null>();
+    @Output() selectionChange: EventEmitter<TreeNode<any> | TreeNode<any>[] | null> = new EventEmitter<TreeNode<any> | TreeNode<any>[] | null>();
     /**
      * Callback to invoke when a node is selected.
-     * @param {TreeNodeSelectEvent} event - node select event.
+     * @param {TreeNodeSelectEvent} event - Node select event.
      * @group Emits
      */
     @Output() onNodeSelect: EventEmitter<TreeNodeSelectEvent> = new EventEmitter<TreeNodeSelectEvent>();
     /**
      * Callback to invoke when a node is unselected.
-     * @param {TreeNodeUnSelectEvent} event - node unselect event.
+     * @param {TreeNodeUnSelectEvent} event - Node unselect event.
      * @group Emits
      */
     @Output() onNodeUnselect: EventEmitter<TreeNodeUnSelectEvent> = new EventEmitter<TreeNodeUnSelectEvent>();
     /**
      * Callback to invoke when a node is expanded.
-     * @param {TreeNodeExpandEvent} event - node expand event.
+     * @param {TreeNodeExpandEvent} event - Node expand event.
      * @group Emits
      */
     @Output() onNodeExpand: EventEmitter<TreeNodeExpandEvent> = new EventEmitter<TreeNodeExpandEvent>();
     /**
      * Callback to invoke when a node is collapsed.
-     * @param {TreeNodeCollapseEvent} event - node collapse event.
+     * @param {TreeNodeCollapseEvent} event - Node collapse event.
      * @group Emits
      */
     @Output() onNodeCollapse: EventEmitter<TreeNodeCollapseEvent> = new EventEmitter<TreeNodeCollapseEvent>();
     /**
      * Callback to invoke when a node is selected with right click.
-     * @param {onNodeContextMenuSelect} event - node context menu select event.
+     * @param {onNodeContextMenuSelect} event - Node context menu select event.
      * @group Emits
      */
     @Output() onNodeContextMenuSelect: EventEmitter<TreeNodeContextMenuSelectEvent> = new EventEmitter<TreeNodeContextMenuSelectEvent>();
     /**
      * Callback to invoke when a node is dropped.
-     * @param {TreeNodeDropEvent} event - node drop event.
+     * @param {TreeNodeDropEvent} event - Node drop event.
      * @group Emits
      */
     @Output() onNodeDrop: EventEmitter<TreeNodeDropEvent> = new EventEmitter<TreeNodeDropEvent>();
     /**
      * Callback to invoke in lazy mode to load new data.
-     * @param {TreeLazyLoadEvent} event - custom lazy load event.
+     * @param {TreeLazyLoadEvent} event - Custom lazy load event.
      * @group Emits
      */
     @Output() onLazyLoad: EventEmitter<TreeLazyLoadEvent> = new EventEmitter<TreeLazyLoadEvent>();
     /**
      * Callback to invoke in virtual scroll mode when scroll position changes.
-     * @param {TreeScrollEvent} event - custom scroll event.
+     * @param {TreeScrollEvent} event - Custom scroll event.
      * @group Emits
      */
     @Output() onScroll: EventEmitter<TreeScrollEvent> = new EventEmitter<TreeScrollEvent>();
     /**
      * Callback to invoke in virtual scroll mode when scroll position and item's range in view changes.
-     * @param {TreeScrollIndexChangeEvent} event - scroll index change event.
+     * @param {TreeScrollIndexChangeEvent} event - Scroll index change event.
      * @group Emits
      */
     @Output() onScrollIndexChange: EventEmitter<TreeScrollIndexChangeEvent> = new EventEmitter<TreeScrollIndexChangeEvent>();
     /**
      * Callback to invoke when data is filtered.
-     * @param {TreeFilterEvent} event - custom filter event.
+     * @param {TreeFilterEvent} event - Custom filter event.
      * @group Emits
      */
     @Output() onFilter: EventEmitter<TreeFilterEvent> = new EventEmitter<TreeFilterEvent>();
@@ -984,7 +1094,7 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
 
     @ViewChild('wrapper') wrapperViewChild: Nullable<ElementRef>;
 
-    serializedValue: Nullable<TreeNode[]>;
+    serializedValue: Nullable<TreeNode<any>[]>;
 
     headerTemplate: Nullable<TemplateRef<any>>;
 
@@ -1006,9 +1116,9 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
 
     public dragNodeTree: Tree | undefined | null;
 
-    public dragNode: TreeNode | undefined | null;
+    public dragNode: TreeNode<any> | undefined | null;
 
-    public dragNodeSubNodes: TreeNode[] | undefined | null;
+    public dragNodeSubNodes: TreeNode<any>[] | undefined | null;
 
     public dragNodeIndex: number | undefined | null;
 
@@ -1108,7 +1218,7 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
         this.serializeNodes(null, this.getRootNode(), 0, true);
     }
 
-    serializeNodes(parent: TreeNode | null, nodes: TreeNode[] | any, level: number, visible: boolean) {
+    serializeNodes(parent: TreeNode<any> | null, nodes: TreeNode<any>[] | any, level: number, visible: boolean) {
         if (nodes && nodes.length) {
             for (let node of nodes) {
                 node.parent = parent;
@@ -1118,7 +1228,7 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
                     level: level,
                     visible: visible && (parent ? parent.expanded : true)
                 };
-                (this.serializedValue as TreeNode[]).push(<TreeNode>rowNode);
+                (this.serializedValue as TreeNode<any>[]).push(<TreeNode>rowNode);
 
                 if (rowNode.visible && node.expanded) {
                     this.serializeNodes(node, node.children, level + 1, rowNode.visible);
@@ -1137,8 +1247,7 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
             }
 
             if (this.hasFilteredNodes()) {
-                node = this.getNodeWithKey(<string>node.key, <TreeNode[]>this.value) as TreeNode;
-
+                node = this.getNodeWithKey(<string>node.key, <TreeNode<any>[]>this.filteredNodes) as TreeNode;
                 if (!node) {
                     return;
                 }
@@ -1226,7 +1335,7 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
         this.nodeTouched = true;
     }
 
-    onNodeRightClick(event: MouseEvent, node: TreeNode) {
+    onNodeRightClick(event: MouseEvent, node: TreeNode<any>) {
         if (this.contextMenu) {
             let eventTarget = <Element>event.target;
 
@@ -1249,7 +1358,6 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
 
     findIndexInSelection(node: TreeNode) {
         let index: number = -1;
-
         if (this.selectionMode && this.selection) {
             if (this.isSingleSelectionMode()) {
                 let areNodesEqual = (this.selection.key && this.selection.key === node.key) || this.selection == node;
@@ -1269,7 +1377,7 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
         return index;
     }
 
-    syncNodeOption(node: TreeNode, parentNodes: TreeNode[], option: any, value?: any) {
+    syncNodeOption(node: TreeNode, parentNodes: TreeNode<any>[], option: any, value?: any) {
         // to synchronize the node option between the filtered nodes and the original nodes(this.value)
         const _node = this.hasFilteredNodes() ? this.getNodeWithKey(<string>node.key, parentNodes) : null;
         if (_node) {
@@ -1281,7 +1389,7 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
         return this.filter && this.filteredNodes && this.filteredNodes.length;
     }
 
-    getNodeWithKey(key: string, nodes: TreeNode[]): TreeNode | undefined {
+    getNodeWithKey(key: string, nodes: TreeNode<any>[]): TreeNode<any> | undefined {
         for (let node of nodes) {
             if (node.key === key) {
                 return node;
@@ -1323,7 +1431,7 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
                 else node.partialSelected = false;
             }
 
-            this.syncNodeOption(node, <TreeNode[]>this.filteredNodes, 'partialSelected');
+            this.syncNodeOption(node, <TreeNode<any>[]>this.filteredNodes, 'partialSelected');
         }
 
         let parent = node.parent;
@@ -1343,7 +1451,7 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
 
         node.partialSelected = false;
 
-        this.syncNodeOption(node, <TreeNode[]>this.filteredNodes, 'partialSelected');
+        this.syncNodeOption(node, <TreeNode<any>[]>this.filteredNodes, 'partialSelected');
 
         if (node.children && node.children.length) {
             for (let child of node.children) {
@@ -1422,8 +1530,8 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
     }
 
     processTreeDrop(dragNode: TreeNode, dragNodeIndex: number) {
-        (<TreeNode[]>this.dragNodeSubNodes).splice(dragNodeIndex, 1);
-        (this.value as TreeNode[]).push(dragNode);
+        (<TreeNode<any>[]>this.dragNodeSubNodes).splice(dragNodeIndex, 1);
+        (this.value as TreeNode<any>[]).push(dragNode);
         this.dragDropService.stopDrag({
             node: dragNode
         });
@@ -1444,7 +1552,7 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
         }
     }
 
-    allowDrop(dragNode: TreeNode, dropNode: TreeNode | null, dragNodeScope: any): boolean {
+    allowDrop(dragNode: TreeNode, dropNode: TreeNode<any> | null, dragNodeScope: any): boolean {
         if (!dragNode) {
             //prevent random html elements to be dragged
             return false;
@@ -1506,7 +1614,7 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
             const searchFields: string[] = this.filterBy.split(',');
             const filterText = ObjectUtils.removeAccents(filterValue).toLocaleLowerCase(this.filterLocale);
             const isStrictMode = this.filterMode === 'strict';
-            for (let node of <TreeNode[]>this.value) {
+            for (let node of <TreeNode<any>[]>this.value) {
                 let copyNode = { ...node };
                 let paramsWithoutNode = { searchFields, filterText, isStrictMode };
                 if (
@@ -1525,6 +1633,10 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
         });
     }
 
+    /**
+     * Resets filter.
+     * @group Method
+     */
     public resetFilter() {
         this.filteredNodes = null;
 
@@ -1532,11 +1644,19 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
             this.filterViewChild.nativeElement.value = '';
         }
     }
-
+    /**
+     * Scrolls to virtual index.
+     * @param {number} number - Index to be scrolled.
+     * @group Method
+     */
     public scrollToVirtualIndex(index: number) {
         this.virtualScroll && this.scroller?.scrollToIndex(index);
     }
-
+    /**
+     * Scrolls to virtual index.
+     * @param {ScrollToOptions} options - Scroll options.
+     * @group Method
+     */
     public scrollTo(options: any) {
         if (this.virtualScroll) {
             this.scroller?.scrollTo(options);
@@ -1609,7 +1729,7 @@ export class Tree implements OnInit, AfterContentInit, OnChanges, OnDestroy, Blo
     }
 }
 @NgModule({
-    imports: [CommonModule, SharedModule, RippleModule, ScrollerModule, CheckIcon, ChevronDownIcon, ChevronRightIcon, MinusIcon, SearchIcon, SpinnerIcon],
+    imports: [CommonModule, SharedModule, RippleModule, ScrollerModule, CheckIcon, ChevronDownIcon, ChevronRightIcon, MinusIcon, SearchIcon, SpinnerIcon, PlusIcon],
     exports: [Tree, SharedModule, ScrollerModule],
     declarations: [Tree, UITreeNode]
 })

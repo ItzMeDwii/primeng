@@ -3,6 +3,7 @@ import { InputNumber } from './inputnumber';
 /**
  * Custom input event.
  * @see {@link InputNumber.onInput}
+ * @group Events
  */
 export interface InputNumberInputEvent {
     /**
@@ -12,7 +13,7 @@ export interface InputNumberInputEvent {
     /**
      * Input value.
      */
-    value: string;
+    value: number;
     /**
      * Selected option value.
      */
@@ -27,13 +28,13 @@ export interface InputNumberTemplates {
     /**
      * Custom clear icon template.
      */
-    clearicon: TemplateRef<any>;
+    clearicon(): TemplateRef<any>;
     /**
      * Custom increment button icon template.
      */
-    incrementbuttonicon: TemplateRef<any>;
+    incrementbuttonicon(): TemplateRef<any>;
     /**
      * Custom decrement button icon template.
      */
-    decrementbuttonicon: TemplateRef<any>;
+    decrementbuttonicon(): TemplateRef<any>;
 }

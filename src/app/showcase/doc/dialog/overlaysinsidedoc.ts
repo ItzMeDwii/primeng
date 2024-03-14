@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Code } from '../../domain/code';
 
 interface City {
@@ -8,8 +8,8 @@ interface City {
 
 @Component({
     selector: 'dialog-overlays-inside-demo',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>
                 When dialog includes other components with overlays such as dropdown, the overlay part cannot exceed dialog boundaries due to overflow. In order to solve this, you can either append the overlay to the body by using
                 <i>appendTo</i> property or allow overflow in dialog.
@@ -24,18 +24,14 @@ interface City {
             </p-dialog>
         </div>
         <app-code [code]="code" selector="dialog-overlays-inside-demo"></app-code>
-    </section>`
+    `
 })
 export class OverlaysInsideDoc implements OnInit {
-    @Input() id: string;
+    cities: City[] | undefined;
 
-    @Input() title: string;
+    selectedCity: City | undefined;
 
-    cities: City[];
-
-    selectedCity: City;
-
-    visible: boolean;
+    visible: boolean = false;
 
     ngOnInit() {
         this.cities = [
@@ -52,8 +48,7 @@ export class OverlaysInsideDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-button (click)="showDialog()" icon="pi pi-external-link" label="Show"></p-button>
+        basic: `<p-button (click)="showDialog()" icon="pi pi-external-link" label="Show"></p-button>
 <p-dialog header="Header" [(visible)]="visible" [style]="{ width: '50vw' }">
     <div class="flex py-2 justify-content-center">
         <p-dropdown appendTo="body" [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name"></p-dropdown>
@@ -83,11 +78,11 @@ interface City {
     templateUrl: './dialog-overlays-inside-demo.html'
 })
 export class DialogOverlaysInsideDemo implements OnInit {
-    cities: City[];
+    cities: City[] | undefined;
 
-    selectedCity: City;
+    selectedCity: City | undefined;
 
-    visible: boolean;
+    visible: boolean = false;
 
     ngOnInit() { 
         this.cities = [

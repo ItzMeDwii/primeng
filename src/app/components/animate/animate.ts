@@ -1,20 +1,25 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Directive, ElementRef, Input, NgModule, Renderer2 } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Input, NgModule, OnInit, Renderer2 } from '@angular/core';
 import { DomHandler } from 'primeng/dom';
-
+/**
+ * Animate manages PrimeFlex CSS classes declaratively to during enter/leave animations on scroll or on page load.
+ * @group Components
+ */
 @Directive({
     selector: '[pAnimate]',
     host: {
         '[class.p-animate]': 'true'
     }
 })
-export class Animate implements AfterViewInit {
+export class Animate implements OnInit, AfterViewInit {
     /**
      * Selector to define the CSS class for enter animation.
+     * @group Props
      */
     @Input() enterClass: string | undefined;
     /**
      * Selector to define the CSS class for leave animation.
+     * @group Props
      */
     @Input() leaveClass: string | undefined;
 
@@ -23,6 +28,10 @@ export class Animate implements AfterViewInit {
     timeout: any;
 
     constructor(private host: ElementRef, public el: ElementRef, public renderer: Renderer2) {}
+
+    ngOnInit() {
+        console.log('pAnimate directive is deprecated in 16.7.0 and will be removed in the future. Use pAnimateOnScroll directive instead');
+    }
 
     ngAfterViewInit() {
         this.bindIntersectionObserver();

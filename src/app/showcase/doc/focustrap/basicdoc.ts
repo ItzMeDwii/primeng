@@ -1,10 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'focus-trap-basic-demo',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>FocusTrap is applied to a container element with the <i>pFocusTrap</i> directive.</p>
         </app-docsectiontext>
         <div pFocusTrap class="card flex align-items-center justify-content-center flex-wrap gap-3">
@@ -37,14 +37,10 @@ import { Code } from '../../domain/code';
             </div>
         </div>
         <app-code [code]="code" selector="focus-trap-basic-demo"></app-code>
-    </section>`
+    `
 })
 export class BasicDoc {
-    @Input() id: string;
-
-    @Input() title: string;
-
-    selectedCity: string;
+    selectedCity: string | undefined;
 
     cities = [
         { name: 'New York', code: 'NY' },
@@ -55,8 +51,7 @@ export class BasicDoc {
     ];
 
     code: Code = {
-        basic: `
-<div pFocusTrap class="card flex align-items-center justify-content-center flex-wrap gap-3">
+        basic: `<div pFocusTrap class="card flex align-items-center justify-content-center flex-wrap gap-3">
     <div>
         <h4>Input</h4>
         <input id="input" type="text" size="30" pInputText>
@@ -106,8 +101,8 @@ import { Component } from '@angular/core';
     selector: 'focus-trap-basic-demo',
     templateUrl: './focus-trap-basic-demo.html'
 })
-export class BasicDoc {
-    selectedCity: string;
+export class FocusTrapBasicDemo {
+    selectedCity: string | undefined;
 
     cities = [
         { name: 'New York', code: 'NY' },

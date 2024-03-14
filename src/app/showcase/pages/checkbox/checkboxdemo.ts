@@ -5,11 +5,10 @@ import { ImportDoc } from '../../doc/checkbox/importdoc';
 import { MultipleDoc } from '../../doc/checkbox/multipledoc';
 import { DynamicDoc } from '../../doc/checkbox/dynamicdoc';
 import { DisabledDoc } from '../../doc/checkbox/disableddoc';
+import { InvalidDoc } from '../../doc/checkbox/invaliddoc';
 import { StyleDoc } from '../../doc/checkbox/styledoc';
-import { PropsDoc } from '../../doc/checkbox/propsdoc';
 import { AccessibilityDoc } from '../../doc/checkbox/accessibilitydoc';
 import { ReactiveFormsDoc } from '../../doc/checkbox/reactiveformsdoc';
-import { TemplatesDoc } from '../../doc/checkbox/templatesdoc';
 
 @Component({
     templateUrl: './checkboxdemo.html'
@@ -47,6 +46,11 @@ export class CheckboxDemo {
             component: DynamicDoc
         },
         {
+            id: 'invalid',
+            label: 'Invalid',
+            component: InvalidDoc
+        },
+        {
             id: 'disabled',
             label: 'Disabled',
             component: DisabledDoc
@@ -60,19 +64,6 @@ export class CheckboxDemo {
             id: 'accessibility',
             label: 'Accessibility',
             component: AccessibilityDoc
-        }
-    ];
-
-    apiDocs = [
-        {
-            id: 'properties',
-            label: 'Properties',
-            component: PropsDoc
-        },
-        {
-            id: 'templates',
-            label: 'Templates',
-            component: TemplatesDoc
         }
     ];
 }

@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Code } from '../../domain/code';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService, TreeNode } from 'primeng/api';
+import { Code } from '../../domain/code';
 import { NodeService } from '../../service/nodeservice';
 
 @Component({
     selector: 'context-menu-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Tree requires a collection of <i>TreeNode</i> instances as a value.</p>
         </app-docsectiontext>
         <div class="card flex justify-content-center">
@@ -15,19 +15,15 @@ import { NodeService } from '../../service/nodeservice';
             <p-toast></p-toast>
         </div>
         <app-code [code]="code" selector="tree-context-menu-demo"></app-code>
-    </section>`,
+    `,
     providers: [MessageService]
 })
 export class ContextMenuDoc implements OnInit {
-    @Input() id: string;
+    files!: TreeNode[];
 
-    @Input() title: string;
+    selectedFile!: TreeNode | null;
 
-    files: TreeNode[];
-
-    selectedFile: TreeNode;
-
-    items: MenuItem[];
+    items!: MenuItem[];
 
     constructor(private nodeService: NodeService, private messageService: MessageService) {}
 
@@ -49,8 +45,7 @@ export class ContextMenuDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-tree class="w-full md:w-30rem" [value]="files" selectionMode="single" [(selection)]="selectedFile" [contextMenu]="cm"></p-tree>
+        basic: `<p-tree class="w-full md:w-30rem" [value]="files" selectionMode="single" [(selection)]="selectedFile" [contextMenu]="cm"></p-tree>
 <p-contextMenu #cm [model]="items"></p-contextMenu>
 <p-toast></p-toast>`,
 
@@ -72,11 +67,11 @@ import { NodeService } from '../../service/nodeservice';
     providers:[MessageService]
 })
 export class TreeContextMenuDemo implements OnInit {
-    files: TreeNode[];
+    files!: TreeNode[];
 
-    selectedFile: TreeNode;
+    selectedFile!: TreeNode | null;
 
-    items: MenuItem[];
+    items!: MenuItem[];
 
     constructor(private nodeService: NodeService, private messageService: MessageService) {}
 

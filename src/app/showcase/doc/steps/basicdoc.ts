@@ -1,31 +1,27 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'basic-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Steps requires a collection of menuitems as its <i>model</i>.</p>
         </app-docsectiontext>
         <div class="card">
             <p-steps [model]="items" [readonly]="true"></p-steps>
         </div>
         <app-code [code]="code" selector="steps-basic-demo"></app-code>
-    </section>`
+    `
 })
 export class BasicDoc implements OnInit {
-    @Input() id: string;
-
-    @Input() title: string;
-
-    items: MenuItem[];
+    items: MenuItem[] | undefined;
 
     ngOnInit() {
         this.items = [
             {
                 label: 'Personal',
-                routerLink: ''
+                routerLink: 'personal'
             },
             {
                 label: 'Seat',
@@ -43,8 +39,7 @@ export class BasicDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-steps [model]="items" [readonly]="true"></p-steps>`,
+        basic: `<p-steps [model]="items" [readonly]="true"></p-steps>`,
 
         html: `
 <div class="card">
@@ -60,7 +55,7 @@ import { MenuItem } from 'primeng/api';
     templateUrl: './steps-basic-demo.html'
 })
 export class StepsBasicDemo implements OnInit {
-    items: MenuItem[];
+    items: MenuItem[] | undefined;
 
     ngOnInit() {
         this.items = [

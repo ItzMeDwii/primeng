@@ -1,28 +1,23 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'calendar-multiple-demo',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>In order to choose multiple dates, set <i>selectionMode</i> as <i>multiple</i>. In this mode, the value binding should be an array.</p>
         </app-docsectiontext>
         <div class="card flex justify-content-center">
             <p-calendar [(ngModel)]="dates" selectionMode="multiple" [readonlyInput]="true"></p-calendar>
         </div>
         <app-code [code]="code" selector="calendar-multiple-demo"></app-code>
-    </section>`
+    `
 })
 export class MultipleDoc {
-    @Input() id: string;
-
-    @Input() title: string;
-
-    dates: Date[];
+    dates: Date[] | undefined;
 
     code: Code = {
-        basic: `
-<p-calendar [(ngModel)]="dates" selectionMode="multiple" [readonlyInput]="true"></p-calendar>`,
+        basic: `<p-calendar [(ngModel)]="dates" selectionMode="multiple" [readonlyInput]="true"></p-calendar>`,
 
         html: `
 <div class="card flex justify-content-center">
@@ -37,7 +32,7 @@ import { Component } from '@angular/core';
     templateUrl: './calendar-multiple-demo.html'
 })
 export class CalendarMultipleDemo {
-    dates: Date[];
+    dates: Date[] | undefined;
 }`
     };
 }

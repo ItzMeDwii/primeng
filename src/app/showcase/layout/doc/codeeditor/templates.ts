@@ -15,15 +15,43 @@ export interface Props {
 const app_dependencies = pkg ? pkg.devDependencies : {};
 
 const PrimeNG = {
-    version: '16.0.0-rc.1',
+    version: '17.10.0',
     description:
-        'PrimeNG is an open source UI library for Angular featuring a rich set of 90+ components, a theme designer, various theme alternatives such as Material, Bootstrap, Tailwind, premium templates and professional support. In addition, it integrates with PrimeBlock, which has 370+ ready to use UI blocks to build spectacular applications in no time.'
+        'PrimeNG is an open source UI library for Angular featuring a rich set of 80+ components, a theme designer, various theme alternatives such as Material, Bootstrap, Tailwind, premium templates and professional support. In addition, it integrates with PrimeBlock, which has 370+ ready to use UI blocks to build spectacular applications in no time.'
 };
+
+const demoDependencies = [
+    '@angular-devkit/build-angular',
+    '@angular/animations',
+    '@angular/cdk',
+    '@angular/cli',
+    '@angular/common',
+    '@angular/compiler',
+    '@angular/compiler-cli',
+    '@angular/core',
+    '@angular/forms',
+    '@angular/material',
+    '@angular/material-moment-adapter',
+    '@angular/platform-browser',
+    '@angular/platform-browser-dynamic',
+    '@angular/platform-server',
+    '@angular/router',
+    '@nguniversal/builders',
+    '@nguniversal/common',
+    '@nguniversal/express-engine',
+    'quill',
+    'primeflex',
+    'chart.js',
+    'primeicons',
+    'rxjs',
+    'tslib',
+    'zone.js'
+];
 
 const getAppDependencies = () => {
     const dependencies = {};
     for (const key in app_dependencies) {
-        if (checkDependency(key)) {
+        if (demoDependencies.includes(key)) {
             dependencies[key] = app_dependencies[key];
         }
     }
@@ -40,10 +68,6 @@ const getDependencies = () => {
     };
 
     return dependencies;
-};
-
-const checkDependency = (dep: string) => {
-    return !(dep.startsWith('jasmine') || dep.startsWith('del') || dep.startsWith('gulp') || dep.startsWith('jspdf') || dep.startsWith('prism') || dep.startsWith('del') || dep.startsWith('@stackblitz'));
 };
 
 const getServiceImports = (service: string[]) => {
@@ -343,8 +367,7 @@ const angular_json = `
               "karmaConfig": "karma.conf.js",
               "inlineStyleLanguage": "scss",
               "assets": [
-                "src/assets",
-                "src/favicon.png"
+                "src/assets"
               ],
               "stylePreprocessorOptions": {
                 "includePaths": [
@@ -480,6 +503,7 @@ ${routeImports}
 import { AccordionModule } from 'primeng/accordion';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
 import { BadgeModule } from 'primeng/badge';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
@@ -491,6 +515,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ChipModule } from 'primeng/chip';
 import { ChipsModule } from 'primeng/chips';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DataViewModule } from 'primeng/dataview';
@@ -511,6 +536,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { InputGroupModule } from 'primeng/inputgroup'
 import { ImageModule } from 'primeng/image';
 import { KnobModule } from 'primeng/knob';
 import { ListboxModule } from 'primeng/listbox';
@@ -563,11 +590,15 @@ import { AnimateModule } from 'primeng/animate';
 import { CardModule } from 'primeng/card';
 import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { RippleModule } from 'primeng/ripple';
+import { StyleClassModule } from 'primeng/styleclass';
+import { MessageService } from 'primeng/api';
 ${serviceImports}
 
 @NgModule({
   imports: [
     AvatarModule,
+    AvatarGroupModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
@@ -588,6 +619,7 @@ ${serviceImports}
     ChipModule,
     ColorPickerModule,
     ConfirmDialogModule,
+    ConfirmPopupModule,
     ContextMenuModule,
     VirtualScrollerModule,
     DataViewModule,
@@ -607,6 +639,8 @@ ${serviceImports}
     InputTextModule,
     InputTextareaModule,
     InputNumberModule,
+    InputGroupModule,
+    InputGroupAddonModule,
     ImageModule,
     KnobModule,
     ListboxModule,
@@ -658,6 +692,8 @@ ${serviceImports}
     TreeTableModule,
     AnimateModule,
     CardModule,
+    RippleModule,
+    StyleClassModule,
     ${routerModule}],
     declarations: [ ${declarations} ],
     bootstrap: [ ${componentName} ],
@@ -678,7 +714,7 @@ export class AppModule {}`;
         <link href="https://unpkg.com/primeflex/primeflex.css" rel="stylesheet" />
         <link href="https://unpkg.com/primeicons/primeicons.css" rel="stylesheet" />
         <link href="https://unpkg.com/quill@1.3.7/dist/quill.snow.css" rel="stylesheet" />
-        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <link rel="icon" type="image/x-icon" href="https://primefaces.org/cdn/primeng/images/favicon.png">
     </head>
     <body>
         <${selector}></${selector}>
@@ -709,7 +745,7 @@ export class AppModule {}`;
             content: {
                 name: `primeng-${selector}`,
                 description: `PrimeNG ${componentName}`,
-                licence: 'MIT',
+                license: 'MIT',
                 keywords: [],
                 scripts: {
                     ng: 'ng',
@@ -718,9 +754,7 @@ export class AppModule {}`;
                     test: 'ng test'
                 },
                 dependencies: {
-                    ...dependencies,
-                    jspdf: '1.5.3',
-                    'jspdf-autotable': '3.2.5'
+                    ...dependencies
                 }
             }
         },

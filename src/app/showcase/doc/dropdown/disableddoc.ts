@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Code } from '../../domain/code';
 
 interface City {
@@ -8,24 +8,20 @@ interface City {
 
 @Component({
     selector: 'dropdown-disabled-demo',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>When <i>disabled</i> is present, the element cannot be edited and focused.</p>
         </app-docsectiontext>
         <div class="card flex justify-content-center">
             <p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" [disabled]="true"></p-dropdown>
         </div>
         <app-code [code]="code" selector="dropdown-disabled-demo"></app-code>
-    </section>`
+    `
 })
 export class DisabledDoc {
-    @Input() id: string;
+    cities: City[] | undefined;
 
-    @Input() title: string;
-
-    cities: City[];
-
-    selectedCity: City;
+    selectedCity: City | undefined;
 
     ngOnInit() {
         this.cities = [
@@ -38,8 +34,7 @@ export class DisabledDoc {
     }
 
     code: Code = {
-        basic: `
-<p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" [disabled]="true"></p-dropdown>`,
+        basic: `<p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" [disabled]="true"></p-dropdown>`,
 
         html: `
 <div class="card flex justify-content-center">
@@ -59,9 +54,9 @@ interface City {
     templateUrl: './dropdown-disabled-demo.html'
 })
 export class DropdownDisabledDemo {
-    cities: City[];
+    cities: City[] | undefined;
 
-    selectedCity: City;
+    selectedCity: City | undefined;
 
     ngOnInit() {
         this.cities = [

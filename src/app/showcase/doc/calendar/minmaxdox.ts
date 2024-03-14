@@ -1,28 +1,24 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'calendar-minmax-demo',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Boundaries for the permitted dates that can be entered are defined with <i>minDate</i> and <i>maxDate</i> properties.</p>
         </app-docsectiontext>
         <div class="card flex justify-content-center">
             <p-calendar [(ngModel)]="date" [minDate]="minDate" [maxDate]="maxDate" [readonlyInput]="true"></p-calendar>
         </div>
         <app-code [code]="code" selector="calendar-minmax-demo"></app-code>
-    </section>`
+    `
 })
 export class MinMaxDoc {
-    @Input() id: string;
+    date: Date | undefined;
 
-    @Input() title: string;
+    minDate: Date | undefined;
 
-    date: Date;
-
-    minDate: Date;
-
-    maxDate: Date;
+    maxDate: Date | undefined;
 
     ngOnInit() {
         let today = new Date();
@@ -41,8 +37,7 @@ export class MinMaxDoc {
     }
 
     code: Code = {
-        basic: `
-<p-calendar [(ngModel)]="date" [minDate]="minDate" [maxDate]="maxDate" [readonlyInput]="true"></p-calendar>`,
+        basic: `<p-calendar [(ngModel)]="date" [minDate]="minDate" [maxDate]="maxDate" [readonlyInput]="true"></p-calendar>`,
 
         html: ` 
 <div class="card flex justify-content-center">
@@ -57,11 +52,11 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: './calendar-minmax-demo.html'
 })
 export class CalendarMinmaxDemo implements OnInit {        
-    date: Date;
+    date: Date | undefined;
     
-    minDate: Date;
+    minDate: Date | undefined;
 
-    maxDate: Date;
+    maxDate: Date | undefined;
 
     ngOnInit() {
         let today = new Date();

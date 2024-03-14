@@ -2,11 +2,12 @@ import { TemplateRef } from '@angular/core';
 import { Listbox } from './listbox';
 /**
  * Filter options of listbox.
+ * @group Interface
  */
 export interface ListboxFilterOptions {
     /**
      * Callback to filter options.
-     * @param value - filter value
+     * @param {any} value - Filter value.
      */
     filter?: (value?: any) => void;
     /**
@@ -17,6 +18,7 @@ export interface ListboxFilterOptions {
 /**
  * Custom change event.
  * @see {@link Listbox.onChange}
+ * @group Events
  */
 export interface ListboxChangeEvent {
     /**
@@ -30,7 +32,38 @@ export interface ListboxChangeEvent {
 }
 /**
  * Custom change event.
+ * @see {@link Listbox.onSelectAllChange}
+ * @group Events
+ */
+export interface ListboxSelectAllChangeEvent {
+    /**
+     * Browser event.
+     */
+    originalEvent: Event;
+    /**
+     * Boolean value indicates whether all data is selected.
+     */
+    checked: boolean;
+}
+/**
+ * Custom filter event.
+ * @see {@link Listbox.onFilter}
+ * @group Events
+ */
+export interface ListboxFilterEvent {
+    /**
+     * Browser event.
+     */
+    originalEvent: Event;
+    /**
+     * Filter value.
+     */
+    filter: any;
+}
+/**
+ * Custom change event.
  * @see {@link Listbox.onClick}
+ * @group Events
  */
 export interface ListboxClickEvent {
     /**
@@ -38,17 +71,18 @@ export interface ListboxClickEvent {
      */
     originalEvent: Event;
     /**
-     * Selected option value
+     * Value of the component.
      */
     value: any;
     /**
      * Selected option
      */
-    option: any;
+    option?: any;
 }
 /**
  * Custom change event.
  * @see {@link Listbox.onDblClick}
+ * @group Events
  */
 export interface ListboxDoubleClickEvent extends ListboxClickEvent {}
 /**
@@ -83,7 +117,7 @@ export interface ListboxTemplates {
     /**
      * Custom header template.
      */
-    header: TemplateRef<any>;
+    header(): TemplateRef<any>;
     /**
      * Custom filter template.
      * @param {Object} context - filter options.
@@ -97,21 +131,21 @@ export interface ListboxTemplates {
     /**
      * Custom footer template.
      */
-    footer: TemplateRef<any>;
+    footer(): TemplateRef<any>;
     /**
      * Custom empty template.
      */
-    empty: TemplateRef<any>;
+    empty(): TemplateRef<any>;
     /**
      * Custom empty filter template.
      */
-    emptyfilter: TemplateRef<any>;
+    emptyfilter(): TemplateRef<any>;
     /**
      * Custom filter icon template.
      */
-    filtericon: TemplateRef<any>;
+    filtericon(): TemplateRef<any>;
     /**
      * Custom check icon template.
      */
-    checkicon: TemplateRef<any>;
+    checkicon(): TemplateRef<any>;
 }

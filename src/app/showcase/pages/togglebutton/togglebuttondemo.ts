@@ -3,9 +3,8 @@ import { ReactiveFormsDoc } from '../../doc/togglebutton/reactiveformsdoc';
 import { AccessibilityDoc } from '../../doc/togglebutton/accessibilitydoc';
 import { BasicDoc } from '../../doc/togglebutton/basicdoc';
 import { CustomizedDoc } from '../../doc/togglebutton/customizeddoc';
-import { EventsDoc } from '../../doc/togglebutton/eventsdoc';
+import { DisabledDoc } from '../../doc/togglebutton/disableddoc';
 import { ImportDoc } from '../../doc/togglebutton/importdoc';
-import { PropsDoc } from '../../doc/togglebutton/propsdoc';
 import { StyleDoc } from '../../doc/togglebutton/styledoc';
 
 @Component({
@@ -34,6 +33,11 @@ export class ToggleButtonDemo {
             component: CustomizedDoc
         },
         {
+            id: 'disabled',
+            label: 'Disabled',
+            component: DisabledDoc
+        },
+        {
             id: 'style',
             label: 'Style',
             component: StyleDoc
@@ -42,19 +46,6 @@ export class ToggleButtonDemo {
             id: 'accessibility',
             label: 'Accessibility',
             component: AccessibilityDoc
-        }
-    ];
-
-    apiDocs = [
-        {
-            id: 'properties',
-            label: 'Properties',
-            component: PropsDoc
-        },
-        {
-            id: 'events',
-            label: 'Events',
-            component: EventsDoc
         }
     ];
 }

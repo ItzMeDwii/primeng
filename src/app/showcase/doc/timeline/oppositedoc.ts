@@ -1,10 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Code } from '../../domain/code';
+
+interface EventItem {
+    status?: string;
+    date?: string;
+    icon?: string;
+    color?: string;
+    image?: string;
+}
 
 @Component({
     selector: 'opposite-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Additional content at the other side of the line can be provided with the <i>opposite</i> property.</p>
         </app-docsectiontext>
         <div class="card">
@@ -18,14 +26,10 @@ import { Code } from '../../domain/code';
             </p-timeline>
         </div>
         <app-code [code]="code" selector="timeline-opposite-demo"></app-code>
-    </section>`
+    `
 })
 export class OppositeDoc {
-    @Input() id: string;
-
-    @Input() title: string;
-
-    events: any[];
+    events: EventItem[];
 
     constructor() {
         this.events = [
@@ -37,8 +41,7 @@ export class OppositeDoc {
     }
 
     code: Code = {
-        basic: `
-<p-timeline [value]="events">
+        basic: `<p-timeline [value]="events">
     <ng-template pTemplate="content" let-event>
         <small class="p-text-secondary">{{ event.date }}</small>
     </ng-template>
@@ -62,12 +65,20 @@ export class OppositeDoc {
         typescript: `
 import { Component } from '@angular/core';
 
+interface EventItem {
+    status?: string;
+    date?: string;
+    icon?: string;
+    color?: string;
+    image?: string;
+}
+
 @Component({
     selector: 'timeline-opposite-demo',
     templateUrl: './timeline-opposite-demo.html'
 })
 export class TimelineOppositeDemo {
-    events: any[];
+    events: EventItem[];
 
     constructor() {
         this.events = [

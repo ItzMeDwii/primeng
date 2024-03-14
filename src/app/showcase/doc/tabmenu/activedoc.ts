@@ -1,27 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Code } from '../../domain/code';
 
 @Component({
     selector: 'active-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>By default item that matches the active route is highlighted, alternatively <i>activeItem</i> property can be used choose the initial active item.</p>
         </app-docsectiontext>
         <div class="card">
             <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
         </div>
         <app-code [code]="code" selector="tab-menu-active-demo"></app-code>
-    </section>`
+    `
 })
 export class ActiveDoc implements OnInit {
-    @Input() id: string;
+    items: MenuItem[] | undefined;
 
-    @Input() title: string;
-
-    items: MenuItem[];
-
-    activeItem: MenuItem;
+    activeItem: MenuItem | undefined;
 
     ngOnInit() {
         this.items = [
@@ -36,8 +32,7 @@ export class ActiveDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>`,
+        basic: `<p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>`,
 
         html: `
 <div class="card">
@@ -53,9 +48,9 @@ import { MenuItem } from 'primeng/api';
     templateUrl: './tab-menu-active-demo.html'
 })
 export class TabMenuActiveDemo implements OnInit {
-    items: MenuItem[];
+    items: MenuItem[] | undefined;
 
-    activeItem: MenuItem;
+    activeItem: MenuItem | undefined;
 
     ngOnInit() {
         this.items = [

@@ -7,13 +7,14 @@ import { Breadcrumb } from './breadcrumb';
  */
 export interface BreadcumbTemplates {
     /**
-     * Custom template of seperator.
+     * Custom template of separator.
      */
-    seperator: TemplateRef<any> | null;
+    separator(): TemplateRef<any>;
 }
 /**
  * Custom select event.
  * @see {@link Breadcrumb.onItemClick}
+ * @group Events
  */
 export interface BreadcrumbItemClickEvent {
     /**

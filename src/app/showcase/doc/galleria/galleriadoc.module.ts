@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AppDocModule } from '../../layout/doc/app.doc.module';
-import { AppCodeModule } from '../../layout/doc/code/app.code.component';
+import { AppCodeModule } from '../../layout/doc/app.code.component';
 import { GalleriaModule } from 'primeng/galleria';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -23,14 +23,12 @@ import { HoverDoc } from './navigator/hoverdoc';
 import { IndicatorsDoc } from './navigator/indicatorsdoc';
 import { ItemThumbnailsDoc } from './navigator/itemthumbnailsdoc';
 import { ItemWithoutThumbnailsDoc } from './navigator/itemwithoutthumbnailsdoc';
-import { PropsDoc } from './propsdoc';
 import { ResponsiveDoc } from './responsivedoc';
 import { StyleDoc } from './styledoc';
 import { ThumbnailDoc } from './thumbnaildoc';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { AccessibilityDoc } from './accessibilitydoc';
-import { TemplatesDoc } from './templatesdoc';
 
 @NgModule({
     imports: [CommonModule, RouterModule, AppCodeModule, AppDocModule, GalleriaModule, FormsModule, ButtonModule, RadioButtonModule, CheckboxModule],
@@ -52,12 +50,10 @@ import { TemplatesDoc } from './templatesdoc';
         IndicatorsDoc,
         ItemThumbnailsDoc,
         ItemWithoutThumbnailsDoc,
-        PropsDoc,
         ResponsiveDoc,
         StyleDoc,
         ThumbnailDoc,
-        AccessibilityDoc,
-        TemplatesDoc
+        AccessibilityDoc
     ],
     exports: [AppDocModule]
 })

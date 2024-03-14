@@ -1,48 +1,44 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Code } from '../../domain/code';
 import { Product } from '../../domain/product';
 import { ProductService } from '../../service/productservice';
 
 @Component({
     selector: 'drag-drop-doc',
-    template: ` <section>
-        <app-docsectiontext [title]="title" [id]="id">
+    template: `
+        <app-docsectiontext>
             <p>Items can be reordered using drag and drop by enabling <i>dragdrop</i> property.</p>
         </app-docsectiontext>
-        <div class="card flex justify-content-center">
+        <div class="card xl:flex xl:justify-content-center">
             <p-orderList [value]="products" [listStyle]="{ 'max-height': '30rem' }" header="Products" [dragdrop]="true">
                 <ng-template let-product pTemplate="item">
-                    <div class="flex align-items-center p-2 w-full flex-wrap">
-                        <div class="w-full text-center lg:w-auto lg:text-left">
-                            <img src="https://primefaces.org/cdn/primeng/images/demo/product/{{ product.image }}" [alt]="product.name" class="mr-3 shadow-3 w-7rem mb-3 lg:w-5rem lg:mb-auto" />
+                    <div class="flex flex-wrap p-2 align-items-center gap-3">
+                        <img src="https://primefaces.org/cdn/primeng/images/demo/product/{{ product.image }}" [alt]="product.name" class="w-4rem shadow-2 flex-shrink-0 border-round" />
+                        <div class="flex-1 flex flex-column gap-2">
+                            <span class="font-bold">{{ product.name }}</span>
+                            <div class="flex align-items-center gap-2">
+                                <i class="pi pi-tag text-sm"></i>
+                                <span>{{ product.category }}</span>
+                            </div>
                         </div>
-                        <div class="flex-1">
-                            <h5 class="mb-2">{{ product.name }}</h5>
-                            <i class="pi pi-tag vertical-align-middle mr-2"></i>
-                            <span class="vertical-align-middle line-height-1">{{ product.category }}</span>
-                        </div>
-                        <div class="flex flex-column align-items-end">
-                            <h6 class="mb-2">{{ '$ ' + product.price }}</h6>
-                            <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"></p-tag>
-                        </div>
+                        <span class="font-bold text-900">{{ '$' + product.price }}</span>
                     </div>
                 </ng-template>
             </p-orderList>
         </div>
         <app-code [code]="code" selector="orderlist-drag-drop-demo" [extFiles]="extFiles"></app-code>
-    </section>`
+    `
 })
 export class DragDropDoc implements OnInit {
-    @Input() id: string;
+    products!: Product[];
 
-    @Input() title: string;
-
-    products: Product[];
-
-    constructor(private productService: ProductService) {}
+    constructor(private productService: ProductService, private cdr: ChangeDetectorRef) {}
 
     ngOnInit() {
-        this.productService.getProductsSmall().then((cars) => (this.products = cars));
+        this.productService.getProductsSmall().then((cars) => {
+            this.products = cars;
+            this.cdr.detectChanges();
+        });
     }
 
     getSeverity(status: string) {
@@ -57,43 +53,36 @@ export class DragDropDoc implements OnInit {
     }
 
     code: Code = {
-        basic: `
-<p-orderList [value]="products" [listStyle]="{ 'max-height': '30rem' }" header="Products" [dragdrop]="true">
+        basic: `<p-orderList [value]="products" [listStyle]="{ 'max-height': '30rem' }" header="Products" [dragdrop]="true">
     <ng-template let-product pTemplate="item">
-        <div class="flex align-items-center p-2 w-full flex-wrap">
-            <div class="w-full text-center lg:w-auto lg:text-left">
-                <img src="https://primefaces.org/cdn/primeng/images/demo/product/{{ product.image }}" [alt]="product.name" class="mr-3 shadow-3 w-7rem mb-3 lg:w-5rem lg:mb-auto" />
+        <div class="flex flex-wrap p-2 align-items-center gap-3">
+            <img src="https://primefaces.org/cdn/primeng/images/demo/product/{{ product.image }}" [alt]="product.name" class="w-4rem shadow-2 flex-shrink-0 border-round" />
+            <div class="flex-1 flex flex-column gap-2">
+                <span class="font-bold">{{ product.name }}</span>
+                <div class="flex align-items-center gap-2">
+                    <i class="pi pi-tag text-sm"></i>
+                    <span>{{ product.category }}</span>
+                </div>
             </div>
-            <div class="flex-1">
-                <h5 class="mb-2">{{ product.name }}</h5>
-                <i class="pi pi-tag vertical-align-middle mr-2"></i>
-                <span class="vertical-align-middle line-height-1">{{ product.category }}</span>
-            </div>
-            <div class="flex flex-column align-items-end">
-                <h6 class="mb-2">{{ '$ ' + product.price }}</h6>
-                <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"></p-tag>
-            </div>
+            <span class="font-bold text-900">{{ '$' + product.price }}</span>
         </div>
     </ng-template>
 </p-orderList>`,
 
         html: `
-<div class="card flex justify-content-center">
+<div class="card xl:flex xl:justify-content-center">
     <p-orderList [value]="products" [listStyle]="{ 'max-height': '30rem' }" header="Products" [dragdrop]="true">
         <ng-template let-product pTemplate="item">
-            <div class="flex align-items-center p-2 w-full flex-wrap">
-                <div class="w-full text-center lg:w-auto lg:text-left">
-                    <img src="https://primefaces.org/cdn/primeng/images/demo/product/{{ product.image }}" [alt]="product.name" class="mr-3 shadow-3 w-7rem mb-3 lg:w-5rem lg:mb-auto" />
+            <div class="flex flex-wrap p-2 align-items-center gap-3">
+                <img src="https://primefaces.org/cdn/primeng/images/demo/product/{{ product.image }}" [alt]="product.name" class="w-4rem shadow-2 flex-shrink-0 border-round" />
+                <div class="flex-1 flex flex-column gap-2">
+                    <span class="font-bold">{{ product.name }}</span>
+                    <div class="flex align-items-center gap-2">
+                        <i class="pi pi-tag text-sm"></i>
+                        <span>{{ product.category }}</span>
+                    </div>
                 </div>
-                <div class="flex-1">
-                    <h5 class="mb-2">{{ product.name }}</h5>
-                    <i class="pi pi-tag vertical-align-middle mr-2"></i>
-                    <span class="vertical-align-middle line-height-1">{{ product.category }}</span>
-                </div>
-                <div class="flex flex-column align-items-end">
-                    <h6 class="mb-2">{{ '$ ' + product.price }}</h6>
-                    <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"></p-tag>
-                </div>
+                <span class="font-bold text-900">{{ '$' + product.price }}</span>
             </div>
         </ng-template>
     </p-orderList>
@@ -109,7 +98,7 @@ import { ProductService } from '../../service/productservice';
     templateUrl: './orderlist-drag-drop-demo.html'
 })
 export class OrderlistDragDropDemo implements OnInit {
-    products: Product[];
+    products!: Product[];
 
     constructor(private productService: ProductService) {}
 
