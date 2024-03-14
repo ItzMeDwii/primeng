@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
-import { DividerModule } from 'primeng/divider';
-import { DropdownModule } from 'primeng/dropdown';
-import { PaginatorModule } from 'primeng/paginator';
-import { SliderModule } from 'primeng/slider';
+import { ButtonModule } from '@dwii5359/primeng/button';
+import { DividerModule } from '@dwii5359/primeng/divider';
+import { DropdownModule } from '@dwii5359/primeng/dropdown';
+import { PaginatorModule } from '@dwii5359/primeng/paginator';
+import { SliderModule } from '@dwii5359/primeng/slider';
 import { AppDocModule } from '../../layout/doc/app.doc.module';
 import { AppCodeModule } from '../../layout/doc/app.code.component';
 import { AccessibilityDoc } from './accessibilitydoc';

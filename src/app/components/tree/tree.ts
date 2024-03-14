@@ -22,21 +22,21 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { BlockableUI, PrimeNGConfig, PrimeTemplate, SharedModule, TranslationKeys, TreeDragDropService, TreeNode } from 'primeng/api';
-import { DomHandler } from 'primeng/dom';
-import { RippleModule } from 'primeng/ripple';
-import { Scroller, ScrollerModule } from 'primeng/scroller';
-import { ScrollerOptions } from 'primeng/api';
-import { ObjectUtils } from 'primeng/utils';
+import { BlockableUI, PrimeNGConfig, PrimeTemplate, SharedModule, TranslationKeys, TreeDragDropService, TreeNode } from '@dwii5359/primeng/api';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { Scroller, ScrollerModule } from '@dwii5359/primeng/scroller';
+import { ScrollerOptions } from '@dwii5359/primeng/api';
+import { ObjectUtils } from '@dwii5359/primeng/utils';
 import { Subscription } from 'rxjs';
-import { CheckIcon } from 'primeng/icons/check';
-import { ChevronDownIcon } from 'primeng/icons/chevrondown';
-import { ChevronRightIcon } from 'primeng/icons/chevronright';
-import { MinusIcon } from 'primeng/icons/minus';
-import { PlusIcon } from 'primeng/icons/plus';
-import { SearchIcon } from 'primeng/icons/search';
-import { SpinnerIcon } from 'primeng/icons/spinner';
-import { Nullable } from 'primeng/ts-helpers';
+import { CheckIcon } from '@dwii5359/primeng/icons/check';
+import { ChevronDownIcon } from '@dwii5359/primeng/icons/chevrondown';
+import { ChevronRightIcon } from '@dwii5359/primeng/icons/chevronright';
+import { MinusIcon } from '@dwii5359/primeng/icons/minus';
+import { PlusIcon } from '@dwii5359/primeng/icons/plus';
+import { SearchIcon } from '@dwii5359/primeng/icons/search';
+import { SpinnerIcon } from '@dwii5359/primeng/icons/spinner';
+import { Nullable } from '@dwii5359/primeng/ts-helpers';
 import {
     TreeFilterEvent,
     TreeLazyLoadEvent,

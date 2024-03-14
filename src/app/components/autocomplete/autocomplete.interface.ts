@@ -1,5 +1,5 @@
 import { TemplateRef } from '@angular/core';
-import { ScrollerOptions } from 'primeng/api';
+import { ScrollerOptions } from '@dwii5359/primeng/api';
 import { AutoComplete } from './autocomplete';
 
 /**

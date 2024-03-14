@@ -2,8 +2,8 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TriStateCheckbox } from './tristatecheckbox';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { CheckIcon } from 'primeng/icons/check';
-import { TimesIcon } from 'primeng/icons/times';
+import { CheckIcon } from '@dwii5359/primeng/icons/check';
+import { TimesIcon } from '@dwii5359/primeng/icons/times';
 
 describe('TriStateCheckbox', () => {
     let tristate: TriStateCheckbox;

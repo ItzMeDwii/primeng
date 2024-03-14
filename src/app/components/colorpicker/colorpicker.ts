@@ -2,10 +2,10 @@ import { AnimationEvent, animate, style, transition, trigger } from '@angular/an
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, Input, NgModule, OnDestroy, Output, PLATFORM_ID, Renderer2, TemplateRef, ViewChild, ViewEncapsulation, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { OverlayService, PrimeNGConfig, TranslationKeys } from 'primeng/api';
-import { ConnectedOverlayScrollHandler, DomHandler } from 'primeng/dom';
-import { Nullable, VoidListener } from 'primeng/ts-helpers';
-import { ZIndexUtils } from 'primeng/utils';
+import { OverlayService, PrimeNGConfig, TranslationKeys } from '@dwii5359/primeng/api';
+import { ConnectedOverlayScrollHandler, DomHandler } from '@dwii5359/primeng/dom';
+import { Nullable, VoidListener } from '@dwii5359/primeng/ts-helpers';
+import { ZIndexUtils } from '@dwii5359/primeng/utils';
 import { ColorPickerChangeEvent } from './colorpicker.interface';
 
 export const COLORPICKER_VALUE_ACCESSOR: any = {

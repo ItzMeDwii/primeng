@@ -5,9 +5,9 @@ import { AppDocModule } from '../../layout/doc/app.doc.module';
 import { AppCodeModule } from '../../layout/doc/app.code.component';
 import { ToggleClassDoc } from './toggleclassdoc';
 import { ImportDoc } from './importdoc';
-import { StyleClassModule } from 'primeng/styleclass';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
+import { StyleClassModule } from '@dwii5359/primeng/styleclass';
+import { ButtonModule } from '@dwii5359/primeng/button';
+import { InputTextModule } from '@dwii5359/primeng/inputtext';
 import { AnimationDoc } from './animationdoc';
 
 @NgModule({

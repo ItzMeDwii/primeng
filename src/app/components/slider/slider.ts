@@ -1,8 +1,8 @@
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, Input, NgModule, NgZone, OnDestroy, Output, PLATFORM_ID, Renderer2, ViewChild, ViewEncapsulation, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DomHandler } from 'primeng/dom';
-import { Nullable, VoidListener } from 'primeng/ts-helpers';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { Nullable, VoidListener } from '@dwii5359/primeng/ts-helpers';
 import { SliderChangeEvent, SliderSlideEndEvent } from './slider.interface';
 
 export const SLIDER_VALUE_ACCESSOR: any = {

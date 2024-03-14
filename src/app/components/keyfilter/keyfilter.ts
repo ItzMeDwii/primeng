@@ -1,6 +1,6 @@
 import { NgModule, Directive, ElementRef, HostListener, Input, forwardRef, Output, EventEmitter, Inject, PLATFORM_ID, Provider } from '@angular/core';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { DomHandler } from 'primeng/dom';
+import { DomHandler } from '@dwii5359/primeng/dom';
 import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
 import { KeyFilterPattern } from './keyfilter.interface';
 

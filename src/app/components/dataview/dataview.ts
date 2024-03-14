@@ -19,15 +19,15 @@ import {
     OnDestroy
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ObjectUtils } from 'primeng/utils';
-import { Header, Footer, PrimeTemplate, SharedModule, FilterService, TranslationKeys, PrimeNGConfig } from 'primeng/api';
-import { PaginatorModule } from 'primeng/paginator';
-import { BlockableUI } from 'primeng/api';
+import { ObjectUtils } from '@dwii5359/primeng/utils';
+import { Header, Footer, PrimeTemplate, SharedModule, FilterService, TranslationKeys, PrimeNGConfig } from '@dwii5359/primeng/api';
+import { PaginatorModule } from '@dwii5359/primeng/paginator';
+import { BlockableUI } from '@dwii5359/primeng/api';
 import { Subscription } from 'rxjs';
-import { SpinnerIcon } from 'primeng/icons/spinner';
-import { ThLargeIcon } from 'primeng/icons/thlarge';
-import { BarsIcon } from 'primeng/icons/bars';
-import { Nullable } from 'primeng/ts-helpers';
+import { SpinnerIcon } from '@dwii5359/primeng/icons/spinner';
+import { ThLargeIcon } from '@dwii5359/primeng/icons/thlarge';
+import { BarsIcon } from '@dwii5359/primeng/icons/bars';
+import { Nullable } from '@dwii5359/primeng/ts-helpers';
 import { DataViewLayoutChangeEvent, DataViewLazyLoadEvent, DataViewPageEvent, DataViewPaginatorState, DataViewSortEvent } from './dataview.interface';
 /**
  * DataView displays data in grid or list layout with pagination and sorting features.

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Message } from 'primeng/api';
+import { Message } from '@dwii5359/primeng/api';
 import { Code } from '../../domain/code';
 
 @Component({
@@ -32,7 +32,7 @@ export class BasicDoc implements OnInit {
 </div>`,
         typescript: `
 import { Component, OnInit } from '@angular/core';
-import { Message } from 'primeng/api';
+import { Message } from '@dwii5359/primeng/api';
 
 @Component({
     selector: 'messages-basic-demo',

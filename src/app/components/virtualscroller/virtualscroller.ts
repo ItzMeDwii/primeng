@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ContentChildren, ElementRef, EventEmitter, Input, NgModule, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { BlockableUI, Footer, Header, PrimeTemplate, ScrollerOptions, SharedModule } from 'primeng/api';
-import { Scroller, ScrollerModule } from 'primeng/scroller';
-import { Nullable } from 'primeng/ts-helpers';
+import { BlockableUI, Footer, Header, PrimeTemplate, ScrollerOptions, SharedModule } from '@dwii5359/primeng/api';
+import { Scroller, ScrollerModule } from '@dwii5359/primeng/scroller';
+import { Nullable } from '@dwii5359/primeng/ts-helpers';
 import { VirtualScrollerLazyLoadEvent } from './virtualscroller.interface';
 /**
  * VirtualScroller is a performant approach to handle huge data efficiently.

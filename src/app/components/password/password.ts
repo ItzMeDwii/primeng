@@ -29,14 +29,14 @@ import {
     forwardRef
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { OverlayService, PrimeNGConfig, PrimeTemplate, SharedModule, TranslationKeys } from 'primeng/api';
-import { ConnectedOverlayScrollHandler, DomHandler } from 'primeng/dom';
-import { EyeIcon } from 'primeng/icons/eye';
-import { EyeSlashIcon } from 'primeng/icons/eyeslash';
-import { TimesIcon } from 'primeng/icons/times';
-import { InputTextModule } from 'primeng/inputtext';
-import { Nullable, VoidListener } from 'primeng/ts-helpers';
-import { ZIndexUtils } from 'primeng/utils';
+import { OverlayService, PrimeNGConfig, PrimeTemplate, SharedModule, TranslationKeys } from '@dwii5359/primeng/api';
+import { ConnectedOverlayScrollHandler, DomHandler } from '@dwii5359/primeng/dom';
+import { EyeIcon } from '@dwii5359/primeng/icons/eye';
+import { EyeSlashIcon } from '@dwii5359/primeng/icons/eyeslash';
+import { TimesIcon } from '@dwii5359/primeng/icons/times';
+import { InputTextModule } from '@dwii5359/primeng/inputtext';
+import { Nullable, VoidListener } from '@dwii5359/primeng/ts-helpers';
+import { ZIndexUtils } from '@dwii5359/primeng/utils';
 import { Subscription } from 'rxjs';
 
 type Meter = {

@@ -4,7 +4,7 @@ import { ContextMenu, ContextMenuModule } from './contextmenu';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Component } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ContextMenuService } from 'primeng/api';
+import { ContextMenuService } from '@dwii5359/primeng/api';
 
 @Component({
     template: `

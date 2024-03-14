@@ -7,6 +7,6 @@ import { Code } from '../../domain/code';
 })
 export class ImportDoc {
     code: Code = {
-        typescript: `import { EditorModule } from 'primeng/editor';`
+        typescript: `import { EditorModule } from '@dwii5359/primeng/editor';`
     };
 }

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { StyleClassModule } from 'primeng/styleclass';
+import { StyleClassModule } from '@dwii5359/primeng/styleclass';
 import { MenuItem } from './app.menu.component';
 
 @Component({

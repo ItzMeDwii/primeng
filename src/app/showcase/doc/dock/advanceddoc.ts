@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
-import { TerminalService } from 'primeng/terminal';
+import { MenuItem, MessageService } from '@dwii5359/primeng/api';
+import { TerminalService } from '@dwii5359/primeng/terminal';
 import { Subscription } from 'rxjs';
 import { Code } from '../../domain/code';
 import { NodeService } from '../../service/nodeservice';
@@ -468,8 +468,8 @@ export class AdvancedDoc implements OnInit, OnDestroy {
 
         typescript: `
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
-import { TerminalService } from 'primeng/terminal';
+import { MenuItem, MessageService } from '@dwii5359/primeng/api';
+import { TerminalService } from '@dwii5359/primeng/terminal';
 import { Subscription } from 'rxjs';
 import { NodeService } from '../../service/nodeservice';
 import { PhotoService } from '../../service/photoservice';

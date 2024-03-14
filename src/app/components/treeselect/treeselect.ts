@@ -2,16 +2,16 @@ import { AnimationEvent } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, NgModule, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { OverlayOptions, OverlayService, PrimeNGConfig, PrimeTemplate, SharedModule, TreeNode } from 'primeng/api';
-import { DomHandler } from 'primeng/dom';
-import { ChevronDownIcon } from 'primeng/icons/chevrondown';
-import { SearchIcon } from 'primeng/icons/search';
-import { TimesIcon } from 'primeng/icons/times';
-import { Overlay, OverlayModule } from 'primeng/overlay';
-import { RippleModule } from 'primeng/ripple';
-import { Tree, TreeModule, TreeNodeSelectEvent, TreeNodeUnSelectEvent } from 'primeng/tree';
-import { ObjectUtils, UniqueComponentId } from 'primeng/utils';
-import { Nullable } from 'primeng/ts-helpers';
+import { OverlayOptions, OverlayService, PrimeNGConfig, PrimeTemplate, SharedModule, TreeNode } from '@dwii5359/primeng/api';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { ChevronDownIcon } from '@dwii5359/primeng/icons/chevrondown';
+import { SearchIcon } from '@dwii5359/primeng/icons/search';
+import { TimesIcon } from '@dwii5359/primeng/icons/times';
+import { Overlay, OverlayModule } from '@dwii5359/primeng/overlay';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { Tree, TreeModule, TreeNodeSelectEvent, TreeNodeUnSelectEvent } from '@dwii5359/primeng/tree';
+import { ObjectUtils, UniqueComponentId } from '@dwii5359/primeng/utils';
+import { Nullable } from '@dwii5359/primeng/ts-helpers';
 import { TreeSelectNodeCollapseEvent, TreeSelectNodeExpandEvent } from './treeselect.interface';
 
 export const TREESELECT_VALUE_ACCESSOR: any = {

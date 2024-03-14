@@ -7,6 +7,6 @@ import { Code } from '../../domain/code';
 })
 export class ImportDoc {
     code: Code = {
-        typescript: `import { InputNumberModule } from 'primeng/inputnumber';`
+        typescript: `import { InputNumberModule } from '@dwii5359/primeng/inputnumber';`
     };
 }

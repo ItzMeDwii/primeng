@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, ChangeDetectionStrategy, Component, ContentChildren, ElementRef, Input, NgModule, QueryList, TemplateRef, ViewChild, ViewEncapsulation, effect, forwardRef, inject, viewChild } from '@angular/core';
-import { PrimeTemplate, SharedModule } from 'primeng/api';
-import { DomHandler } from 'primeng/dom';
+import { PrimeTemplate, SharedModule } from '@dwii5359/primeng/api';
+import { DomHandler } from '@dwii5359/primeng/dom';
 import { MeterItem } from './metergroup.interface';
 
 @Component({

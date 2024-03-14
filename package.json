@@ -1,5 +1,5 @@
 {
-    "name": "primeng",
+    "name": "@dwii5359/primeng",
     "version": "17.10.0",
     "license": "SEE LICENSE IN LICENSE.md",
     "scripts": {
@@ -12,7 +12,7 @@
         "format": "prettier --write \"**/*.{js,ts,d.ts}\"",
         "format:check": "prettier --check \"**/*.{js,ts,d.ts}\"",
         "build:lib": "npm run build:check && npm run build:package",
-        "build:package": "BROWSERSLIST_ENV=library ng build primeng-library && gulp build-assets",
+        "build:package": "ng build primeng-library && gulp build-assets",
         "build:check": "npm run format:check && npm run security:check",
         "security:check": "npm audit --production --audit-level high",
         "apidoc": "node ./api-generator/build-apidoc.ts",
@@ -20,7 +20,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/primefaces/primeng.git"
+        "url": "https://github.com/ItzMeDwii/primeng"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "^17.0.5",

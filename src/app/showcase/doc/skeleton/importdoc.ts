@@ -7,6 +7,6 @@ import { Code } from '../../domain/code';
 })
 export class ImportDoc {
     code: Code = {
-        typescript: `import { SkeletonModule } from 'primeng/skeleton';`
+        typescript: `import { SkeletonModule } from '@dwii5359/primeng/skeleton';`
     };
 }

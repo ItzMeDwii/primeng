@@ -22,17 +22,17 @@ import {
     Renderer2
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule, PrimeTemplate, Footer, Header, FilterService, TranslationKeys, PrimeNGConfig, ScrollerOptions } from 'primeng/api';
-import { DomHandler } from 'primeng/dom';
-import { ObjectUtils, UniqueComponentId } from 'primeng/utils';
+import { SharedModule, PrimeTemplate, Footer, Header, FilterService, TranslationKeys, PrimeNGConfig, ScrollerOptions } from '@dwii5359/primeng/api';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { ObjectUtils, UniqueComponentId } from '@dwii5359/primeng/utils';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { RippleModule } from 'primeng/ripple';
+import { RippleModule } from '@dwii5359/primeng/ripple';
 import { Subscription } from 'rxjs';
-import { SearchIcon } from 'primeng/icons/search';
-import { CheckIcon } from 'primeng/icons/check';
-import { Nullable } from 'primeng/ts-helpers';
+import { SearchIcon } from '@dwii5359/primeng/icons/search';
+import { CheckIcon } from '@dwii5359/primeng/icons/check';
+import { Nullable } from '@dwii5359/primeng/ts-helpers';
 import { ListboxChangeEvent, ListboxClickEvent, ListboxDoubleClickEvent, ListboxFilterEvent, ListboxFilterOptions, ListboxSelectAllChangeEvent } from './listbox.interface';
-import { Scroller, ScrollerModule } from 'primeng/scroller';
+import { Scroller, ScrollerModule } from '@dwii5359/primeng/scroller';
 
 export const LISTBOX_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,

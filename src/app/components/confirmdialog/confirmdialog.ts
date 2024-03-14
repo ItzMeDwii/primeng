@@ -23,14 +23,14 @@ import {
     ViewEncapsulation,
     ViewRef
 } from '@angular/core';
-import { ConfirmEventType, Confirmation, ConfirmationService, Footer, PrimeNGConfig, PrimeTemplate, SharedModule, TranslationKeys } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { DomHandler } from 'primeng/dom';
-import { CheckIcon } from 'primeng/icons/check';
-import { TimesIcon } from 'primeng/icons/times';
-import { RippleModule } from 'primeng/ripple';
-import { Nullable } from 'primeng/ts-helpers';
-import { UniqueComponentId, ZIndexUtils } from 'primeng/utils';
+import { ConfirmEventType, Confirmation, ConfirmationService, Footer, PrimeNGConfig, PrimeTemplate, SharedModule, TranslationKeys } from '@dwii5359/primeng/api';
+import { ButtonModule } from '@dwii5359/primeng/button';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { CheckIcon } from '@dwii5359/primeng/icons/check';
+import { TimesIcon } from '@dwii5359/primeng/icons/times';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { Nullable } from '@dwii5359/primeng/ts-helpers';
+import { UniqueComponentId, ZIndexUtils } from '@dwii5359/primeng/utils';
 import { Subscription } from 'rxjs';
 
 const showAnimation = animation([style({ transform: '{{transform}}', opacity: 0 }), animate('{{transition}}', style({ transform: 'none', opacity: 1 }))]);

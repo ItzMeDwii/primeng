@@ -2,17 +2,17 @@ import { AnimationEvent, animate, style, transition, trigger } from '@angular/an
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, ElementRef, EventEmitter, HostListener, Inject, Input, NgModule, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
-import { PrimeNGConfig, PrimeTemplate, SharedModule } from 'primeng/api';
-import { DomHandler } from 'primeng/dom';
-import { EyeIcon } from 'primeng/icons/eye';
-import { RefreshIcon } from 'primeng/icons/refresh';
-import { SearchMinusIcon } from 'primeng/icons/searchminus';
-import { SearchPlusIcon } from 'primeng/icons/searchplus';
-import { TimesIcon } from 'primeng/icons/times';
-import { UndoIcon } from 'primeng/icons/undo';
-import { ZIndexUtils } from 'primeng/utils';
-import { Nullable } from 'primeng/ts-helpers';
-import { FocusTrapModule } from 'primeng/focustrap';
+import { PrimeNGConfig, PrimeTemplate, SharedModule } from '@dwii5359/primeng/api';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { EyeIcon } from '@dwii5359/primeng/icons/eye';
+import { RefreshIcon } from '@dwii5359/primeng/icons/refresh';
+import { SearchMinusIcon } from '@dwii5359/primeng/icons/searchminus';
+import { SearchPlusIcon } from '@dwii5359/primeng/icons/searchplus';
+import { TimesIcon } from '@dwii5359/primeng/icons/times';
+import { UndoIcon } from '@dwii5359/primeng/icons/undo';
+import { ZIndexUtils } from '@dwii5359/primeng/utils';
+import { Nullable } from '@dwii5359/primeng/ts-helpers';
+import { FocusTrapModule } from '@dwii5359/primeng/focustrap';
 
 /**
  * Displays an image with preview and tranformation options. For multiple image, see Galleria.

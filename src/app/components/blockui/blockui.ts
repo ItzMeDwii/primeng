@@ -1,8 +1,8 @@
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, ElementRef, Inject, Input, NgModule, OnDestroy, PLATFORM_ID, QueryList, Renderer2, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { PrimeNGConfig, PrimeTemplate } from 'primeng/api';
-import { DomHandler } from 'primeng/dom';
-import { ZIndexUtils } from 'primeng/utils';
+import { PrimeNGConfig, PrimeTemplate } from '@dwii5359/primeng/api';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { ZIndexUtils } from '@dwii5359/primeng/utils';
 /**
  * BlockUI can either block other components or the whole page.
  * @group Components

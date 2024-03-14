@@ -18,11 +18,11 @@ import {
     TemplateRef,
     ViewEncapsulation
 } from '@angular/core';
-import { Confirmation, ConfirmationService, OverlayService, PrimeNGConfig, PrimeTemplate, SharedModule, TranslationKeys } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { ConnectedOverlayScrollHandler, DomHandler } from 'primeng/dom';
-import { Nullable, VoidListener } from 'primeng/ts-helpers';
-import { ZIndexUtils } from 'primeng/utils';
+import { Confirmation, ConfirmationService, OverlayService, PrimeNGConfig, PrimeTemplate, SharedModule, TranslationKeys } from '@dwii5359/primeng/api';
+import { ButtonModule } from '@dwii5359/primeng/button';
+import { ConnectedOverlayScrollHandler, DomHandler } from '@dwii5359/primeng/dom';
+import { Nullable, VoidListener } from '@dwii5359/primeng/ts-helpers';
+import { ZIndexUtils } from '@dwii5359/primeng/utils';
 import { Subscription } from 'rxjs';
 /**
  * ConfirmPopup displays a confirmation overlay displayed relatively to its target.

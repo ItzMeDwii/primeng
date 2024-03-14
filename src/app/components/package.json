@@ -1,16 +1,16 @@
 {
-    "name": "primeng",
+    "name": "@dwii5359/primeng",
     "version": "17.10.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/primefaces/primeng"
+        "url": "ttps://github.com/ItzMeDwii/primeng"
     },
     "keywords": [
         "angular"
     ],
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/primefaces/primeng/issues"
+        "url": "https://github.com/ItzMeDwii/primeng/issues"
     },
     "exports": {
         "./resources/": "./resources/"

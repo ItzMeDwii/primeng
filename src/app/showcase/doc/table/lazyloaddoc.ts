@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { LazyLoadEvent } from 'primeng/api';
+import { LazyLoadEvent } from '@dwii5359/primeng/api';
 import { Code } from '../../domain/code';
 import { Customer, Representative } from '../../domain/customer';
 import { CustomerService } from '../../service/customerservice';
@@ -287,7 +287,7 @@ export class LazyLoadDoc implements OnInit {
 </div>`,
         typescript: `
 import { Component, OnInit } from '@angular/core';
-import { LazyLoadEvent } from 'primeng/api';
+import { LazyLoadEvent } from '@dwii5359/primeng/api';
 import { Customer, Representative } from '../../domain/customer';
 import { CustomerService } from '../../service/customerservice';
 

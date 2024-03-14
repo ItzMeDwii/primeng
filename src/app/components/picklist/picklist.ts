@@ -20,22 +20,22 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { FilterService, PrimeNGConfig, PrimeTemplate, SharedModule } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { DomHandler } from 'primeng/dom';
-import { AngleDoubleDownIcon } from 'primeng/icons/angledoubledown';
-import { AngleDoubleLeftIcon } from 'primeng/icons/angledoubleleft';
-import { AngleDoubleRightIcon } from 'primeng/icons/angledoubleright';
-import { AngleDoubleUpIcon } from 'primeng/icons/angledoubleup';
-import { AngleDownIcon } from 'primeng/icons/angledown';
-import { AngleLeftIcon } from 'primeng/icons/angleleft';
-import { AngleRightIcon } from 'primeng/icons/angleright';
-import { AngleUpIcon } from 'primeng/icons/angleup';
-import { HomeIcon } from 'primeng/icons/home';
-import { SearchIcon } from 'primeng/icons/search';
-import { RippleModule } from 'primeng/ripple';
-import { Nullable, VoidListener } from 'primeng/ts-helpers';
-import { ObjectUtils, UniqueComponentId } from 'primeng/utils';
+import { FilterService, PrimeNGConfig, PrimeTemplate, SharedModule } from '@dwii5359/primeng/api';
+import { ButtonModule } from '@dwii5359/primeng/button';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { AngleDoubleDownIcon } from '@dwii5359/primeng/icons/angledoubledown';
+import { AngleDoubleLeftIcon } from '@dwii5359/primeng/icons/angledoubleleft';
+import { AngleDoubleRightIcon } from '@dwii5359/primeng/icons/angledoubleright';
+import { AngleDoubleUpIcon } from '@dwii5359/primeng/icons/angledoubleup';
+import { AngleDownIcon } from '@dwii5359/primeng/icons/angledown';
+import { AngleLeftIcon } from '@dwii5359/primeng/icons/angleleft';
+import { AngleRightIcon } from '@dwii5359/primeng/icons/angleright';
+import { AngleUpIcon } from '@dwii5359/primeng/icons/angleup';
+import { HomeIcon } from '@dwii5359/primeng/icons/home';
+import { SearchIcon } from '@dwii5359/primeng/icons/search';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { Nullable, VoidListener } from '@dwii5359/primeng/ts-helpers';
+import { ObjectUtils, UniqueComponentId } from '@dwii5359/primeng/utils';
 import {
     PickListFilterOptions,
     PickListMoveAllToSourceEvent,

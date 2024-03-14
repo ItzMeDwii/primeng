@@ -27,23 +27,23 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { BlockableUI, FilterMetadata, FilterService, PrimeNGConfig, PrimeTemplate, ScrollerOptions, SharedModule, SortMeta, TreeNode, TreeTableNode } from 'primeng/api';
-import { DomHandler } from 'primeng/dom';
-import { ArrowDownIcon } from 'primeng/icons/arrowdown';
-import { ArrowUpIcon } from 'primeng/icons/arrowup';
-import { CheckIcon } from 'primeng/icons/check';
-import { ChevronDownIcon } from 'primeng/icons/chevrondown';
-import { ChevronRightIcon } from 'primeng/icons/chevronright';
-import { MinusIcon } from 'primeng/icons/minus';
-import { SortAltIcon } from 'primeng/icons/sortalt';
-import { SortAmountDownIcon } from 'primeng/icons/sortamountdown';
-import { SortAmountUpAltIcon } from 'primeng/icons/sortamountupalt';
-import { SpinnerIcon } from 'primeng/icons/spinner';
-import { PaginatorModule } from 'primeng/paginator';
-import { RippleModule } from 'primeng/ripple';
-import { Scroller, ScrollerModule } from 'primeng/scroller';
-import { Nullable, VoidListener } from 'primeng/ts-helpers';
-import { ObjectUtils } from 'primeng/utils';
+import { BlockableUI, FilterMetadata, FilterService, PrimeNGConfig, PrimeTemplate, ScrollerOptions, SharedModule, SortMeta, TreeNode, TreeTableNode } from '@dwii5359/primeng/api';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { ArrowDownIcon } from '@dwii5359/primeng/icons/arrowdown';
+import { ArrowUpIcon } from '@dwii5359/primeng/icons/arrowup';
+import { CheckIcon } from '@dwii5359/primeng/icons/check';
+import { ChevronDownIcon } from '@dwii5359/primeng/icons/chevrondown';
+import { ChevronRightIcon } from '@dwii5359/primeng/icons/chevronright';
+import { MinusIcon } from '@dwii5359/primeng/icons/minus';
+import { SortAltIcon } from '@dwii5359/primeng/icons/sortalt';
+import { SortAmountDownIcon } from '@dwii5359/primeng/icons/sortamountdown';
+import { SortAmountUpAltIcon } from '@dwii5359/primeng/icons/sortamountupalt';
+import { SpinnerIcon } from '@dwii5359/primeng/icons/spinner';
+import { PaginatorModule } from '@dwii5359/primeng/paginator';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { Scroller, ScrollerModule } from '@dwii5359/primeng/scroller';
+import { Nullable, VoidListener } from '@dwii5359/primeng/ts-helpers';
+import { ObjectUtils } from '@dwii5359/primeng/utils';
 import { Subject, Subscription } from 'rxjs';
 import {
     TreeTableColResizeEvent,

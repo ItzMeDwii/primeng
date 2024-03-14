@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { TabMenuModule } from 'primeng/tabmenu';
-import { ButtonModule } from 'primeng/button';
-import { RippleModule } from 'primeng/ripple';
+import { TabMenuModule } from '@dwii5359/primeng/tabmenu';
+import { ButtonModule } from '@dwii5359/primeng/button';
+import { RippleModule } from '@dwii5359/primeng/ripple';
 import { AppDocModule } from '../../layout/doc/app.doc.module';
 import { AppCodeModule } from '../../layout/doc/app.code.component';
 import { ActiveDoc } from './activedoc';

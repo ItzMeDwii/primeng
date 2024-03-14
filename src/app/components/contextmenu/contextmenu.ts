@@ -27,13 +27,13 @@ import {
     signal
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MenuItem, OverlayService, PrimeNGConfig, PrimeTemplate, SharedModule } from 'primeng/api';
-import { DomHandler } from 'primeng/dom';
-import { AngleRightIcon } from 'primeng/icons/angleright';
-import { RippleModule } from 'primeng/ripple';
-import { TooltipModule } from 'primeng/tooltip';
-import { Nullable, VoidListener } from 'primeng/ts-helpers';
-import { ObjectUtils, UniqueComponentId, ZIndexUtils } from 'primeng/utils';
+import { MenuItem, OverlayService, PrimeNGConfig, PrimeTemplate, SharedModule } from '@dwii5359/primeng/api';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { AngleRightIcon } from '@dwii5359/primeng/icons/angleright';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { TooltipModule } from '@dwii5359/primeng/tooltip';
+import { Nullable, VoidListener } from '@dwii5359/primeng/ts-helpers';
+import { ObjectUtils, UniqueComponentId, ZIndexUtils } from '@dwii5359/primeng/utils';
 
 @Component({
     selector: 'p-contextMenuSub',

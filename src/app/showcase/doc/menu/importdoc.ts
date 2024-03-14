@@ -7,6 +7,6 @@ import { Code } from '../../domain/code';
 })
 export class ImportDoc {
     code: Code = {
-        typescript: `import { MenuModule } from 'primeng/menu';`
+        typescript: `import { MenuModule } from '@dwii5359/primeng/menu';`
     };
 }

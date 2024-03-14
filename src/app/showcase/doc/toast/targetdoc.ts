@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@dwii5359/primeng/api';
 import { Code } from '../../domain/code';
 
 @Component({
@@ -45,7 +45,7 @@ export class TargetDoc {
 </div>`,
         typescript: `
 import { Component } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@dwii5359/primeng/api';
 
 @Component({
     selector: 'toast-target-demo',

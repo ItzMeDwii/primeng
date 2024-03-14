@@ -7,6 +7,6 @@ import { Code } from '../../domain/code';
 })
 export class ImportDoc {
     code: Code = {
-        typescript: `import { PanelMenuModule } from 'primeng/panelmenu';`
+        typescript: `import { PanelMenuModule } from '@dwii5359/primeng/panelmenu';`
     };
 }

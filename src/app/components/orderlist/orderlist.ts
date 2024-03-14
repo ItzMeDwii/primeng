@@ -20,17 +20,17 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { FilterService, PrimeNGConfig, PrimeTemplate, SharedModule } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { DomHandler } from 'primeng/dom';
-import { AngleDoubleDownIcon } from 'primeng/icons/angledoubledown';
-import { AngleDoubleUpIcon } from 'primeng/icons/angledoubleup';
-import { AngleDownIcon } from 'primeng/icons/angledown';
-import { AngleUpIcon } from 'primeng/icons/angleup';
-import { SearchIcon } from 'primeng/icons/search';
-import { RippleModule } from 'primeng/ripple';
-import { Nullable } from 'primeng/ts-helpers';
-import { ObjectUtils, UniqueComponentId } from 'primeng/utils';
+import { FilterService, PrimeNGConfig, PrimeTemplate, SharedModule } from '@dwii5359/primeng/api';
+import { ButtonModule } from '@dwii5359/primeng/button';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { AngleDoubleDownIcon } from '@dwii5359/primeng/icons/angledoubledown';
+import { AngleDoubleUpIcon } from '@dwii5359/primeng/icons/angledoubleup';
+import { AngleDownIcon } from '@dwii5359/primeng/icons/angledown';
+import { AngleUpIcon } from '@dwii5359/primeng/icons/angleup';
+import { SearchIcon } from '@dwii5359/primeng/icons/search';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { Nullable } from '@dwii5359/primeng/ts-helpers';
+import { ObjectUtils, UniqueComponentId } from '@dwii5359/primeng/utils';
 import { OrderListFilterEvent, OrderListFilterOptions, OrderListSelectionChangeEvent } from './orderlist.interface';
 /**
  * OrderList is used to managed the order of a collection.

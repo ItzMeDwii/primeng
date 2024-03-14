@@ -1,11 +1,11 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { Component, EventEmitter, Inject, Output, Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { InputSwitchModule, InputSwitchChangeEvent } from 'primeng/inputswitch';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
-import { SidebarModule } from 'primeng/sidebar';
+import { ButtonModule } from '@dwii5359/primeng/button';
+import { InputSwitchModule, InputSwitchChangeEvent } from '@dwii5359/primeng/inputswitch';
+import { RadioButtonModule } from '@dwii5359/primeng/radiobutton';
+import { SelectButtonChangeEvent, SelectButtonModule } from '@dwii5359/primeng/selectbutton';
+import { SidebarModule } from '@dwii5359/primeng/sidebar';
 import { AppConfigService } from '../../service/appconfigservice';
 
 @Component({

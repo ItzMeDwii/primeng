@@ -24,14 +24,14 @@ import {
     signal
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MegaMenuItem, PrimeNGConfig, PrimeTemplate, SharedModule } from 'primeng/api';
-import { DomHandler } from 'primeng/dom';
-import { AngleDownIcon } from 'primeng/icons/angledown';
-import { AngleRightIcon } from 'primeng/icons/angleright';
-import { RippleModule } from 'primeng/ripple';
-import { TooltipModule } from 'primeng/tooltip';
-import { VoidListener } from 'primeng/ts-helpers';
-import { ObjectUtils, UniqueComponentId } from 'primeng/utils';
+import { MegaMenuItem, PrimeNGConfig, PrimeTemplate, SharedModule } from '@dwii5359/primeng/api';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { AngleDownIcon } from '@dwii5359/primeng/icons/angledown';
+import { AngleRightIcon } from '@dwii5359/primeng/icons/angleright';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { TooltipModule } from '@dwii5359/primeng/tooltip';
+import { VoidListener } from '@dwii5359/primeng/ts-helpers';
+import { ObjectUtils, UniqueComponentId } from '@dwii5359/primeng/utils';
 
 @Component({
     selector: 'p-megaMenuSub',

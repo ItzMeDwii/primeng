@@ -11,7 +11,7 @@ import { ImportDoc } from './importdoc';
 import { ListDoc } from './listdoc';
 import { SizeDoc } from './sizedoc';
 import { SpinDoc } from './spindoc';
-import { MenuModule } from 'primeng/menu';
+import { MenuModule } from '@dwii5359/primeng/menu';
 
 @NgModule({
     imports: [CommonModule, RouterModule, AppCodeModule, AppDocModule, MenuModule],

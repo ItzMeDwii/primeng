@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, ElementRef, EventEmitter, Input, NgModule, OnChanges, OnInit, Output, QueryList, SimpleChanges, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { PrimeNGConfig, PrimeTemplate, SelectItem, SharedModule } from 'primeng/api';
-import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
-import { AngleDoubleLeftIcon } from 'primeng/icons/angledoubleleft';
-import { AngleDoubleRightIcon } from 'primeng/icons/angledoubleright';
-import { AngleLeftIcon } from 'primeng/icons/angleleft';
-import { AngleRightIcon } from 'primeng/icons/angleright';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { RippleModule } from 'primeng/ripple';
-import { Nullable } from 'primeng/ts-helpers';
+import { PrimeNGConfig, PrimeTemplate, SelectItem, SharedModule } from '@dwii5359/primeng/api';
+import { DropdownChangeEvent, DropdownModule } from '@dwii5359/primeng/dropdown';
+import { AngleDoubleLeftIcon } from '@dwii5359/primeng/icons/angledoubleleft';
+import { AngleDoubleRightIcon } from '@dwii5359/primeng/icons/angledoubleright';
+import { AngleLeftIcon } from '@dwii5359/primeng/icons/angleleft';
+import { AngleRightIcon } from '@dwii5359/primeng/icons/angleright';
+import { InputNumberModule } from '@dwii5359/primeng/inputnumber';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { Nullable } from '@dwii5359/primeng/ts-helpers';
 import { PaginatorState } from './paginator.interface';
 /**
  * Paginator is a generic component to display content in paged format.

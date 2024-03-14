@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@dwii5359/primeng/api';
 import { Code } from '../../domain/code';
 import { Product } from '../../domain/product';
 import { ProductService } from '../../service/productservice';
@@ -112,7 +112,7 @@ export class ColumnSelectionDoc {
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../../domain/product';
 import { ProductService } from '../../service/productservice';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@dwii5359/primeng/api';
 
 @Component({
     selector: 'table-column-selection-demo',

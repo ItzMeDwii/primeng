@@ -1,4 +1,4 @@
-import { DomHandler } from 'primeng/dom';
+import { DomHandler } from '@dwii5359/primeng/dom';
 
 import { CommonModule } from '@angular/common';
 import { Directive, ElementRef, HostListener, Input, NgModule, inject } from '@angular/core';

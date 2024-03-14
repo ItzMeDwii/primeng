@@ -28,12 +28,12 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { MenuItem, OverlayService, PrimeNGConfig, PrimeTemplate } from 'primeng/api';
-import { ConnectedOverlayScrollHandler, DomHandler } from 'primeng/dom';
-import { RippleModule } from 'primeng/ripple';
-import { TooltipModule } from 'primeng/tooltip';
-import { Nullable, VoidListener } from 'primeng/ts-helpers';
-import { UniqueComponentId, ZIndexUtils } from 'primeng/utils';
+import { MenuItem, OverlayService, PrimeNGConfig, PrimeTemplate } from '@dwii5359/primeng/api';
+import { ConnectedOverlayScrollHandler, DomHandler } from '@dwii5359/primeng/dom';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { TooltipModule } from '@dwii5359/primeng/tooltip';
+import { Nullable, VoidListener } from '@dwii5359/primeng/ts-helpers';
+import { UniqueComponentId, ZIndexUtils } from '@dwii5359/primeng/utils';
 
 @Pipe({
     name: 'safeHtml'

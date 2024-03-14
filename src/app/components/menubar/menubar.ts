@@ -24,15 +24,15 @@ import {
     signal
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MenuItem, PrimeNGConfig, PrimeTemplate, SharedModule } from 'primeng/api';
-import { DomHandler } from 'primeng/dom';
-import { AngleDownIcon } from 'primeng/icons/angledown';
-import { AngleRightIcon } from 'primeng/icons/angleright';
-import { BarsIcon } from 'primeng/icons/bars';
-import { RippleModule } from 'primeng/ripple';
-import { TooltipModule } from 'primeng/tooltip';
-import { VoidListener } from 'primeng/ts-helpers';
-import { ObjectUtils, UniqueComponentId, ZIndexUtils } from 'primeng/utils';
+import { MenuItem, PrimeNGConfig, PrimeTemplate, SharedModule } from '@dwii5359/primeng/api';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { AngleDownIcon } from '@dwii5359/primeng/icons/angledown';
+import { AngleRightIcon } from '@dwii5359/primeng/icons/angleright';
+import { BarsIcon } from '@dwii5359/primeng/icons/bars';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { TooltipModule } from '@dwii5359/primeng/tooltip';
+import { VoidListener } from '@dwii5359/primeng/ts-helpers';
+import { ObjectUtils, UniqueComponentId, ZIndexUtils } from '@dwii5359/primeng/utils';
 import { Subject, Subscription, interval } from 'rxjs';
 import { debounce, filter } from 'rxjs/operators';
 

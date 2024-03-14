@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MessagesModule } from 'primeng/messages';
-import { SpeedDialModule } from 'primeng/speeddial';
-import { ToastModule } from 'primeng/toast';
-import { TooltipModule } from 'primeng/tooltip';
+import { MessagesModule } from '@dwii5359/primeng/messages';
+import { SpeedDialModule } from '@dwii5359/primeng/speeddial';
+import { ToastModule } from '@dwii5359/primeng/toast';
+import { TooltipModule } from '@dwii5359/primeng/tooltip';
 import { AppDocModule } from '../../layout/doc/app.doc.module';
 import { AppCodeModule } from '../../layout/doc/app.code.component';
 import { AccessibilityDoc } from './accessibilitydoc';

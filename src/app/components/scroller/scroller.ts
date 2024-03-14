@@ -23,10 +23,10 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { PrimeTemplate, ScrollerOptions, SharedModule } from 'primeng/api';
-import { DomHandler } from 'primeng/dom';
-import { SpinnerIcon } from 'primeng/icons/spinner';
-import { Nullable, VoidListener } from 'primeng/ts-helpers';
+import { PrimeTemplate, ScrollerOptions, SharedModule } from '@dwii5359/primeng/api';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { SpinnerIcon } from '@dwii5359/primeng/icons/spinner';
+import { Nullable, VoidListener } from '@dwii5359/primeng/ts-helpers';
 import { ScrollerLazyLoadEvent, ScrollerScrollEvent, ScrollerScrollIndexChangeEvent, ScrollerToType } from './scroller.interface';
 /**
  * Scroller is a performance-approach to handle huge data efficiently.

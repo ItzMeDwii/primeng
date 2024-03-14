@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BaseIcon } from 'primeng/baseicon';
-import { UniqueComponentId } from 'primeng/utils';
+import { BaseIcon } from '@dwii5359/primeng/baseicon';
+import { UniqueComponentId } from '@dwii5359/primeng/utils';
 
 @Component({
     selector: 'HomeIcon',

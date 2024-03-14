@@ -7,6 +7,6 @@ import { Code } from '../../domain/code';
 })
 export class ImportDoc {
     code: Code = {
-        typescript: `import { FileUploadModule } from 'primeng/fileupload';`
+        typescript: `import { FileUploadModule } from '@dwii5359/primeng/fileupload';`
     };
 }

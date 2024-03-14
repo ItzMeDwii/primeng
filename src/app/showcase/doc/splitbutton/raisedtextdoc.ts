@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from '@dwii5359/primeng/api';
 import { Code } from '../../domain/code';
 
 @Component({
@@ -85,7 +85,7 @@ export class RaisedTextDoc {
 
         typescript: `
 import { Component } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from '@dwii5359/primeng/api';
 
 @Component({
     selector: 'split-button-raised-text-demo',

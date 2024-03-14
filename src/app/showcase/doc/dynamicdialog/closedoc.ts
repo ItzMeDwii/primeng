@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MessageService } from '@dwii5359/primeng/api';
+import { DialogService, DynamicDialogRef } from '@dwii5359/primeng/dynamicdialog';
 import { Code } from '../../domain/code';
 import { Product } from '../../domain/product';
 import { ProductListDemo } from './productlistdemo';
@@ -42,8 +42,8 @@ export class CloseDoc {
     code: Code = {
         typescript: `
 import { Component, Input } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MessageService } from '@dwii5359/primeng/api';
+import { DialogService, DynamicDialogRef } from '@dwii5359/primeng/dynamicdialog';
 import { Product } from '../../domain/product';
 import { ProductListDemo } from './productlistdemo';
 
@@ -54,7 +54,7 @@ import { ProductListDemo } from './productlistdemo';
 export class DynamicDialogDemo {
 
     ref: DynamicDialogRef | undefined;
-    
+
     constructor(public dialogService: DialogService, public messageService: MessageService) {}
 
     show() {

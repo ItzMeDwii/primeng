@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Directive, ElementRef, HostListener, Input, NgModule, NgZone, OnDestroy, Renderer2 } from '@angular/core';
-import { DomHandler } from 'primeng/dom';
-import { VoidListener } from 'primeng/ts-helpers';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { VoidListener } from '@dwii5359/primeng/ts-helpers';
 /**
  * StyleClass manages css classes declaratively to during enter/leave animations or just to toggle classes on an element.
  * @group Components

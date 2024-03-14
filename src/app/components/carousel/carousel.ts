@@ -21,16 +21,16 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { Footer, Header, PrimeTemplate, SharedModule } from 'primeng/api';
-import { ChevronDownIcon } from 'primeng/icons/chevrondown';
-import { ChevronLeftIcon } from 'primeng/icons/chevronleft';
-import { ChevronRightIcon } from 'primeng/icons/chevronright';
-import { ChevronUpIcon } from 'primeng/icons/chevronup';
-import { RippleModule } from 'primeng/ripple';
-import { UniqueComponentId } from 'primeng/utils';
+import { Footer, Header, PrimeTemplate, SharedModule } from '@dwii5359/primeng/api';
+import { ChevronDownIcon } from '@dwii5359/primeng/icons/chevrondown';
+import { ChevronLeftIcon } from '@dwii5359/primeng/icons/chevronleft';
+import { ChevronRightIcon } from '@dwii5359/primeng/icons/chevronright';
+import { ChevronUpIcon } from '@dwii5359/primeng/icons/chevronup';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { UniqueComponentId } from '@dwii5359/primeng/utils';
 import { CarouselPageEvent, CarouselResponsiveOptions } from './carousel.interface';
-import { PrimeNGConfig } from 'primeng/api';
-import { DomHandler } from 'primeng/dom';
+import { PrimeNGConfig } from '@dwii5359/primeng/api';
+import { DomHandler } from '@dwii5359/primeng/dom';
 /**
  * Carousel is a content slider featuring various customization options.
  * @group Components

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, NgModule, ViewEncapsulation } from '@angular/core';
-import { SharedModule } from 'primeng/api';
+import { SharedModule } from '@dwii5359/primeng/api';
 
 /**
  * InputIcon displays an icon.

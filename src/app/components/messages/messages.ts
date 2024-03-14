@@ -1,14 +1,14 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, ElementRef, EventEmitter, Input, NgModule, OnDestroy, Optional, Output, QueryList, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { Message, MessageService, PrimeTemplate } from 'primeng/api';
-import { PrimeNGConfig } from 'primeng/api';
-import { CheckIcon } from 'primeng/icons/check';
-import { ExclamationTriangleIcon } from 'primeng/icons/exclamationtriangle';
-import { InfoCircleIcon } from 'primeng/icons/infocircle';
-import { TimesIcon } from 'primeng/icons/times';
-import { TimesCircleIcon } from 'primeng/icons/timescircle';
-import { RippleModule } from 'primeng/ripple';
+import { Message, MessageService, PrimeTemplate } from '@dwii5359/primeng/api';
+import { PrimeNGConfig } from '@dwii5359/primeng/api';
+import { CheckIcon } from '@dwii5359/primeng/icons/check';
+import { ExclamationTriangleIcon } from '@dwii5359/primeng/icons/exclamationtriangle';
+import { InfoCircleIcon } from '@dwii5359/primeng/icons/infocircle';
+import { TimesIcon } from '@dwii5359/primeng/icons/times';
+import { TimesCircleIcon } from '@dwii5359/primeng/icons/timescircle';
+import { RippleModule } from '@dwii5359/primeng/ripple';
 import { Subscription, timer } from 'rxjs';
 /**
  * Messages is used to display alerts inline.

@@ -4,10 +4,10 @@ import { RouterModule } from '@angular/router';
 import { AppDocModule } from '../../layout/doc/app.doc.module';
 import { AppCodeModule } from '../../layout/doc/app.code.component';
 import { FormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
-import { FocusTrapModule } from 'primeng/focustrap';
+import { ButtonModule } from '@dwii5359/primeng/button';
+import { InputTextModule } from '@dwii5359/primeng/inputtext';
+import { DropdownModule } from '@dwii5359/primeng/dropdown';
+import { FocusTrapModule } from '@dwii5359/primeng/focustrap';
 import { ImportDoc } from './importdoc';
 import { BasicDoc } from './basicdoc';
 

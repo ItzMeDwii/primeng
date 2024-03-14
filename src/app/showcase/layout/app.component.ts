@@ -3,7 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID, Renderer2, afterNextRender } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { PrimeNGConfig } from 'primeng/api';
+import { PrimeNGConfig } from '@dwii5359/primeng/api';
 import { Subscription } from 'rxjs';
 import { Theme } from '../domain/theme';
 import { LandingComponent } from '../pages/landing/landing.component';
@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
           window.dataLayer = window.dataLayer || [];
           function gtag() { dataLayer.push(arguments); }
           gtag('js', new Date());
-    
+
           gtag('config', 'G-W297P962XH');
         `;
         this.renderer.appendChild(this.document.body, scriptBody);

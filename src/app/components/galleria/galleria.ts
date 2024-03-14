@@ -26,18 +26,18 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { PrimeNGConfig, PrimeTemplate, SharedModule } from 'primeng/api';
-import { DomHandler } from 'primeng/dom';
-import { ChevronLeftIcon } from 'primeng/icons/chevronleft';
-import { ChevronRightIcon } from 'primeng/icons/chevronright';
-import { TimesIcon } from 'primeng/icons/times';
-import { WindowMaximizeIcon } from 'primeng/icons/windowmaximize';
-import { WindowMinimizeIcon } from 'primeng/icons/windowminimize';
-import { RippleModule } from 'primeng/ripple';
-import { VoidListener } from 'primeng/ts-helpers';
-import { UniqueComponentId, ZIndexUtils } from 'primeng/utils';
+import { PrimeNGConfig, PrimeTemplate, SharedModule } from '@dwii5359/primeng/api';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { ChevronLeftIcon } from '@dwii5359/primeng/icons/chevronleft';
+import { ChevronRightIcon } from '@dwii5359/primeng/icons/chevronright';
+import { TimesIcon } from '@dwii5359/primeng/icons/times';
+import { WindowMaximizeIcon } from '@dwii5359/primeng/icons/windowmaximize';
+import { WindowMinimizeIcon } from '@dwii5359/primeng/icons/windowminimize';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { VoidListener } from '@dwii5359/primeng/ts-helpers';
+import { UniqueComponentId, ZIndexUtils } from '@dwii5359/primeng/utils';
 import { GalleriaResponsiveOptions } from './galleria.interface';
-import { FocusTrapModule } from 'primeng/focustrap';
+import { FocusTrapModule } from '@dwii5359/primeng/focustrap';
 /**
  * Galleria is an advanced content gallery component.
  * @group Components

@@ -7,6 +7,6 @@ import { Code } from '../../domain/code';
 })
 export class ImportDoc {
     code: Code = {
-        typescript: `import { FocusTrapModule } from 'primeng/focustrap';`
+        typescript: `import { FocusTrapModule } from '@dwii5359/primeng/focustrap';`
     };
 }

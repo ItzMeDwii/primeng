@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy, ViewEncapsulation, ElementRef, HostBinding } from '@angular/core';
-import { ObjectUtils } from 'primeng/utils';
+import { ObjectUtils } from '@dwii5359/primeng/utils';
 
 @Component({
     template: ` <ng-content></ng-content> `,

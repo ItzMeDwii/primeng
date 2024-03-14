@@ -29,20 +29,20 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { FilterService, Footer, Header, OverlayOptions, OverlayService, PrimeNGConfig, PrimeTemplate, SharedModule, TranslationKeys } from 'primeng/api';
-import { DomHandler } from 'primeng/dom';
-import { Overlay, OverlayModule } from 'primeng/overlay';
-import { RippleModule } from 'primeng/ripple';
-import { Scroller, ScrollerModule } from 'primeng/scroller';
-import { ScrollerOptions } from 'primeng/api';
-import { TooltipModule } from 'primeng/tooltip';
-import { ObjectUtils, UniqueComponentId } from 'primeng/utils';
-import { CheckIcon } from 'primeng/icons/check';
-import { SearchIcon } from 'primeng/icons/search';
-import { TimesCircleIcon } from 'primeng/icons/timescircle';
-import { TimesIcon } from 'primeng/icons/times';
-import { ChevronDownIcon } from 'primeng/icons/chevrondown';
-import { Nullable } from 'primeng/ts-helpers';
+import { FilterService, Footer, Header, OverlayOptions, OverlayService, PrimeNGConfig, PrimeTemplate, SharedModule, TranslationKeys } from '@dwii5359/primeng/api';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { Overlay, OverlayModule } from '@dwii5359/primeng/overlay';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { Scroller, ScrollerModule } from '@dwii5359/primeng/scroller';
+import { ScrollerOptions } from '@dwii5359/primeng/api';
+import { TooltipModule } from '@dwii5359/primeng/tooltip';
+import { ObjectUtils, UniqueComponentId } from '@dwii5359/primeng/utils';
+import { CheckIcon } from '@dwii5359/primeng/icons/check';
+import { SearchIcon } from '@dwii5359/primeng/icons/search';
+import { TimesCircleIcon } from '@dwii5359/primeng/icons/timescircle';
+import { TimesIcon } from '@dwii5359/primeng/icons/times';
+import { ChevronDownIcon } from '@dwii5359/primeng/icons/chevrondown';
+import { Nullable } from '@dwii5359/primeng/ts-helpers';
 import { MultiSelectRemoveEvent, MultiSelectFilterOptions, MultiSelectFilterEvent, MultiSelectBlurEvent, MultiSelectChangeEvent, MultiSelectFocusEvent, MultiSelectLazyLoadEvent, MultiSelectSelectAllChangeEvent } from './multiselect.interface';
 
 export const MULTISELECT_VALUE_ACCESSOR: any = {

@@ -29,20 +29,20 @@ import {
     ViewRef
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { FilterService, OverlayOptions, PrimeNGConfig, PrimeTemplate, SelectItem, SharedModule, TranslationKeys } from 'primeng/api';
-import { AutoFocusModule } from 'primeng/autofocus';
-import { DomHandler } from 'primeng/dom';
-import { Overlay, OverlayModule } from 'primeng/overlay';
-import { RippleModule } from 'primeng/ripple';
-import { Scroller, ScrollerModule } from 'primeng/scroller';
-import { ScrollerOptions } from 'primeng/api';
-import { TooltipModule } from 'primeng/tooltip';
-import { ObjectUtils, UniqueComponentId } from 'primeng/utils';
-import { TimesIcon } from 'primeng/icons/times';
-import { ChevronDownIcon } from 'primeng/icons/chevrondown';
-import { SearchIcon } from 'primeng/icons/search';
+import { FilterService, OverlayOptions, PrimeNGConfig, PrimeTemplate, SelectItem, SharedModule, TranslationKeys } from '@dwii5359/primeng/api';
+import { AutoFocusModule } from '@dwii5359/primeng/autofocus';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { Overlay, OverlayModule } from '@dwii5359/primeng/overlay';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { Scroller, ScrollerModule } from '@dwii5359/primeng/scroller';
+import { ScrollerOptions } from '@dwii5359/primeng/api';
+import { TooltipModule } from '@dwii5359/primeng/tooltip';
+import { ObjectUtils, UniqueComponentId } from '@dwii5359/primeng/utils';
+import { TimesIcon } from '@dwii5359/primeng/icons/times';
+import { ChevronDownIcon } from '@dwii5359/primeng/icons/chevrondown';
+import { SearchIcon } from '@dwii5359/primeng/icons/search';
 import { DropdownChangeEvent, DropdownFilterEvent, DropdownFilterOptions, DropdownLazyLoadEvent } from './dropdown.interface';
-import { Nullable } from 'primeng/ts-helpers';
+import { Nullable } from '@dwii5359/primeng/ts-helpers';
 
 export const DROPDOWN_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,

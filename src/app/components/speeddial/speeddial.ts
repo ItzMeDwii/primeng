@@ -22,13 +22,13 @@ import {
     signal
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MenuItem, PrimeTemplate, SharedModule } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { DomHandler } from 'primeng/dom';
-import { PlusIcon } from 'primeng/icons/plus';
-import { RippleModule } from 'primeng/ripple';
-import { TooltipModule } from 'primeng/tooltip';
-import { UniqueComponentId } from 'primeng/utils';
+import { MenuItem, PrimeTemplate, SharedModule } from '@dwii5359/primeng/api';
+import { ButtonModule } from '@dwii5359/primeng/button';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { PlusIcon } from '@dwii5359/primeng/icons/plus';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { TooltipModule } from '@dwii5359/primeng/tooltip';
+import { UniqueComponentId } from '@dwii5359/primeng/utils';
 import { asapScheduler } from 'rxjs';
 
 /**

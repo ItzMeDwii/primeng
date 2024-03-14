@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MessageService } from '@dwii5359/primeng/api';
+import { DialogService, DynamicDialogRef } from '@dwii5359/primeng/dynamicdialog';
 import { Code } from '../../domain/code';
 import { ProductListDemo } from './productlistdemo';
 import { Footer } from './footer';
@@ -75,8 +75,8 @@ export class ExampleDoc implements OnDestroy {
 
         typescript: `
 import { Component, OnDestroy } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MessageService } from '@dwii5359/primeng/api';
+import { DialogService, DynamicDialogRef } from '@dwii5359/primeng/dynamicdialog';
 import { Product } from '../../domain/product';
 import { ProductListDemo } from './productlistdemo';
 import { Footer } from './footer';
@@ -87,7 +87,7 @@ import { Footer } from './footer';
     providers: [DialogService, MessageService]
 })
 export class DynamicDialogExampleDemo implements OnDestroy {
-    
+
     constructor(public dialogService: DialogService, public messageService: MessageService) {}
 
     ref: DynamicDialogRef | undefined;
@@ -158,8 +158,8 @@ export interface Product {
             content: `import { Component, OnInit } from '@angular/core';
 import { Product } from '../../domain/product';
 import { ProductService } from '../../service/productservice';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MessageService } from '@dwii5359/primeng/api';
+import { DialogService, DynamicDialogRef } from '@dwii5359/primeng/dynamicdialog';
 import { InfoDemo } from './infodemo';
 @Component({
     providers: [DialogService, MessageService, ProductService],
@@ -237,8 +237,8 @@ export class ProductListDemo implements OnInit {
             path: 'src/app/demo/infodemo.ts',
             name: 'InfoDemo',
             content: `import { Component} from '@angular/core';
-import { DialogService, DynamicDialogComponent, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogComponent, DynamicDialogRef } from '@dwii5359/primeng/dynamicdialog';
+import { MessageService } from '@dwii5359/primeng/api';
 @Component({
     providers: [DialogService, MessageService],
     template: \`<div>
@@ -280,7 +280,7 @@ export class InfoDemo {
             path: 'src/app/demo/footer.ts',
             name: 'Footer',
             content: `import { Component } from '@angular/core';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogRef } from '@dwii5359/primeng/dynamicdialog';
 
 @Component({
     selector: 'footer',

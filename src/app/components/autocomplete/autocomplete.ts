@@ -26,21 +26,21 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { OverlayOptions, OverlayService, PrimeNGConfig, PrimeTemplate, SharedModule, TranslationKeys } from 'primeng/api';
-import { AutoFocusModule } from 'primeng/autofocus';
-import { ButtonModule } from 'primeng/button';
-import { ConnectedOverlayScrollHandler, DomHandler } from 'primeng/dom';
-import { InputTextModule } from 'primeng/inputtext';
-import { Overlay, OverlayModule } from 'primeng/overlay';
-import { RippleModule } from 'primeng/ripple';
-import { Scroller, ScrollerModule } from 'primeng/scroller';
-import { ScrollerOptions } from 'primeng/api';
-import { ObjectUtils, UniqueComponentId } from 'primeng/utils';
-import { TimesCircleIcon } from 'primeng/icons/timescircle';
-import { SpinnerIcon } from 'primeng/icons/spinner';
-import { TimesIcon } from 'primeng/icons/times';
-import { ChevronDownIcon } from 'primeng/icons/chevrondown';
-import { Nullable, VoidListener } from 'primeng/ts-helpers';
+import { OverlayOptions, OverlayService, PrimeNGConfig, PrimeTemplate, SharedModule, TranslationKeys } from '@dwii5359/primeng/api';
+import { AutoFocusModule } from '@dwii5359/primeng/autofocus';
+import { ButtonModule } from '@dwii5359/primeng/button';
+import { ConnectedOverlayScrollHandler, DomHandler } from '@dwii5359/primeng/dom';
+import { InputTextModule } from '@dwii5359/primeng/inputtext';
+import { Overlay, OverlayModule } from '@dwii5359/primeng/overlay';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { Scroller, ScrollerModule } from '@dwii5359/primeng/scroller';
+import { ScrollerOptions } from '@dwii5359/primeng/api';
+import { ObjectUtils, UniqueComponentId } from '@dwii5359/primeng/utils';
+import { TimesCircleIcon } from '@dwii5359/primeng/icons/timescircle';
+import { SpinnerIcon } from '@dwii5359/primeng/icons/spinner';
+import { TimesIcon } from '@dwii5359/primeng/icons/times';
+import { ChevronDownIcon } from '@dwii5359/primeng/icons/chevrondown';
+import { Nullable, VoidListener } from '@dwii5359/primeng/ts-helpers';
 import { AutoCompleteCompleteEvent, AutoCompleteDropdownClickEvent, AutoCompleteLazyLoadEvent, AutoCompleteSelectEvent, AutoCompleteUnselectEvent } from './autocomplete.interface';
 
 export const AUTOCOMPLETE_VALUE_ACCESSOR: any = {

@@ -22,19 +22,19 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { OverlayService, PrimeNGConfig, PrimeTemplate, SharedModule, TranslationKeys } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { ConnectedOverlayScrollHandler, DomHandler } from 'primeng/dom';
-import { RippleModule } from 'primeng/ripple';
-import { ObjectUtils, UniqueComponentId, ZIndexUtils } from 'primeng/utils';
+import { OverlayService, PrimeNGConfig, PrimeTemplate, SharedModule, TranslationKeys } from '@dwii5359/primeng/api';
+import { ButtonModule } from '@dwii5359/primeng/button';
+import { ConnectedOverlayScrollHandler, DomHandler } from '@dwii5359/primeng/dom';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { ObjectUtils, UniqueComponentId, ZIndexUtils } from '@dwii5359/primeng/utils';
 import { Subscription } from 'rxjs';
-import { ChevronLeftIcon } from 'primeng/icons/chevronleft';
-import { ChevronRightIcon } from 'primeng/icons/chevronright';
-import { ChevronUpIcon } from 'primeng/icons/chevronup';
-import { ChevronDownIcon } from 'primeng/icons/chevrondown';
-import { TimesIcon } from 'primeng/icons/times';
-import { CalendarIcon } from 'primeng/icons/calendar';
-import { Nullable, VoidListener } from 'primeng/ts-helpers';
+import { ChevronLeftIcon } from '@dwii5359/primeng/icons/chevronleft';
+import { ChevronRightIcon } from '@dwii5359/primeng/icons/chevronright';
+import { ChevronUpIcon } from '@dwii5359/primeng/icons/chevronup';
+import { ChevronDownIcon } from '@dwii5359/primeng/icons/chevrondown';
+import { TimesIcon } from '@dwii5359/primeng/icons/times';
+import { CalendarIcon } from '@dwii5359/primeng/icons/calendar';
+import { Nullable, VoidListener } from '@dwii5359/primeng/ts-helpers';
 import { NavigationState, CalendarResponsiveOptions, CalendarTypeView, LocaleSettings, Month, CalendarMonthChangeEvent, CalendarYearChangeEvent } from './calendar.interface';
 
 export const CALENDAR_VALUE_ACCESSOR: any = {

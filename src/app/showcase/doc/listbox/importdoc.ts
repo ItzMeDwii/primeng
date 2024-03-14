@@ -7,6 +7,6 @@ import { Code } from '../../domain/code';
 })
 export class ImportDoc {
     code: Code = {
-        typescript: `import { ListboxModule } from 'primeng/listbox';`
+        typescript: `import { ListboxModule } from '@dwii5359/primeng/listbox';`
     };
 }

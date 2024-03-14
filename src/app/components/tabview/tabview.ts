@@ -24,17 +24,17 @@ import {
     forwardRef,
     signal
 } from '@angular/core';
-import { BlockableUI, PrimeTemplate, SharedModule } from 'primeng/api';
-import { DomHandler } from 'primeng/dom';
-import { ChevronLeftIcon } from 'primeng/icons/chevronleft';
-import { ChevronRightIcon } from 'primeng/icons/chevronright';
-import { TimesIcon } from 'primeng/icons/times';
-import { RippleModule } from 'primeng/ripple';
-import { TooltipModule } from 'primeng/tooltip';
+import { BlockableUI, PrimeTemplate, SharedModule } from '@dwii5359/primeng/api';
+import { DomHandler } from '@dwii5359/primeng/dom';
+import { ChevronLeftIcon } from '@dwii5359/primeng/icons/chevronleft';
+import { ChevronRightIcon } from '@dwii5359/primeng/icons/chevronright';
+import { TimesIcon } from '@dwii5359/primeng/icons/times';
+import { RippleModule } from '@dwii5359/primeng/ripple';
+import { TooltipModule } from '@dwii5359/primeng/tooltip';
 import { Subscription } from 'rxjs';
 import { TabViewChangeEvent, TabViewCloseEvent } from './tabview.interface';
-import { UniqueComponentId } from 'primeng/utils';
-import { Nullable } from 'primeng/ts-helpers';
+import { UniqueComponentId } from '@dwii5359/primeng/utils';
+import { Nullable } from '@dwii5359/primeng/ts-helpers';
 
 /**
  * TabPanel is a helper component for TabView component.

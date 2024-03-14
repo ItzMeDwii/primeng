@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { TreeNode } from 'primeng/api';
+import { TreeNode } from '@dwii5359/primeng/api';
 import { Code } from '../../domain/code';
 import { NodeService } from '../../service/nodeservice';
 
@@ -64,7 +64,7 @@ export class LazyVirtualScrollDoc implements OnInit {
 
         typescript: `
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { TreeNode } from 'primeng/api';
+import { TreeNode } from '@dwii5359/primeng/api';
 import { NodeService } from '../../service/nodeservice';
 
 @Component({

@@ -19,11 +19,11 @@ import {
     PLATFORM_ID
 } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { SharedModule, Header, PrimeTemplate } from 'primeng/api';
-import { DomHandler } from 'primeng/dom';
+import { SharedModule, Header, PrimeTemplate } from '@dwii5359/primeng/api';
+import { DomHandler } from '@dwii5359/primeng/dom';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { EditorInitEvent, EditorTextChangeEvent, EditorSelectionChangeEvent } from './editor.interface';
-import { Nullable } from 'primeng/ts-helpers';
+import { Nullable } from '@dwii5359/primeng/ts-helpers';
 //@ts-ignore
 import Quill from 'quill';
 
